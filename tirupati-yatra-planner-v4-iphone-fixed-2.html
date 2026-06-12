@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover,maximum-scale=1.0,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Tirupati Yatra">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=yes">
+<meta name="theme-color" content="#4A0808">
+<title>ॐ Tirupati Yatra Planner v4.0 — iPhone — by Pankaj Kanodia</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Josefin+Sans:wght@300;400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --saffron:#E8751A;--saffron-d:#A84A00;--gold:#C9962A;--gold-l:#F0C840;
+  --crimson:#8B1A1A;--crimson-d:#4A0808;--maroon:#6B1515;
+  --ivory:#FDF6EC;--warm:#F5E8D0;--cream:#FBF4E8;
+  --stone:#2D1B0E;--stone-m:#5C3A1E;--stone-l:#8B6040;
+  --road:#c05820;--train:#1565C0;--flight:#6A1B9A;
+  --sh:rgba(74,8,8,0.13);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Josefin Sans',sans-serif;background:var(--ivory);color:var(--stone);min-height:100vh;overflow-x:hidden;-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased;word-break:break-word;}
+/* HEADER */
+header{background:linear-gradient(135deg,var(--crimson-d) 0%,var(--crimson) 45%,#7B3010 100%);position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='52' height='52' viewBox='0 0 52 52' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M26 2l3 9 8-4-5 8 9 1-7 6 4 9-9-3-3 9-3-9-9 3 4-9-7-6 9-1-5-8 8 4z'/%3E%3C/g%3E%3C/svg%3E");}
+.hdr-in{max-width:960px;margin:0 auto;padding:22px 18px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.om-icon{width:56px;height:56px;background:radial-gradient(circle,var(--gold-l),var(--gold));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;box-shadow:0 0 0 4px rgba(240,200,64,.3),0 0 24px rgba(240,200,64,.4);animation:pulse 3s ease-in-out infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 4px rgba(240,200,64,.3),0 0 24px rgba(240,200,64,.4);}50%{box-shadow:0 0 0 7px rgba(240,200,64,.5),0 0 40px rgba(240,200,64,.6);}}
+.hdr-text h1{font-family:'Playfair Display',serif;font-size:clamp(18px,4.5vw,34px);font-weight:900;color:#fff;line-height:1.1;letter-spacing:-.3px;}
+.hdr-text h1 span{color:var(--gold-l);}
+.hdr-text p{font-size:10px;letter-spacing:3px;color:rgba(255,255,255,.5);text-transform:uppercase;margin-top:5px;}
+.hdr-badge{margin-left:auto;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:9px 13px;text-align:right;flex-shrink:0;}
+.hdr-badge .bl{font-size:9px;letter-spacing:2px;color:var(--gold-l);text-transform:uppercase;}
+.hdr-badge .bv{font-size:12px;color:#fff;font-weight:600;margin-top:3px;}
+.hdr-badge .bs{font-size:10px;color:rgba(255,255,255,.5);}
+/* NAV */
+.nav-wrap{background:#fff;border-bottom:3px solid var(--warm);position:sticky;top:0;z-index:1100;box-shadow:0 2px 14px var(--sh);}
+.nav-in{max-width:960px;margin:0 auto;padding:0 12px;display:flex;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-behavior:smooth;}
+.nav-in::-webkit-scrollbar{display:none;}
+.ntab{padding:12px 11px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-3px;white-space:nowrap;color:var(--stone-l);transition:all .2s;display:flex;align-items:center;gap:5px;flex-shrink:0;background:none;border-top:none;border-left:none;border-right:none;font-family:'Josefin Sans',sans-serif;}
+.ntab .ti{font-size:14px;}
+.ntab.active{color:var(--crimson);border-bottom-color:var(--saffron);}
+.ntab:hover{color:var(--stone);}
+/* MAIN */
+main{max-width:960px;margin:0 auto;padding:20px 16px 60px;}
+.tsec{display:none;}
+.tsec.active{display:block;animation:fi .3s ease;}
+@keyframes fi{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+/* PANELS */
+.panel{background:#fff;border-radius:18px;box-shadow:0 4px 24px var(--sh);margin-bottom:20px;overflow:hidden;border:1px solid rgba(201,150,42,.13);}
+.phd{background:linear-gradient(90deg,var(--crimson),var(--maroon));padding:12px 18px;display:flex;align-items:center;gap:10px;}
+.phd .ic{font-size:18px;}
+.phd h2{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:#fff;}
+.pbd{padding:18px;}
+/* FORM */
+.fl label{display:block;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--stone-m);margin-bottom:6px;font-weight:700;}
+.fl select,.fl input[type=number]{width:100%;padding:11px 13px;border:2px solid var(--warm);border-radius:11px;font-family:'Josefin Sans',sans-serif;font-size:13px;color:var(--stone);background:var(--cream);outline:none;transition:border-color .2s;-webkit-appearance:none;appearance:none;}
+.fl select:focus,.fl input:focus{border-color:var(--saffron);box-shadow:0 0 0 3px rgba(232,117,26,.11);background:#fff;}
+.sw{position:relative;}
+.sw::after{content:'▾';position:absolute;right:11px;top:50%;transform:translateY(-50%);color:var(--saffron);pointer-events:none;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px;}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:11px;}
+@media(max-width:640px){.g3,.g4{grid-template-columns:1fr 1fr;}.g2{grid-template-columns:1fr;}}
+@media(max-width:380px){.g2,.g3,.g4{grid-template-columns:1fr;}}
+/* DATE PICKER */
+.dw{position:relative;}
+.dtrg{display:flex;align-items:center;gap:8px;padding:11px 13px;border:2px solid var(--warm);border-radius:11px;background:var(--cream);cursor:pointer;transition:border-color .2s;user-select:none;min-height:46px;}
+.dtrg:hover,.dtrg.open{border-color:var(--saffron);}
+.dtrg.hv{border-color:var(--saffron);background:rgba(232,117,26,.05);}
+.dtxt{flex:1;font-size:13px;color:var(--stone);font-family:'Josefin Sans',sans-serif;}
+.dtxt.ph{color:var(--stone-l);}
+.dcaret{font-size:11px;color:var(--stone-l);transition:transform .2s;}
+.dtrg.open .dcaret{transform:rotate(180deg);}
+.cpop{position:fixed;top:auto;left:auto;z-index:1200;background:#fff;border:2px solid var(--warm);border-radius:14px;box-shadow:0 8px 32px rgba(74,8,8,.18);width:290px;overflow:hidden;animation:fi .15s ease;}
+.chd{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(90deg,var(--crimson-d),var(--stone));padding:10px 13px;}
+.chd-lbl{font-family:'Playfair Display',serif;color:var(--gold-l);font-size:14px;font-weight:700;}
+.cnav{background:none;border:none;color:var(--gold-l);font-size:20px;cursor:pointer;padding:0 6px;line-height:1;border-radius:4px;}
+.cnav:hover{background:rgba(255,255,255,.15);}
+.cwk{display:grid;grid-template-columns:repeat(7,1fr);background:var(--warm);border-bottom:1px solid rgba(201,150,42,.2);}
+.cwk span{text-align:center;padding:5px 0;font-size:9px;font-weight:700;color:var(--stone-l);}
+.cwk span:first-child{color:var(--crimson);}
+.cwk span:last-child{color:var(--saffron);}
+.cgrid{display:grid;grid-template-columns:repeat(7,1fr);padding:5px 4px 3px;gap:2px;}
+.cd{display:flex;align-items:center;justify-content:center;height:34px;border-radius:50%;font-size:13px;cursor:pointer;color:var(--stone);transition:background .12s,color .12s;position:relative;}
+.cd:hover:not(.cdis):not(.csel){background:rgba(232,117,26,.14);color:var(--crimson);}
+.cd.ctod{border:2px solid var(--saffron);color:var(--saffron);font-weight:700;}
+.cd.csel{background:linear-gradient(135deg,var(--saffron),var(--crimson));color:#fff;font-weight:700;box-shadow:0 2px 8px rgba(232,117,26,.4);}
+.cd.crng{background:rgba(232,117,26,.1);border-radius:0;}
+.cd.cdis{color:rgba(45,27,14,.22);cursor:not-allowed;}
+.cd.csun{color:var(--crimson);}
+.cd.csat{color:var(--saffron);}
+.cd.cemp{pointer-events:none;}
+.cd.caus::after{content:'🪔';position:absolute;bottom:1px;right:1px;font-size:.36em;line-height:1;}
+.cft{display:flex;justify-content:space-between;padding:7px 12px;border-top:1px solid var(--warm);background:var(--cream);}
+.cftb{font-size:11px;font-weight:700;cursor:pointer;padding:4px 11px;border-radius:6px;}
+.cftb-t{color:var(--saffron);background:rgba(232,117,26,.1);}
+.cftb-c{color:var(--stone-l);background:rgba(45,27,14,.07);}
+/* TRIP BADGE */
+.tbadge{display:inline-flex;align-items:center;gap:7px;background:rgba(232,117,26,.1);border:1.5px solid rgba(232,117,26,.3);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700;color:var(--crimson);margin-bottom:12px;}
+/* FILTER CHIPS */
+.fstrip{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px;}
+.fc{padding:6px 13px;border-radius:20px;border:1.5px solid var(--warm);font-size:11px;font-weight:700;cursor:pointer;background:#fff;color:var(--stone-m);transition:all .2s;white-space:nowrap;font-family:'Josefin Sans',sans-serif;}
+.hsearchbar{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+.hsearch-inp{flex:1 1 160px;padding:9px 13px;border-radius:20px;border:1.5px solid var(--warm);font-size:13px;font-family:'Josefin Sans',sans-serif;color:var(--stone);background:#fff;outline:none;}
+.hsearch-inp:focus{border-color:var(--saffron);}
+.hsort-sel{padding:9px 11px;border-radius:20px;border:1.5px solid var(--warm);font-size:11px;font-weight:700;font-family:'Josefin Sans',sans-serif;color:var(--stone-m);background:#fff;}
+.hfav{position:absolute;top:8px;right:8px;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.88);display:flex;align-items:center;justify-content:center;font-size:15px;z-index:2;cursor:pointer;box-shadow:0 1px 6px rgba(0,0,0,.15);}
+.hresc{font-size:11px;color:var(--stone-l);margin-bottom:8px;font-weight:700;letter-spacing:1px;}
+.fc.on{background:var(--crimson);color:#fff;border-color:var(--crimson);}
+/* HOTEL CARDS */
+.hgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(228px,1fr));gap:13px;}
+@media(max-width:600px){.hgrid{grid-template-columns:1fr 1fr;}@media(max-width:380px){.hgrid{grid-template-columns:1fr;}}}
+.hsec-head{grid-column:1/-1;display:flex;align-items:center;gap:10px;margin:10px 0 4px;padding:10px 14px;border-radius:12px;font-family:'Josefin Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;width:100%;box-sizing:border-box;}
+.hsec-tirumala{background:linear-gradient(90deg,#8B1A1A 0%,#6b1414 100%);color:#f9e4a0;}
+.hsec-tirupati{background:linear-gradient(90deg,#1a4a8b 0%,#143a6b 100%);color:#a0d0f9;}
+.hsec-badge{background:rgba(255,255,255,0.18);border-radius:20px;padding:2px 10px;font-size:9px;letter-spacing:1px;margin-left:auto;}
+.hsec-note{font-size:9px;font-weight:400;letter-spacing:0.5px;opacity:0.8;margin-left:6px;text-transform:none;font-family:inherit;}
+.hcard{background:#fff;border-radius:16px;border:2px solid var(--warm);overflow:hidden;cursor:pointer;transition:transform .2s,box-shadow .2s,border-color .2s;position:relative;}
+.hcard:hover{transform:translateY(-3px);box-shadow:0 8px 24px var(--sh);border-color:var(--saffron);}
+.hcard.sel{border-color:var(--saffron);box-shadow:0 0 0 3px rgba(232,117,26,.18);}
+.hcard.sel .hck{display:flex;}
+.hctop{height:5px;}
+.hcbd{padding:12px 13px 13px;}
+.hck{display:none;position:absolute;top:9px;right:9px;width:22px;height:22px;background:var(--saffron);border-radius:50%;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;}
+.hccat{font-size:9px;letter-spacing:1.2px;color:var(--stone-l);margin-bottom:3px;font-weight:700;}
+.hcst{font-size:10px;color:var(--gold);margin-bottom:3px;}
+.hcnm{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:var(--stone);line-height:1.25;margin-bottom:2px;}
+.hcloc{font-size:11px;color:var(--stone-l);margin-bottom:6px;font-family:'Crimson Text',serif;font-style:italic;}
+.hcrt{font-size:20px;font-weight:900;color:var(--crimson);font-family:'Playfair Display',serif;}
+.hcrt small{font-size:11px;font-weight:400;color:var(--stone-l);}
+.hcbg{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;margin-top:4px;}
+.bg-gold{background:rgba(201,150,42,.14);color:#7a5a00;}
+.bg-green{background:rgba(46,125,50,.12);color:#1B5E20;}
+.bg-blue{background:rgba(21,101,192,.12);color:#0D47A1;}
+.bg-red{background:rgba(139,26,26,.12);color:#5a0a0a;}
+.hcph{font-size:10px;color:var(--stone-l);margin-top:4px;}
+.hcmap{font-size:10px;color:var(--saffron);margin-top:3px;display:block;text-decoration:none;}
+/* LIVE COST PANEL */
+.lcost{background:linear-gradient(135deg,var(--crimson-d) 0%,#3D1A08 55%,var(--stone) 100%);border-radius:18px;padding:20px;margin-bottom:18px;position:relative;overflow:hidden;}
+.lcost::before{content:'ॐ';position:absolute;right:-8px;bottom:-18px;font-size:110px;line-height:1;color:rgba(255,255,255,.04);pointer-events:none;}
+.lctit{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--gold-l);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.lcrow{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:13px;}
+.lclbl{color:rgba(253,246,236,.72);}
+.lcval{font-weight:700;color:var(--ivory);}
+.lctot{padding-top:12px;margin-top:4px;border-top:1px solid rgba(201,150,42,.4);border-bottom:none !important;}
+.lctot .lclbl{color:var(--gold-l);font-weight:700;font-size:15px;}
+.lctot .lcval{color:var(--gold-l);font-size:22px;font-family:'Playfair Display',serif;}
+.lcpp{text-align:center;margin-top:10px;font-size:12px;color:rgba(253,246,236,.5);}
+.lcpp strong{color:var(--saffron);font-size:16px;}
+.lflash{animation:flash .4s ease;}
+@keyframes flash{0%{background:rgba(240,200,64,.15);}100%{background:transparent;}}
+/* TRIPLE HERO */
+.triple{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:18px;}
+@media(max-width:640px){.triple{grid-template-columns:repeat(3,minmax(150px,1fr));overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;}}.tc{scroll-snap-align:start;}
+.tc{border-radius:16px;padding:15px;color:#fff;position:relative;overflow:hidden;cursor:pointer;transition:transform .18s;border:3px solid transparent;}
+.tc:hover{transform:translateY(-2px);}
+.tc.tca{border-color:var(--gold-l);box-shadow:0 0 0 3px rgba(240,200,64,.22);}
+.tc::after{content:'';position:absolute;right:-10px;top:-10px;width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.07);}
+.tcr{background:linear-gradient(135deg,#903010,var(--road));}
+.tct{background:linear-gradient(135deg,#0d3160,var(--train));}
+.tcf{background:linear-gradient(135deg,#3a0870,var(--flight));}
+.tcic{font-size:24px;margin-bottom:5px;}
+.tclb{font-size:9px;letter-spacing:2px;text-transform:uppercase;opacity:.75;margin-bottom:5px;}
+.tcam{font-size:22px;font-weight:900;line-height:1;font-family:'Playfair Display',serif;}
+.tcpp{font-size:10px;opacity:.8;margin-top:3px;}
+.tcdt{font-size:9px;opacity:.6;margin-top:5px;line-height:1.45;}
+.tcbdg{position:absolute;top:9px;right:9px;background:rgba(255,255,255,.22);border-radius:14px;padding:2px 8px;font-size:9px;font-weight:700;}
+.tcbst{background:var(--gold-l);color:var(--stone);}
+/* CMP TABLE WRAP */
+.cmpwrap{background:#fff;border-radius:16px;border:1px solid var(--warm);overflow:hidden;margin-bottom:16px;}
+.cmphd{background:linear-gradient(90deg,var(--crimson),var(--maroon));padding:12px 18px;}
+.cmphd h3{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:#fff;}
+.scrhint{font-size:10px;color:var(--stone-l);text-align:right;padding:3px 8px 0;display:none;}
+@media(max-width:640px){.scrhint{display:block;}}
+.ctab{width:100%;border-collapse:collapse;}
+.ctab th{padding:8px 10px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;border-bottom:2px solid var(--warm);font-weight:700;}
+.ctab th.thl{text-align:left;color:var(--stone-m);}
+.ctab th.thr{text-align:right;}
+.ctab td{padding:9px 10px;font-size:12px;border-bottom:1px dashed var(--warm);}
+.ctab td.tdl{color:var(--stone);font-weight:600;}
+.ctab td.tdr{text-align:right;font-weight:700;}
+.ctab td.rc{color:var(--road);}
+.ctab td.tc2{color:var(--train);}
+.ctab td.fc{color:var(--flight);}
+.ctab td.wb{text-align:center;}
+.ctab .tfr td{background:var(--cream);font-weight:900;font-size:13px;padding:11px 10px;}
+.wr{background:#fff3e0;color:var(--road);border-radius:8px;padding:2px 8px;font-weight:700;font-size:10px;display:inline-block;}
+.wt{background:#e3f2fd;color:var(--train);border-radius:8px;padding:2px 8px;font-weight:700;font-size:10px;display:inline-block;}
+.wf{background:#f3e5f5;color:var(--flight);border-radius:8px;padding:2px 8px;font-weight:700;font-size:10px;display:inline-block;}
+.wi{background:var(--cream);color:var(--stone-m);border-radius:8px;padding:2px 8px;font-weight:700;font-size:10px;display:inline-block;}
+/* HOTEL IMPACT */
+.hirow{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px dashed var(--warm);cursor:pointer;transition:background .15s;}
+.hirow:hover{background:rgba(232,117,26,.05);}
+.hirow.on{background:rgba(232,117,26,.08);border-left:3px solid var(--saffron);}
+.hinm{flex:1;font-size:12px;font-weight:600;color:var(--stone);}
+.hirt{font-size:11px;color:var(--stone-l);width:82px;text-align:right;}
+.hito{font-size:12px;font-weight:700;color:var(--crimson);width:90px;text-align:right;}
+.hidf{font-size:11px;width:70px;text-align:right;}
+.hidf.p{color:var(--crimson);}
+.hidf.z,.hidf.n{color:#2e7d32;}
+/* VERDICT */
+.vbox{background:linear-gradient(135deg,var(--crimson),var(--crimson-d));border-radius:16px;padding:18px;margin-top:16px;color:#fff;}
+.vbox h3{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--gold-l);margin-bottom:13px;}
+.vgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:13px;}
+@media(max-width:600px){.vgrid{grid-template-columns:1fr 1fr;}}
+.vdbx{background:rgba(255,255,255,.1);border-radius:10px;padding:9px;text-align:center;}
+.vdic{font-size:18px;margin-bottom:3px;}
+.vdwn{font-size:11px;font-weight:700;color:var(--gold-l);}
+.vdct{font-size:9px;opacity:.65;margin-top:2px;letter-spacing:1px;text-transform:uppercase;}
+.vnote{font-family:'Crimson Text',serif;font-size:13px;line-height:1.65;opacity:.88;font-style:italic;}
+/* PROS CONS 3-COL */
+.pc3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:14px;}
+@media(max-width:700px){.pc3{grid-template-columns:1fr;}}
+.pcol{border-radius:12px;overflow:hidden;}
+.pchd{padding:9px 13px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#fff;}
+.pcr .pchd{background:linear-gradient(90deg,#903010,var(--road));}
+.pct .pchd{background:linear-gradient(90deg,#0d3160,var(--train));}
+.pcf .pchd{background:linear-gradient(90deg,#3a0870,var(--flight));}
+.pcbd{border:1.5px solid;border-top:none;border-radius:0 0 12px 12px;padding:11px 13px;background:#fff;}
+.pcr .pcbd{border-color:var(--road);}
+.pct .pcbd{border-color:var(--train);}
+.pcf .pcbd{border-color:var(--flight);}
+.pcbd ul{list-style:none;font-size:11px;line-height:1.75;color:var(--stone);}
+/* TIMELINE */
+.daycard{background:#fff;border-radius:14px;border:1px solid var(--warm);margin-bottom:12px;overflow:hidden;}
+.dayhd{background:linear-gradient(90deg,var(--crimson-d),var(--maroon));padding:11px 16px;display:flex;align-items:center;gap:9px;}
+.daynum{background:var(--gold-l);color:var(--stone);width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;flex-shrink:0;}
+.dayhd h3{font-family:'Playfair Display',serif;font-size:15px;color:#fff;font-weight:700;flex:1;}
+.dayhd p{font-size:10px;color:rgba(255,255,255,.5);letter-spacing:1px;}
+.daybd{padding:12px 16px;}
+.slot{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px dashed var(--warm);}
+.slot:last-child{border-bottom:none;}
+.stime{background:var(--cream);border:1px solid var(--warm);border-radius:7px;padding:3px 8px;font-size:9px;font-weight:700;color:var(--saffron);letter-spacing:1px;white-space:nowrap;flex-shrink:0;margin-top:2px;}
+.spl{font-size:13px;font-weight:700;color:var(--stone);}
+.sdc{font-size:11px;color:var(--stone-m);margin-top:2px;font-family:'Crimson Text',serif;font-style:italic;line-height:1.45;}
+.stags{display:flex;flex-wrap:wrap;gap:5px;margin-top:5px;}
+.stag{font-size:9px;letter-spacing:.8px;text-transform:uppercase;padding:2px 8px;border-radius:12px;font-weight:700;}
+.st-temple{background:#fef3e2;color:#b35a00;}
+.st-travel{background:#fff8e1;color:#f57f17;}
+.st-darshan{background:rgba(139,26,26,.1);color:#5a0a0a;}
+.st-leisure{background:#e0f7fa;color:#00838f;}
+.st-food{background:#fce4ec;color:#c62828;}
+.st-sacred{background:rgba(201,150,42,.14);color:#7a5a00;}
+/* SUMMARY STATS */
+.sgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:18px;}
+@media(max-width:580px){.sgrid{grid-template-columns:1fr 1fr;}}
+.sstat{background:linear-gradient(135deg,var(--cream),#fff);border:1px solid var(--warm);border-radius:12px;padding:12px;text-align:center;}
+.sstat .sv{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:var(--crimson);}
+.sstat .sl{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--stone-m);margin-top:2px;}
+/* ALERTS */
+.abar{border-radius:11px;padding:10px 14px;display:flex;gap:9px;align-items:flex-start;margin-bottom:14px;font-size:12px;line-height:1.5;}
+.ag{background:rgba(201,150,42,.1);border-left:4px solid var(--gold);color:#5a3a00;}
+.as{background:rgba(232,117,26,.09);border-left:4px solid var(--saffron);color:var(--crimson-d);}
+.ab{background:rgba(21,101,192,.09);border-left:4px solid var(--train);color:#0D47A1;}
+.agr{background:rgba(46,125,50,.09);border-left:4px solid #2e7d32;color:#1B5E20;}
+/* TIP ROWS */
+.trow{display:flex;gap:9px;padding:8px 0;border-bottom:1px dashed var(--warm);font-size:12px;color:var(--stone-m);font-family:'Crimson Text',serif;line-height:1.5;}
+.trow:last-child{border-bottom:none;}
+.tic{flex-shrink:0;font-size:15px;}
+.trow strong{color:var(--stone);font-family:'Josefin Sans',sans-serif;font-style:normal;}
+.div-s{display:flex;align-items:center;gap:12px;margin:16px 0;color:var(--stone-l);font-size:11px;font-style:italic;font-family:'Crimson Text',serif;}
+.div-s::before,.div-s::after{content:'';flex:1;height:1px;background:rgba(201,150,42,.28);}
+
+/* ── EMERGENCY SERVICES — Kerala-inspired ── */
+.emg-section-label{font-size:9px;letter-spacing:2.5px;font-weight:700;text-transform:uppercase;padding:7px 16px 6px;display:flex;align-items:center;gap:7px;}
+.emg-label-red{background:linear-gradient(90deg,rgba(183,28,28,.1),transparent);color:#b71c1c;border-left:3px solid #b71c1c;}
+.emg-label-blue{background:linear-gradient(90deg,rgba(21,101,192,.09),transparent);color:#0D47A1;border-left:3px solid #1565C0;}
+.emg-label-green{background:linear-gradient(90deg,rgba(27,94,32,.09),transparent);color:#1B5E20;border-left:3px solid #2e7d32;}
+.emg-label-orange{background:linear-gradient(90deg,rgba(230,81,0,.08),transparent);color:#BF360C;border-left:3px solid #E64A19;}
+.emg-label-purple{background:linear-gradient(90deg,rgba(74,20,140,.08),transparent);color:#4A148C;border-left:3px solid #7B1FA2;}
+.erow{display:flex;align-items:center;padding:0;border-bottom:1px solid rgba(245,232,208,.8);transition:background .15s;}
+.erow:last-child{border-bottom:none;}
+.erow:active{background:rgba(232,117,26,.04);}
+.enm-wrap{flex:1;padding:9px 16px;min-width:0;}
+.enm{font-size:12px;font-weight:700;color:var(--stone);line-height:1.2;}
+.edet{font-size:10px;color:var(--stone-m);font-family:'Crimson Text',serif;font-style:italic;margin-top:1px;line-height:1.3;}
+.eph{flex-shrink:0;padding:8px 12px 8px 0;}
+.ecall{display:inline-flex;align-items:center;gap:4px;border-radius:18px;padding:5px 11px;font-size:10px;font-weight:700;text-decoration:none;white-space:nowrap;font-family:'Josefin Sans',sans-serif;-webkit-touch-callout:default;transition:opacity .15s;letter-spacing:.2px;}
+.ecall:active{opacity:.75;}
+.ecall-red{background:linear-gradient(135deg,#b71c1c,#e53935);color:#fff;box-shadow:0 2px 6px rgba(183,28,28,.3);}
+.ecall-blue{background:linear-gradient(135deg,#0d3160,#1565C0);color:#fff;box-shadow:0 2px 6px rgba(21,101,192,.3);}
+.ecall-green{background:linear-gradient(135deg,#1B5E20,#2e7d32);color:#fff;box-shadow:0 2px 6px rgba(27,94,32,.3);}
+.ecall-orange{background:linear-gradient(135deg,#BF360C,#E64A19);color:#fff;box-shadow:0 2px 6px rgba(230,81,0,.3);}
+.ecall-purple{background:linear-gradient(135deg,#4A148C,#7B1FA2);color:#fff;box-shadow:0 2px 6px rgba(74,20,140,.3);}
+.emg-panel{background:#fff;border-radius:16px;overflow:hidden;margin-bottom:14px;border:1.5px solid rgba(245,232,208,.9);box-shadow:0 2px 14px rgba(74,8,8,.07);}
+.emg-panel-head{padding:11px 16px;display:flex;align-items:center;gap:10px;}
+.emg-panel-head h2{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:#fff;flex:1;}
+.emg-head-red{background:linear-gradient(90deg,#7f0000,#b71c1c);}
+.emg-head-blue{background:linear-gradient(90deg,#0d3160,#1565C0);}
+@media(max-width:480px){.ecall{font-size:9px;padding:4px 8px;}.enm-wrap{padding:8px 12px;}}
+/* ── PDF SAVE BUTTON ── */
+.pdf-bar{display:flex;justify-content:flex-end;margin-bottom:14px;}
+.pdf-btn{display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,var(--crimson-d),var(--crimson));color:#fff;border:none;border-radius:22px;padding:9px 18px;font-family:'Josefin Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;box-shadow:0 3px 12px rgba(74,8,8,.22);transition:transform .18s,box-shadow .18s;-webkit-tap-highlight-color:transparent;}
+.pdf-btn:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(74,8,8,.3);}
+.pdf-btn:active{transform:scale(0.97);}
+.pdf-btn .pdf-ic{font-size:15px;}
+@media print{body{background:#fff!important;}.pdf-bar{display:none!important;}}
+</style>
+</head>
+<body>
+<header>
+  <div class="hdr-in">
+    <div class="om-icon">ॐ</div>
+    <div class="hdr-text">
+      <h1>Tirupati <span>Yatra Planner</span></h1>
+      <p>Sacred Pilgrimage Guide — v4.0 — by Pankaj Kanodia</p>
+    </div>
+    <div class="hdr-badge">
+      <div class="bl">Origin → Destination</div>
+      <div class="bv">Banashankari → Tirumala</div>
+      <div class="bs">JP Nagar, Bengaluru · AP</div>
+    </div>
+  </div>
+</header>
+<div class="nav-wrap">
+  <div class="nav-in">
+    <button class="ntab active" onclick="showT('planner',this)"><span class="ti">🗺️</span> Plan Trip</button>
+    <button class="ntab" onclick="showT('compare',this)"><span class="ti">💰</span> Compare</button>
+    <button class="ntab" onclick="showT('hotels',this)"><span class="ti">🏨</span> Hotels</button>
+    <button class="ntab" onclick="showT('trains',this)"><span class="ti">🚆</span> Trains</button>
+    <button class="ntab" onclick="showT('itinerary',this)"><span class="ti">📋</span> Itinerary</button>
+    <button class="ntab" onclick="showT('darshan',this)"><span class="ti">🙏</span> Darshan</button>
+    <button class="ntab" onclick="showT('tips',this)"><span class="ti">💡</span> Tips</button>
+    <button class="ntab" onclick="showT('emergency',this)"><span class="ti">🚨</span> Emergency</button>
+  </div>
+</div>
+<main>
+<!-- ===== TAB 1 PLAN ===== -->
+<div class="tsec active" id="t-planner">
+  <div class="pdf-bar"><button class="pdf-btn" onclick="savePDF('planner')"><span class="pdf-ic">📄</span> Save as PDF — Plan Trip Summary</button></div>
+  <div class="abar ag"><span>🪔</span><span><strong>Route:</strong> Banashankari Temple, JP Nagar → Sri Venkateswara Swamy Temple, Tirumala. Road ~295 km via NH44 · Rail ~325 km · Flight ~55 min BLR→TIR.</span></div>
+  <div class="panel">
+    <div class="phd"><span class="ic">👥</span><h2>Group & Trip Details</h2></div>
+    <div class="pbd">
+      <div class="g4" style="margin-bottom:13px">
+        <div class="fl"><label>Adults</label><input type="number" id="g_adults" value="2" min="1" max="20" oninput="recalc()"></div>
+        <div class="fl"><label>Children ≤12</label><input type="number" id="g_children" value="0" min="0" max="10" oninput="recalc()"></div>
+        <div class="fl"><label>Seniors 60+</label><input type="number" id="g_seniors" value="0" min="0" max="10" oninput="recalc()"></div>
+        <div class="fl"><label>Nights</label><input type="number" id="g_nights" value="2" min="1" max="7" oninput="recalc()"></div>
+      </div>
+      <div class="g2" style="margin-bottom:12px">
+        <div class="fl"><label>Departure Date</label>
+          <div class="dw">
+            <div class="dtrg" id="dep_trg" onclick="tgCal('dep')"><span>📅</span><span class="dtxt ph" id="dep_txt">Select date</span><span class="dcaret">▾</span></div>
+            <div class="cpop" id="cal_dep" style="display:none">
+              <div class="chd"><button class="cnav" onclick="shM('dep',-1)">‹</button><span class="chd-lbl" id="dep_ml"></span><button class="cnav" onclick="shM('dep',1)">›</button></div>
+              <div class="cwk"><span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span></div>
+              <div class="cgrid" id="dep_grid"></div>
+              <div class="cft"><span class="cftb cftb-t" onclick="picToday('dep')">Today</span><span class="cftb cftb-c" onclick="clsCal('dep')">Close</span></div>
+            </div>
+          </div>
+          <input type="hidden" id="dep_val">
+        </div>
+        <div class="fl"><label>Return Date</label>
+          <div class="dw">
+            <div class="dtrg" id="ret_trg" onclick="tgCal('ret')"><span>📅</span><span class="dtxt ph" id="ret_txt">Select date</span><span class="dcaret">▾</span></div>
+            <div class="cpop" id="cal_ret" style="display:none">
+              <div class="chd"><button class="cnav" onclick="shM('ret',-1)">‹</button><span class="chd-lbl" id="ret_ml"></span><button class="cnav" onclick="shM('ret',1)">›</button></div>
+              <div class="cwk"><span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span></div>
+              <div class="cgrid" id="ret_grid"></div>
+              <div class="cft"><span class="cftb cftb-t" onclick="picToday('ret')">Today</span><span class="cftb cftb-c" onclick="clsCal('ret')">Close</span></div>
+            </div>
+          </div>
+          <input type="hidden" id="ret_val">
+        </div>
+      </div>
+      <div id="tBadge" style="display:none"><div class="tbadge">🗓️ <span id="tBadgeTxt"></span></div></div>
+      <div class="g2">
+        <div class="fl"><label>Darshan Type</label><div class="sw"><select id="g_darshan" onchange="recalc()"><option value="0">Free Sarva Darshan</option><option value="300" selected>Special Entry — ₹300/person</option><option value="10500">Srivani VIP — ₹10,500/person</option></select></div></div>
+        <div class="fl"><label>Travel Mode</label><div class="sw"><select id="g_mode" onchange="recalc()"><option value="train_sl">🚆 Train — Sleeper (SL)</option><option value="train_3a">🚆 Train — 3A (AC)</option><option value="train_cc">🪑 Intercity CC (22618)</option><option value="car">🚗 Own Car</option><option value="taxi">🚕 Outstation Taxi</option><option value="bus">🚌 KSRTC / APSRTC Bus</option><option value="flight">✈️ Flight BLR→TIR</option></select></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="phd"><span class="ic">🏨</span><h2>Choose Accommodation — Cost Updates Live Instantly</h2></div>
+    <div class="pbd">
+      <div class="fstrip" id="pHF">
+        <button class="fc on" onclick="pFilt('all',this)">All</button>
+        <button class="fc" onclick="pFilt('tirumala',this)">🛕 Tirumala Hill</button>
+        <button class="fc" onclick="pFilt('budget',this)">🪙 Budget</button>
+        <button class="fc" onclick="pFilt('mid',this)">⭐⭐⭐ Mid</button>
+        <button class="fc" onclick="pFilt('comfort',this)">⭐⭐⭐⭐ Comfort</button>
+        <button class="fc" onclick="pFilt('luxury',this)">👑 Luxury</button>
+      </div>
+      <div class="hgrid" id="pHGrid"></div>
+      <div id="selBar" style="display:none;margin-top:10px;padding:10px 13px;background:rgba(232,117,26,.07);border:1px solid rgba(232,117,26,.25);border-radius:10px;font-size:12px;">
+        <strong>Selected:</strong> <span id="sb_nm" style="color:var(--crimson);font-weight:700;"></span>
+        &nbsp;·&nbsp;<span id="sb_loc" style="color:var(--stone-l);"></span>
+        &nbsp;·&nbsp;₹<span id="sb_rt" style="font-weight:700;color:var(--crimson);"></span>/night
+        &nbsp;·&nbsp;<span id="sb_nt" style="color:var(--stone-m);"></span>
+      </div>
+    </div>
+  </div>
+  <div class="lcost">
+    <div class="lctit">💰 Live Yatra Cost — Changes with Every Hotel &amp; Mode Selection</div>
+    <div class="lcrow"><span class="lclbl" id="lc_trlbl">🚆 Travel (round trip)</span><span class="lcval" id="lc_tr">₹—</span></div>
+    <div class="lcrow"><span class="lclbl"><span id="lc_hlbl">🏨 Hotel</span> (<span id="lc_nlbl">2</span>N)</span><span class="lcval" id="lc_h">₹—</span></div>
+    <div class="lcrow"><span class="lclbl">🎫 Darshan tickets</span><span class="lcval" id="lc_d">₹—</span></div>
+    <div class="lcrow"><span class="lclbl">🍽️ Meals (estimated)</span><span class="lcval" id="lc_m">₹—</span></div>
+    <div class="lcrow"><span class="lclbl">🚌 Local transport (hill)</span><span class="lcval" id="lc_l">₹—</span></div>
+    <div class="lcrow"><span class="lclbl">🛍️ Prasadam + Misc</span><span class="lcval" id="lc_x">₹—</span></div>
+    <div class="lcrow lctot"><span class="lclbl">TOTAL YATRA COST</span><span class="lcval" id="lc_tot">₹—</span></div>
+    <div class="lcpp">Per Person: <strong id="lc_pp">₹—</strong></div>
+  </div>
+</div>
+<!-- ===== TAB 2 COMPARE ===== -->
+<div class="tsec" id="t-compare">
+  <div class="pdf-bar"><button class="pdf-btn" onclick="savePDF('compare')"><span class="pdf-ic">📄</span> Save as PDF — Cost Comparison</button></div>
+  <div class="abar as"><span>ℹ️</span><span>All costs react instantly. Change hotel or mode in Plan Trip — everything here updates. Tap any of the 3 cards to switch mode.</span></div>
+  <div class="triple" id="tripleHero"></div>
+  <div id="savBanner" style="margin-bottom:16px;"></div>
+  <div class="cmpwrap">
+    <div class="cmphd"><h3>💸 Full Cost Breakdown — Road vs Train vs Flight</h3></div>
+    <div class="scrhint">← Swipe to see all →</div>
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;scroll-behavior:smooth;"><table class="ctab" id="cmpTable" style="min-width:520px;"></table></div>
+  </div>
+  <div class="panel">
+    <div class="phd"><span class="ic">🏨</span><h2>Hotel Impact — How Each Stay Changes Your Total Trip Cost</h2></div>
+    <div class="pbd" style="padding:0">
+      <div style="display:grid;grid-template-columns:1fr 82px 92px 72px;padding:8px 14px;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--stone-l);font-weight:700;border-bottom:2px solid var(--warm);">
+        <span>Hotel</span><span style="text-align:right">Rate/Night</span><span style="text-align:right">Trip Total</span><span style="text-align:right">vs Budget</span>
+      </div>
+      <div id="hiList"></div>
+    </div>
+  </div>
+  <div id="pcSection"></div>
+  <div id="vbSection"></div>
+</div>
+<!-- ===== TAB 3 HOTELS ===== -->
+<div class="tsec" id="t-hotels">
+  <div class="pdf-bar"><button class="pdf-btn" onclick="savePDF('hotels')"><span class="pdf-ic">📄</span> Save as PDF — Hotels List</button></div>
+  <div class="hsearchbar">
+    <input type="text" id="hSearch" class="hsearch-inp" placeholder="🔍 Search by hotel name or area..." oninput="hSearchInput(this.value)">
+    <select id="hSort" class="hsort-sel" onchange="hSortChange(this.value)">
+      <option value="def">Sort: Default</option>
+      <option value="pl">Price: Low → High</option>
+      <option value="ph">Price: High → Low</option>
+      <option value="st">Rating: High → Low</option>
+      <option value="az">Name: A → Z</option>
+    </select>
+  </div>
+  <div class="fstrip" id="aHF">
+    <button class="fc on" onclick="aFilt('all',this)">All</button>
+    <button class="fc" onclick="aFilt('tirumala',this)">🛕 Tirumala Hill</button>
+    <button class="fc" onclick="aFilt('budget',this)">🪙 Budget</button>
+    <button class="fc" onclick="aFilt('mid',this)">⭐⭐⭐ Mid</button>
+    <button class="fc" onclick="aFilt('comfort',this)">⭐⭐⭐⭐ Comfort</button>
+    <button class="fc" onclick="aFilt('luxury',this)">👑 Luxury 5★</button>
+    <button class="fc" onclick="aFilt('free',this)">🆓 Free/Mutt</button>
+    <button class="fc" onclick="aFilt('fav',this)">❤️ My Favorites</button>
+  </div>
+  <div class="hresc" id="hResCount"></div>
+  <div class="abar ag"><span>💡</span><span>Tap any hotel card to select it — costs update live across all tabs. Tap ❤️ to save favorites for later. No private hotels exist on Tirumala Hill; only TTD-managed properties.</span></div>
+  <div class="hgrid" id="aHGrid"></div>
+</div>
+<!-- ===== TAB 4 TRAINS ===== -->
+<div class="tsec" id="t-trains">
+  <div class="pdf-bar"><button class="pdf-btn" onclick="savePDF('trains')"><span class="pdf-ic">📄</span> Save as PDF — Train Schedule</button></div>
+  <div class="abar as"><span>⚠️</span><span><strong>Oct 2022 update:</strong> Most trains depart from <strong>SMVT Bengaluru (SMVB)</strong>, not KSR Bengaluru. SMVB is ~12 km from Banashankari. Only 16219 departs from KSR SBC.</span></div>
+  <div class="panel">
+    <div class="phd"><span class="ic">🚆</span><h2>Bengaluru → Tirupati — Verified 2026</h2></div>
+    <div class="pbd" style="padding:0">
+      <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+        <table class="ctab" style="min-width:560px;">
+          <thead><tr><th class="thl">Train</th><th class="thl">From</th><th class="thr">Dep</th><th class="thr">Arr</th><th class="thr">Time</th><th class="thl">Days</th><th class="thr">SL</th><th class="thr">3A</th><th class="thr">CC</th></tr></thead>
+          <tbody>
+            <tr style="background:rgba(232,117,26,.05)"><td class="tdl">22618 Tirupathi Intercity SF ⚡<br><small style="font-size:10px;color:var(--stone-l)">Fastest day train</small></td><td>SMVB</td><td class="tdr">07:40</td><td class="tdr">13:25</td><td class="tdr" style="color:var(--saffron);font-weight:700">5h 45m</td><td>Mon/Wed/Sat</td><td class="tdr">—</td><td class="tdr">—</td><td class="tdr tc2">₹430</td></tr>
+            <tr style="background:rgba(21,101,192,.04)"><td class="tdl">12864 SMVB Howrah SF 🏆<br><small style="font-size:10px;color:var(--stone-l)">Best daily option</small></td><td>SMVB</td><td class="tdr">10:40</td><td class="tdr">16:00</td><td class="tdr tc2" style="font-weight:700">5h 20m</td><td>Daily</td><td class="tdr tc2">₹225</td><td class="tdr tc2">₹610</td><td class="tdr">—</td></tr>
+            <tr><td class="tdl">17209 Seshadri Express 🪙<br><small style="font-size:10px;color:var(--stone-l)">Cheapest daily</small></td><td>SMVB</td><td class="tdr">11:30</td><td class="tdr">17:10</td><td class="tdr">5h 40m</td><td>Daily</td><td class="tdr tc2">₹230</td><td class="tdr tc2">₹600</td><td class="tdr">—</td></tr>
+            <tr><td class="tdl">16597 Amrit Bharat Express</td><td>SMVB</td><td class="tdr">08:50</td><td class="tdr">14:30<small>(RU)</small></td><td class="tdr">5h 40m</td><td>Daily</td><td class="tdr tc2">₹230</td><td class="tdr tc2">₹605</td><td class="tdr">—</td></tr>
+            <tr style="background:rgba(106,27,154,.04)"><td class="tdl">16219 CMNR–Tirupati Exp 🌙<br><small style="font-size:10px;color:var(--stone-l)">Overnight from KSR SBC</small></td><td style="color:var(--road);font-weight:700">KSR SBC</td><td class="tdr">20:20</td><td class="tdr">04:05+1</td><td class="tdr">7h 45m</td><td>Daily</td><td class="tdr tc2">₹240</td><td class="tdr tc2">₹625</td><td class="tdr">—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="phd"><span class="ic">↩️</span><h2>Return: Tirupati → Bengaluru</h2></div>
+    <div class="pbd" style="padding:0"><div style="overflow-x:auto"><table class="ctab" style="min-width:400px;"><thead><tr><th class="thl">Train</th><th class="thr">Dep TPTY</th><th class="thr">Arr BLR</th><th class="thl">Days</th></tr></thead><tbody>
+      <tr><td class="tdl">22617 Tirupati–SMVB Intercity</td><td class="tdr tc2">14:55</td><td class="tdr">SMVB 20:55</td><td>Mon/Wed/Sat</td></tr>
+      <tr><td class="tdl">12863 Howrah–SMVB SF Exp</td><td class="tdr tc2">~07:00</td><td class="tdr">SMVB ~12:20</td><td>Daily</td></tr>
+      <tr><td class="tdl">17210 Seshadri Express</td><td class="tdr tc2">~11:30</td><td class="tdr">SMVB ~17:10</td><td>Daily</td></tr>
+      <tr><td class="tdl">16220 Tirupati–Chamarajanagar</td><td class="tdr tc2">21:40</td><td class="tdr">KSR BLR ~05:35</td><td>Daily</td></tr>
+    </tbody></table></div></div>
+  </div>
+  <div class="panel">
+    <div class="phd"><span class="ic">🗺️</span><h2>Road, Bus &amp; Flight Options</h2></div>
+    <div class="pbd">
+      <div class="div-s">Road via NH44</div>
+      <div class="trow"><span class="tic">🚗</span><div><strong>Own Car via NH44:</strong> Banashankari → Hosur → Krishnagiri → Vellore → Chittoor → Tirupati. ~295 km, 5.5–6.5 hrs. Petrol ~₹2,530 + toll ~₹420 ≈ ₹2,950 one-way.</div></div>
+      <div class="trow"><span class="tic">🚕</span><div><strong>Outstation Cab (Ola/Uber):</strong> Door-to-door round trip ~₹10,000–₹12,000 sedan. Book Outstation option in advance.</div></div>
+      <div class="trow"><span class="tic">🚌</span><div><strong>KSRTC Airavat / APSRTC:</strong> ₹550–₹900/seat. From Majestic Bus Stand (~14 km from Banashankari). Book at ksrtc.in. Journey 6–7 hrs.</div></div>
+      <div class="div-s">Flight BLR → TIR</div>
+      <div class="trow"><span class="tic">✈️</span><div><strong>BLR → Tirupati Airport (Renigunta TIR):</strong> IndiGo / Air India Express / SpiceJet. ~55 min. ₹2,500–₹7,500 typical. 1–3 daily flights. Book 3+ weeks ahead.</div></div>
+      <div class="trow"><span class="tic">📍</span><div><strong>From Banashankari to SMVB:</strong> Auto/cab ₹120–160 (~12 km, 35 min). Allow 45 min buffer. BLR Airport to Banashankari: ~35 km, allow 2.5 hrs.</div></div>
+    </div>
+  </div>
+</div>
+<!-- ===== TAB 5 ITINERARY ===== -->
+<div class="tsec" id="t-itinerary">
+  <div class="pdf-bar"><button class="pdf-btn" onclick="savePDF('itinerary')"><span class="pdf-ic">📄</span> Save as PDF — Itinerary</button></div>
+  <div class="panel">
+    <div class="phd"><span class="ic">⚙️</span><h2>Customise Your Yatra Itinerary</h2></div>
+    <div class="pbd">
+      <div class="g3">
+        <div class="fl"><label>Trip Duration</label><div class="sw"><select id="it_days" onchange="bldItin()"><option value="2">2 Days / 1 Night</option><option value="3" selected>3 Days / 2 Nights ✨</option><option value="4">4 Days / 3 Nights</option></select></div></div>
+        <div class="fl"><label>Travel Mode</label><div class="sw"><select id="it_mode" onchange="bldItin()"><option value="train" selected>🚆 Train (12864/17209)</option><option value="car">🚗 Own Car</option><option value="taxi">🚕 Outstation Cab</option><option value="bus">🚌 KSRTC Bus</option><option value="flight">✈️ Flight</option></select></div></div>
+        <div class="fl"><label>Darshan Type</label><div class="sw"><select id="it_darshan" onchange="bldItin()"><option value="free">Free Sarva Darshan (4–10 hrs)</option><option value="paid" selected>Special Entry ₹300 (2–4 hrs)</option><option value="vip">Srivani VIP ₹10,500 (2–3 hrs)</option></select></div></div>
+      </div>
+    </div>
+  </div>
+  <div id="itinSum"></div>
+  <div id="itinOut"></div>
+</div>
+<!-- ===== TAB 6 DARSHAN ===== -->
+<div class="tsec" id="t-darshan">
+  <div class="pdf-bar"><button class="pdf-btn" onclick="savePDF('darshan')"><span class="pdf-ic">📄</span> Save as PDF — Darshan Guide</button></div>
+  <div class="abar ag"><span>🪔</span><span><strong>Sri Venkateswara Swamy Tirumala</strong> — World's most visited pilgrimage. Advance booking essential for Special Entry Darshan.</span></div>
+  <div class="panel">
+    <div class="phd"><span class="ic">🎫</span><h2>Darshan Types — Verified 2025–26</h2></div>
+    <div class="pbd" style="padding:0"><div style="overflow-x:auto"><table class="ctab" style="min-width:480px;">
+      <thead><tr><th class="thl">Type</th><th class="thr">Cost</th><th class="thr">Wait</th><th class="thl">How to Book</th></tr></thead>
+      <tbody>
+        <tr><td class="tdl">Sarva / Divya Darshan (Free)</td><td class="tdr" style="color:#2e7d32;font-weight:700">FREE</td><td class="tdr">4–20 hrs</td><td>Token at Railway Station / Bus Stand counter</td></tr>
+        <tr style="background:rgba(232,117,26,.05)"><td class="tdl"><strong>Special Entry Darshan ✅ Recommended</strong></td><td class="tdr" style="color:var(--crimson)"><strong>₹300/person</strong></td><td class="tdr">2–5 hrs</td><td>ttdsevaonline.com — 90 days ahead. Aadhaar mandatory.</td></tr>
+        <tr><td class="tdl">Divyajana Darshan (65+ / Disabled)</td><td class="tdr" style="color:#2e7d32">FREE</td><td class="tdr">30–60 min</td><td>Divyajana counter with age / disability proof</td></tr>
+        <tr style="background:rgba(106,27,154,.04)"><td class="tdl"><strong>Srivani VIP Break Darshan</strong><br><small style="color:var(--road)">⚠️ NOT ₹3,000 — system updated Nov 2025</small></td><td class="tdr"><strong>₹10,000 donation<br>+ ₹500 ticket<br>= ₹10,500/person</strong></td><td class="tdr">2–3 hrs</td><td>Donate ₹10,000 to SRIVANI Trust online → receipt → Donor Cell Tirumala → ₹500 ticket. Valid 180 days.</td></tr>
+        <tr><td class="tdl">Suprabhatam Seva (4:00 AM)</td><td class="tdr">₹500–₹700</td><td class="tdr">Minimal</td><td>ttdsevaonline.com — very limited quota</td></tr>
+      </tbody>
+    </table></div></div>
+  </div>
+  <div class="abar as"><span>⚠️</span><span>VIP Darshan unavailable during Brahmotsavam (Sept–Oct) &amp; Vaikunta Ekadashi (Dec–Jan). No mobiles inside main temple. Strict dress code enforced.</span></div>
+  <div class="panel">
+    <div class="phd"><span class="ic">⛩️</span><h2>Sacred Places Near Tirupati</h2></div>
+    <div class="pbd">
+      <div class="trow"><span class="tic">🛕</span><div><strong>Sri Padmavathi Ammavari Temple, Tiruchanur</strong> — 5 km. Visit before Tirumala. Very auspicious. <a href="https://maps.google.com/?q=Padmavathi+Temple+Tiruchanur" target="_blank" style="color:var(--saffron)">📍 Map</a></div></div>
+      <div class="trow"><span class="tic">🛕</span><div><strong>Sri Govindharaja Swamy Temple</strong> — Largest temple in Tirupati city. <a href="https://maps.google.com/?q=Govindarajaswamy+Temple+Tirupati" target="_blank" style="color:var(--saffron)">📍 Map</a></div></div>
+      <div class="trow"><span class="tic">💧</span><div><strong>Kapila Theertham</strong> — Sacred Shiva temple &amp; waterfall. 3 km. <a href="https://maps.google.com/?q=Kapila+Theertham+Tirupati" target="_blank" style="color:var(--saffron)">📍 Map</a></div></div>
+      <div class="trow"><span class="tic">🌊</span><div><strong>Papavinasam Theertham</strong> — Holy waterfall on Tirumala Hill. Destroys sins. <a href="https://maps.google.com/?q=Papavinasam+Theertham+Tirumala" target="_blank" style="color:var(--saffron)">📍 Map</a></div></div>
+      <div class="trow"><span class="tic">⛰️</span><div><strong>Srikalahasti Temple</strong> — 36 km. Powerful Rahu-Ketu / Shiva-Parvati temple. Full day trip. <a href="https://maps.google.com/?q=Srikalahasti+Temple" target="_blank" style="color:var(--saffron)">📍 Map</a></div></div>
+      <div class="trow"><span class="tic">🕌</span><div><strong>ISKCON Tirupati</strong> — 2 km from station. Free prasadam. Morning visits ideal. <a href="https://maps.google.com/?q=ISKCON+Tirupati" target="_blank" style="color:var(--saffron)">📍 Map</a></div></div>
+    </div>
+  </div>
+</div>
+<!-- ===== TAB 7 TIPS ===== -->
+<div class="tsec" id="t-tips">
+  <div class="pdf-bar"><button class="pdf-btn" onclick="savePDF('tips')"><span class="pdf-ic">📄</span> Save as PDF — Pilgrim Tips</button></div>
+  <div class="panel">
+    <div class="phd"><span class="ic">✅</span><h2>Essential Pilgrim Dos &amp; Don'ts</h2></div>
+    <div class="pbd">
+      <div class="g2">
+        <div>
+          <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#2e7d32;font-weight:700;margin-bottom:9px">✅ DO</div>
+          <div class="trow"><span class="tic">📋</span><div><strong>Book Special Darshan 90 days ahead</strong> — ttdsevaonline.com</div></div>
+          <div class="trow"><span class="tic">📄</span><div><strong>Carry Aadhaar card</strong> — mandatory for all darshan entry</div></div>
+          <div class="trow"><span class="tic">💧</span><div>Carry water — queues last 2–10 hours</div></div>
+          <div class="trow"><span class="tic">✂️</span><div>Head tonsure (Mottai) at TTD complex: ₹50. Auspicious.</div></div>
+          <div class="trow"><span class="tic">🕓</span><div>Reach TTD bus stand by 4:30 AM for morning darshan</div></div>
+          <div class="trow"><span class="tic">💰</span><div>Carry ₹2,000–₹3,000 cash — limited ATMs on Tirumala Hill</div></div>
+          <div class="trow"><span class="tic">👗</span><div>Dress modestly — saree / salwar for women, dhoti / trousers for men</div></div>
+        </div>
+        <div>
+          <div style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--crimson);font-weight:700;margin-bottom:9px">❌ DON'T</div>
+          <div class="trow"><span class="tic">📵</span><div>Mobile phones NOT allowed inside main sanctum</div></div>
+          <div class="trow"><span class="tic">👜</span><div>No leather items (belt / wallet) inside temple</div></div>
+          <div class="trow"><span class="tic">🚫</span><div>Non-Hindus not permitted inside the Sanctum Sanctorum</div></div>
+          <div class="trow"><span class="tic">🥩</span><div>No non-veg food anywhere in the Tirumala area</div></div>
+          <div class="trow"><span class="tic">💸</span><div>Don't buy Laddoo outside — TTD counters ONLY (max 10/person @ ₹50)</div></div>
+          <div class="trow"><span class="tic">⏰</span><div>Vacate TTD rooms within 24 hrs — 200% penalty after 48 hrs</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="phd"><span class="ic">📞</span><h2>Key Contacts &amp; Booking Links</h2></div>
+    <div class="pbd">
+      <div class="trow"><span class="tic">🌐</span><div><strong>TTD Official Booking:</strong> ttdsevaonline.com &nbsp;|&nbsp; tirupatibalaji.ap.gov.in</div></div>
+      <div class="trow"><span class="tic">📞</span><div><strong>TTD Helpline:</strong> 0877-2277777 &nbsp;|&nbsp; Toll-Free: 1800-425-1333 &nbsp;|&nbsp; Rooms: 0877-226-3922</div></div>
+      <div class="trow"><span class="tic">📞</span><div><strong>Karnataka Pravasi Soudha:</strong> 0877-2276060 &nbsp;|&nbsp; Raghavendra Mutt: 0877-2277302 &nbsp;|&nbsp; Sringeri Mutt: 0877-2277269</div></div>
+      <div class="trow"><span class="tic">🚆</span><div><strong>Train Booking:</strong> irctc.co.in — Book 60 days ahead for best seats</div></div>
+      <div class="trow"><span class="tic">🚌</span><div><strong>KSRTC:</strong> ksrtc.in &nbsp;|&nbsp; APSRTC: apsrtconline.in</div></div>
+      <div class="trow"><span class="tic">📱</span><div><strong>TTD App:</strong> Search "Tirupati Balaji" on Play Store / App Store</div></div>
+    </div>
+  </div>
+  <div class="abar ag"><span>🙏</span><span style="font-family:'Crimson Text',serif;font-size:14px;font-style:italic"><strong>"श्री वेंकटेश वरदाय नमः"</strong> — May Lord Venkateswara bless your sacred Yatra with peace, devotion, and a beautiful Darshan!</span></div>
+  <div style="margin:28px 0 8px;padding:0 2px;">
+    <div style="font-family:'Josefin Sans',sans-serif;font-size:10px;letter-spacing:2px;font-weight:700;color:var(--stone-l);text-transform:uppercase;margin-bottom:10px;">📋 Version History</div>
+    <div style="border-radius:12px;overflow:hidden;border:1px solid var(--warm);">
+      <div style="background:linear-gradient(90deg,#8B1A1A,#6b1414);padding:10px 14px;display:flex;justify-content:space-between;align-items:center;">
+        <div><span style="font-family:'Josefin Sans',sans-serif;font-size:13px;font-weight:700;color:#f9e4a0;letter-spacing:1px;">v4.0</span><span style="font-size:10px;color:rgba(249,228,160,0.75);margin-left:8px;">June 2026 · Current</span></div>
+        <span style="background:rgba(249,228,160,0.2);color:#f9e4a0;font-size:9px;letter-spacing:1px;padding:2px 8px;border-radius:10px;font-family:'Josefin Sans',sans-serif;">LATEST</span>
+      </div>
+      <div style="background:#fff;padding:10px 14px;">
+        <div class="trow"><span class="tic">🔧</span><div><strong>Scrolling &amp; display fixes</strong> — Calendar popup smart positioning, nav tab auto-scroll, triple hero snap scroll, compare table momentum, hotel section headers</div></div>
+        <div class="trow"><span class="tic">🛕</span><div><strong>Tirumala vs Tirupati division</strong> — Hotels grouped under bold section headers with option count badges</div></div>
+        <div class="trow"><span class="tic">🏷️</span><div><strong>Smarter hotel card labels</strong> — Zone shown as 🛕 TIRUMALA HILL / 🏙️ TIRUPATI CITY</div></div>
+        <div class="trow" style="border-bottom:none"><span class="tic">📌</span><div><strong>Tirumala note</strong> — Banner clarifies no private hotels on Tirumala Hill; TTD-managed only</div></div>
+      </div>
+      <div style="background:rgba(201,150,42,.06);padding:10px 14px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--warm);">
+        <div><span style="font-family:'Josefin Sans',sans-serif;font-size:12px;font-weight:700;color:var(--stone);letter-spacing:1px;">v3.0</span><span style="font-size:10px;color:var(--stone-l);margin-left:8px;">June 2026</span></div>
+      </div>
+      <div style="background:#fff;padding:10px 14px;">
+        <div class="trow"><span class="tic">🏨</span><div><strong>258 hotels database</strong> — Tirumala TTD, Budget, Mid, Comfort, Luxury 5★, Free/Mutt</div></div>
+        <div class="trow"><span class="tic">❤️</span><div><strong>My Favorites</strong> — Save and filter preferred hotels across sessions</div></div>
+        <div class="trow" style="border-bottom:none"><span class="tic">🔍</span><div><strong>Search + Sort</strong> — Live search by name/area; sort by price, stars, A-Z</div></div>
+      </div>
+      <div style="background:rgba(201,150,42,.06);padding:10px 14px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--warm);">
+        <div><span style="font-family:'Josefin Sans',sans-serif;font-size:12px;font-weight:700;color:var(--stone);letter-spacing:1px;">v2.0</span><span style="font-size:10px;color:var(--stone-l);margin-left:8px;">June 2026</span></div>
+      </div>
+      <div style="background:#fff;padding:10px 14px;">
+        <div class="trow"><span class="tic">💰</span><div><strong>Compare tab</strong> — Side-by-side cost breakdown: Car, Train SL/3AC, Bus, Flight</div></div>
+        <div class="trow" style="border-bottom:none"><span class="tic">🚆</span><div><strong>Train tab</strong> — Detailed schedules from Bengaluru with SL &amp; 3AC fares</div></div>
+      </div>
+      <div style="background:rgba(201,150,42,.06);padding:10px 14px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--warm);">
+        <div><span style="font-family:'Josefin Sans',sans-serif;font-size:12px;font-weight:700;color:var(--stone);letter-spacing:1px;">v1.0</span><span style="font-size:10px;color:var(--stone-l);margin-left:8px;">June 2026</span></div>
+      </div>
+      <div style="background:#fff;padding:10px 14px;">
+        <div class="trow"><span class="tic">🗺️</span><div><strong>Initial release</strong> — Plan Trip tab with live cost calculator, itinerary builder, darshan guide</div></div>
+        <div class="trow" style="border-bottom:none"><span class="tic">👤</span><div><strong>Pankaj Kanodia</strong> — Single-file HTML pilgrimage planner, Bengaluru → Tirumala</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ===== TAB 8 EMERGENCY ===== -->
+<div class="tsec" id="t-emergency">
+  <div class="pdf-bar"><button class="pdf-btn" onclick="savePDF('emergency')"><span class="pdf-ic">📄</span> Save as PDF — Emergency Services</button></div>
+
+  <div class="abar" style="background:linear-gradient(90deg,rgba(183,28,28,.08),rgba(183,28,28,.03));border-left:4px solid #b71c1c;color:#7f0000;margin-bottom:14px;">
+    <span>🚨</span><span><strong>Save this tab as PDF before your trip.</strong> Mobile signal on Tirumala Hill is weak during peak seasons. Keep a printed copy handy.</span>
+  </div>
+
+  <!-- TIRUMALA HILL -->
+  <div class="emg-panel">
+    <div class="emg-panel-head emg-head-red">
+      <span style="font-size:20px;">🛕</span>
+      <h2>Tirumala Hill — Emergency</h2>
+      <span style="background:rgba(255,255,255,.18);border-radius:20px;padding:2px 9px;font-size:9px;color:#fff;letter-spacing:1px;">ON HILL</span>
+    </div>
+
+    <div class="emg-section-label emg-label-red">🚑 Medical &amp; Ambulance</div>
+    <div class="erow"><div class="enm-wrap"><div class="enm">TTD Hospital, Tirumala</div><div class="edet">24×7 · Free for all pilgrims · Near VQC</div></div><div class="eph"><a href="tel:08772277388" class="ecall ecall-red">📞 0877-227-7388</a></div></div>
+    <div class="erow"><div class="enm-wrap"><div class="enm">TTD Ambulance (Hill)</div><div class="edet">24×7 emergency ambulance on Tirumala</div></div><div class="eph"><a href="tel:08772277999" class="ecall ecall-red">📞 0877-227-7999</a></div></div>
+    <div class="erow"><div class="enm-wrap"><div class="enm">National Ambulance — AP</div><div class="edet">108 · Free emergency ambulance statewide</div></div><div class="eph"><a href="tel:108" class="ecall ecall-red">📞 108</a></div></div>
+    <div class="erow"><div class="enm-wrap"><div class="enm">TTD Medical Wing</div><div class="edet">Medicines, first aid posts, medical queries</div></div><div class="eph"><a href="tel:08772277700" class="ecall ecall-red">📞 0877-227-7700</a></div></div>
+
+    <div class="emg-section-label emg-label-blue">🚔 Police &amp; Security</div>
+    <div class="erow"><div class="enm-wrap"><div class="enm">Tirumala Police Station</div><div class="edet">Inside hill · Near main temple entrance</div></div><div class="eph"><a href="tel:08772277251" class="ecall ecall-blue">📞 0877-227-7251</a></div></div>
+    <div class="erow"><div class="enm-wrap"><div class="enm">TTD Vigilance &amp; Security</div><div class="edet">Queue issues, theft, missing persons on hill</div></div><div class="eph"><a href="tel:08772277225" class="ecall ecall-blue">📞 0877-227-7225</a></div></div>
+    <div class="erow"><div class="enm-wrap"><div class="enm">AP Police Emergency</div><div class="edet">100 · State police emergency line</div></div><div class="eph"><a href="tel:100" class="ecall ecall-blue">📞 100</a></div></div>
+
+    <div class="emg-section-label emg-label-green">🏛️ TTD Administration</div>
+    <div class="erow"><div class="enm-wrap"><div class="enm">TTD Main Helpline</div><div class="edet">Darshan, accommodation, lost &amp; found</div></div><div class="eph"><a href="tel:08772277777" class="ecall ecall-green">📞 0877-227-7777</a></div></div>
+    <div class="erow"><div class="enm-wrap"><div class="enm">TTD Toll-Free</div><div class="edet">Seva booking, complaints · Free to call</div></div><div class="eph"><a href="tel:18004251333" class="ecall ecall-green">📞 1800-425-1333</a></div></div>
+    <div class="erow"><div class="enm-wrap"><div class="enm">TTD Guest House (Hill)</div><div class="edet">Room issues, accommodation emergencies</div></div><div class="eph"><a href="tel:08772263922" class="ecall ecall-green">📞 0877-226-3922</a></div></div>
+    <div class="erow"><div class="enm-wrap"><div class="enm">TTD Lost &amp; Found</div><div class="edet">Lost articles on Tirumala Hill</div></div><div class="eph"><a href="tel:08772277455" class="ecall ecall-green">📞 0877-227-7455</a></div></div>
+    <div class="erow"><div class="enm-wrap"><div class="enm">TTD Cloak Room (Hill)</div><div class="edet">Luggage &amp; article storage on hill</div></div><div class="eph"><a href="tel:08772277302" class="ecall ecall-green">📞 0877-227-7302</a></div></div>
+
+    <div class="emg-section-label emg-label-orange">🔥 Fire &amp; Rescue</div>
+    <div class="erow"><div class="enm-wrap"><div class="enm">Fire &amp; Rescue — AP</div><div class="edet">101 · Fire emergency anywhere in Andhra Pradesh</div></div><div class="eph"><a href="tel:101" class="ecall ecall-orange">📞 101</a></div></div>
+  </div>
+
+  <!-- TIRUPATI CITY -->
+  <div class="emg-panel">
+    <div class="emg-panel-head emg-head-blue">
+      <span style="font-size:20px;">🏙️</span>
+      <h2>Tirupati City — Emergency</h2>
+      <span style="background:rgba(255,255,255,.18);border-radius:20px;padding:2px 9px;font-size:9px;color:#fff;letter-spacing:1px;">CITY</span>
+    </div>
+
+    <div class="emg-section-label emg-label-red">🚑 Hospitals &amp; Ambulance</div>
+    <div class="erow"><div class="enm-wrap"><div class="enm">SVRR Govt Hospital</div><div class="edet">Largest public hospital · 24×7 casualty</div></div><div class="eph"><a href="tel:08772289595" class="ecall ecall-red">📞 0877-228-9595</a></div></div>
+    <div class="erow"><div class="enm-wrap"><div class="enm">Ruia General Hospital</div><div class="edet">Govt · Near bus stand · Free treatment</div></div><div class="eph"><a href="tel:08772225801" class="ecall ecall-red">📞 0877-222-5801</a></div></div>
+    <div class="erow"><div class="enm-wrap"><div class="enm">Bhimas Hospital</div><div class="edet">Private multi-speciality · 24×7 · Near station</div></div><div class="eph"><a href="tel:08772237271" class="ecall ecall-red">📞 0877-223-7271</a></div></div>
+    <div class="erow"><div class="enm-wrap"><div class="enm">Aravind Eye Hospital</div><div class="edet">Eye emergencies · Tirupati city</div></div><div class="eph"><a href="tel:08772274100" class="ecall ecall-red">📞 0877-227-4100</a></div></div>
+    <div class="erow"><div class="enm-wrap"><div class="enm">National Ambulance</div><div class="edet">108 · Free ambulance · 104 — Health helpline</div></div><div class="eph"><a href="tel:108" class="ecall ecall-red">📞 108 / 104</a></div></div>
+
+    <div class="emg-section-label emg-label-blue">🚔 Police</div>
+    <div class="erow"><div class="enm-wrap"><div class="enm">Tirupati Town Police</div><div class="edet">Main city police control room</div></div><div class="eph"><a href="tel:08772225530" class="ecall ecall-blue">📞 0877-222-5530</a></div></div>
+    <div class="erow"><div class="enm-wrap"><div class="enm">Railway Police — GRP</div><div class="edet">Crime or emergency at railway station</div></div><div class="eph"><a href="tel:08772220666" class="ecall ecall-blue">📞 0877-222-0666</a></div></div>
+    <div class="erow"><div class="enm-wrap"><div class="enm">Women Helpline — AP</div><div class="edet">181 · 24×7 women safety helpline</div></div><div class="eph"><a href="tel:181" class="ecall ecall-blue">📞 181</a></div></div>
+
+    <div class="emg-section-label emg-label-orange">🔥 Fire, Rail &amp; Disaster</div>
+    <div class="erow"><div class="enm-wrap"><div class="enm">Tirupati Fire Station</div><div class="edet">Fire emergency · Tirupati city</div></div><div class="eph"><a href="tel:08772225101" class="ecall ecall-orange">📞 0877-222-5101</a></div></div>
+    <div class="erow"><div class="enm-wrap"><div class="enm">Railway Enquiry / Helpline</div><div class="edet">139 · Train info, lost luggage, platform issues</div></div><div class="eph"><a href="tel:139" class="ecall ecall-orange">📞 139</a></div></div>
+    <div class="erow"><div class="enm-wrap"><div class="enm">AP Disaster Response</div><div class="edet">1070 · State disaster &amp; flood helpline</div></div><div class="eph"><a href="tel:1070" class="ecall ecall-orange">📞 1070</a></div></div>
+
+    <div class="emg-section-label emg-label-green">🏛️ TTD Tirupati &amp; Pilgrim Homes</div>
+    <div class="erow"><div class="enm-wrap"><div class="enm">Karnataka Pravasi Soudha</div><div class="edet">Karnataka pilgrims' rest house</div></div><div class="eph"><a href="tel:08772276060" class="ecall ecall-green">📞 0877-227-6060</a></div></div>
+    <div class="erow"><div class="enm-wrap"><div class="enm">Raghavendra Mutt</div><div class="edet">Free pilgrim accommodation</div></div><div class="eph"><a href="tel:08772277302" class="ecall ecall-green">📞 0877-227-7302</a></div></div>
+    <div class="erow"><div class="enm-wrap"><div class="enm">Sringeri Mutt</div><div class="edet">Free pilgrim accommodation</div></div><div class="eph"><a href="tel:08772277269" class="ecall ecall-green">📞 0877-227-7269</a></div></div>
+    <div class="erow"><div class="enm-wrap"><div class="enm">TTD Tirupati Central Office</div><div class="edet">Admin queries · Seva booking walk-in</div></div><div class="eph"><a href="tel:08772277777" class="ecall ecall-green">📞 0877-227-7777</a></div></div>
+
+    <div class="emg-section-label emg-label-purple">📱 National Helplines</div>
+    <div class="erow"><div class="enm-wrap"><div class="enm">All-in-One Emergency</div><div class="edet">112 · Police + Fire + Ambulance combined</div></div><div class="eph"><a href="tel:112" class="ecall ecall-purple">📞 112</a></div></div>
+    <div class="erow"><div class="enm-wrap"><div class="enm">Child Helpline</div><div class="edet">1098 · Child in distress or danger</div></div><div class="eph"><a href="tel:1098" class="ecall ecall-purple">📞 1098</a></div></div>
+    <div class="erow"><div class="enm-wrap"><div class="enm">Senior Citizen Helpline</div><div class="edet">14567 · Elder emergency &amp; assistance</div></div><div class="eph"><a href="tel:14567" class="ecall ecall-purple">📞 14567</a></div></div>
+    <div class="erow"><div class="enm-wrap"><div class="enm">Mental Health — iCall</div><div class="edet">9152987821 · Distress counselling</div></div><div class="eph"><a href="tel:9152987821" class="ecall ecall-purple">📞 iCall</a></div></div>
+  </div>
+
+  <div class="abar agr"><span>💡</span><span>Tap any number to call directly. Save as PDF for offline access during the yatra.</span></div>
+</div>
+</main>
+<script>
+// ── HOTEL MASTER DATA ─────────────────────────────
+const H=[
+  // ═══════ TIRUMALA HILL (Temple Hill — TTD Managed) ═══════
+  {id:'tm_mut',  cat:'tirumala',name:'Raghavendra / Sringeri Mutt',loc:'Tirumala Hill',         rate:75,   stars:0, col:'#8B1A1A',bg:'bg-red',  bt:'FREE~₹150',      ph:'0877-2277302',  mp:'https://maps.google.com/?q=Raghavendra+Mutt+Tirumala'},
+  {id:'tm_free', cat:'tirumala',name:'TTD Free Choultry',         loc:'Tirumala Hill',          rate:100,  stars:0, col:'#8B1A1A',bg:'bg-green',bt:'FREE',          ph:'0877-226-3922', mp:'https://maps.google.com/?q=Central+Reception+Tirumala'},
+  {id:'tm_bas',  cat:'tirumala',name:'TTD Non-A/C Room',          loc:'Tirumala Hill',          rate:450,  stars:1, col:'#8B1A1A',bg:'bg-gold', bt:'TTD Official',   ph:'0877-226-3922', mp:'https://maps.google.com/?q=TTD+Guest+House+Tirumala'},
+  {id:'tm_cot',  cat:'tirumala',name:'TTD Cottage (Non-A/C)',     loc:'Tirumala Hill',          rate:1000, stars:2, col:'#8B1A1A',bg:'bg-green',bt:'Cottage',        ph:'0877-2277681',  mp:'https://maps.google.com/?q=Anjanadri+Nagar+Cottages'},
+  {id:'tm_std',  cat:'tirumala',name:'TTD Guest House (Std)',     loc:'SV GH Area, Tirumala',   rate:1150, stars:2, col:'#8B1A1A',bg:'bg-gold', bt:'TTD Official',   ph:'0877-226-4507', mp:'https://maps.google.com/?q=SV+Guest+House+Tirumala'},
+  {id:'tm_ac',   cat:'tirumala',name:'TTD A/C Suite',             loc:'SV GH Area, Tirumala',   rate:2000, stars:2, col:'#8B1A1A',bg:'bg-blue', bt:'A/C Suite',      ph:'0877-226-4507', mp:'https://maps.google.com/?q=Hari+Sadan+Tirumala'},
+  {id:'tm_prem', cat:'tirumala',name:'Srivari Kuteer GH',         loc:'Near Temple, Tirumala',  rate:3200, stars:3, col:'#8B1A1A',bg:'bg-gold', bt:'Premium',        ph:'0877-226-3922', mp:'https://maps.google.com/?q=Srivari+Kuteer+Tirumala'},
+  {id:'tm_cac',  cat:'tirumala',name:'TTD A/C Cottage (TBC)',     loc:'Varahaswami, Tirumala',  rate:3250, stars:3, col:'#8B1A1A',bg:'bg-blue', bt:'A/C Cottage',    ph:'0877-2277681',  mp:'https://maps.google.com/?q=Travellers+Bungalow+Tirumala'},
+  // ═══════ TIRUPATI TOWN (City Hotels) ═══════
+  {id:'tp_fre',  cat:'budget',  name:'Dharamshala (Free)',        loc:'Near Railway Station',   rate:0,    stars:0, col:'#2e7d32',bg:'bg-green',bt:'FREE',           ph:'',              mp:'https://maps.google.com/?q=Dharamshala+Tirupati'},
+  {id:'tp_srin', cat:'budget',  name:'Srinivasam Complex (TTD)',  loc:'Near Railway Station',   rate:475,  stars:1, col:'#8B1A1A',bg:'bg-gold', bt:'TTD Town',       ph:'0877-226-4540', mp:'https://maps.google.com/?q=Srinivasam+Complex+Tirupati'},
+  {id:'tp_blk',  cat:'budget',  name:'Balaji Lodge',               loc:'Near Railway Station',   rate:600,  stars:1, col:'#555',   bg:'bg-green',bt:'Budget',         ph:'0877-2221199',  mp:'https://maps.google.com/?q=Balaji+Lodge+Tirupati'},
+  {id:'tp_apl',  cat:'budget',  name:'Annapoorna Lodge',           loc:'Near Railway Station',   rate:650,  stars:1, col:'#555',   bg:'bg-green',bt:'Budget',         ph:'0877-2222277',  mp:'https://maps.google.com/?q=Annapoorna+Lodge+Tirupati'},
+  {id:'tp_ntl', cat:'budget', name:'Hotel New Tirupati Lodge', loc:'Near Railway Station', rate:650, stars:1, col:'#555',bg:'bg-green',bt:'Budget', ph:'0877-2222588', mp:'https://maps.google.com/?q=Hotel+New+Tirupati+Lodge+Tirupati'},
+  {id:'tp_spl',  cat:'budget',  name:'Sapthagiri Lodge',           loc:'Near Railway Station',   rate:700,  stars:1, col:'#555',   bg:'bg-green',bt:'Budget',         ph:'0877-2223344',  mp:'https://maps.google.com/?q=Sapthagiri+Lodge+Tirupati'},
+  {id:'tp_vsl', cat:'budget',  name:'Vinayaka Sai Lodge',         loc:'Near Bus Stand',         rate:700,  stars:1, col:'#555',   bg:'bg-green',bt:'Budget',         ph:'0877-2225511',  mp:'https://maps.google.com/?q=Vinayaka+Sai+Lodge+Tirupati'},
+  {id:'tp_xhsdl5', cat:'budget', name:'Hotel Sri Durga Lodge', loc:'Alipiri Road', rate:700, stars:1, col:'#555',bg:'bg-gold',bt:'Budget+', ph:'0877-2253384', mp:'https://maps.google.com/?q=Hotel+Sri+Durga+Lodge+Tirupati'},
+  {id:'tp_vij',  cat:'budget',  name:'Hotel Vijaya Inn',          loc:'Central Tirupati',       rate:750,  stars:1, col:'#555',   bg:'bg-green',bt:'Budget',         ph:'0877-2227474',  mp:'https://maps.google.com/?q=Hotel+Vijaya+Inn+Tirupati'},
+  {id:'tp_jss', cat:'budget',  name:'Jai Sri Srinivasa Lodge',    loc:'Near Bus Stand',         rate:750,  stars:1, col:'#555',   bg:'bg-green',bt:'Budget',         ph:'0877-2225522',  mp:'https://maps.google.com/?q=Jai+Sri+Srinivasa+Lodge+Tirupati'},
+  {id:'tp_sps', cat:'budget', name:'Hotel Sri Padmavathi Sadan', loc:'Near Bus Stand', rate:750, stars:1, col:'#555',bg:'bg-green',bt:'Budget', ph:'0877-2225633', mp:'https://maps.google.com/?q=Hotel+Sri+Padmavathi+Sadan+Tirupati'},
+  {id:'tp_vbh',  cat:'budget',  name:'Vaibhav Lodge',              loc:'Central Tirupati',       rate:800,  stars:1, col:'#555',   bg:'bg-green',bt:'Budget',         ph:'0877-2221177',  mp:'https://maps.google.com/?q=Vaibhav+Lodge+Tirupati'},
+  {id:'tp_avs',  cat:'budget',  name:'Hotel Annapurna Sadan',      loc:'Near Railway Station',   rate:850,  stars:1, col:'#555',   bg:'bg-green',bt:'Budget',         ph:'0877-2222233',  mp:'https://maps.google.com/?q=Annapurna+Sadan+Tirupati'},
+  {id:'tp_sr2', cat:'budget', name:'Hotel Sri Ramana', loc:'Near Railway Station', rate:850, stars:1, col:'#555',bg:'bg-green',bt:'Budget', ph:'0877-2222399', mp:'https://maps.google.com/?q=Hotel+Sri+Ramana+Tirupati'},
+  {id:'tp_xstl21', cat:'budget', name:'Sri Tirumala Lodge', loc:'Renigunta Road', rate:850, stars:1, col:'#555',bg:'bg-green',bt:'Budget', ph:'0877-2290263', mp:'https://maps.google.com/?q=Sri+Tirumala+Lodge+Tirupati'},
+  {id:'tp_sst',  cat:'budget',  name:'Sri Sai Tourist Home',       loc:'Near Bus Stand',         rate:900,  stars:1, col:'#555',   bg:'bg-green',bt:'Budget',         ph:'0877-2224488',  mp:'https://maps.google.com/?q=Sri+Sai+Tourist+Home+Tirupati'},
+  {id:'tp_vl', cat:'budget', name:'Hotel Venkata Lakshmi', loc:'Near Railway Station', rate:900, stars:1, col:'#555',bg:'bg-green',bt:'Budget', ph:'0877-2221455', mp:'https://maps.google.com/?q=Hotel+Venkata+Lakshmi+Tirupati'},
+  {id:'tp_xsvl0', cat:'budget', name:'Sri Venkata Lodge', loc:'Tiruchanur Road', rate:900, stars:1, col:'#555',bg:'bg-gold',bt:'Budget+', ph:'0877-2241328', mp:'https://maps.google.com/?q=Sri+Venkata+Lodge+Tirupati'},
+  {id:'tp_ssn',  cat:'budget',  name:'Sri Srinivasa Nilayam',      loc:'Near Bus Stand',         rate:950,  stars:1, col:'#555',   bg:'bg-green',bt:'Budget',         ph:'0877-2227711',  mp:'https://maps.google.com/?q=Sri+Srinivasa+Nilayam+Tirupati'},
+  {id:'tp_ns', cat:'budget', name:'Hotel New Sapthagiri', loc:'Near Railway Station', rate:950, stars:1, col:'#555',bg:'bg-green',bt:'Budget', ph:'0877-2221366', mp:'https://maps.google.com/?q=Hotel+New+Sapthagiri+Tirupati'},
+  {id:'tp_xhar1', cat:'budget', name:'Hotel Annapurna Residency', loc:'Renigunta Road', rate:950, stars:1, col:'#555',bg:'bg-gold',bt:'Value', ph:'0877-2279189', mp:'https://maps.google.com/?q=Hotel+Annapurna+Residency+Tirupati'},
+  {id:'tp_dpl',  cat:'budget',  name:'Devotee Plaza Lodge',        loc:'Near Railway Station',   rate:1000, stars:1, col:'#555',   bg:'bg-green',bt:'Budget',         ph:'0877-2226633',  mp:'https://maps.google.com/?q=Devotee+Plaza+Lodge+Tirupati'},
+  {id:'tp_sa', cat:'budget', name:'Hotel Sri Anjaneya', loc:'Near Railway Station', rate:1000, stars:1, col:'#555',bg:'bg-green',bt:'Budget', ph:'0877-2221788', mp:'https://maps.google.com/?q=Hotel+Sri+Anjaneya+Tirupati'},
+  {id:'tp_xsnl6', cat:'budget', name:'Sai Nivas Lodge', loc:'Near Govindaraja Temple', rate:1000, stars:1, col:'#555',bg:'bg-blue',bt:'Budget', ph:'0877-2221489', mp:'https://maps.google.com/?q=Sai+Nivas+Lodge+Tirupati'},
+  {id:'tp_yat',  cat:'budget',  name:'Yatri Nivas',                loc:'Central Tirupati',       rate:1050, stars:1, col:'#555',   bg:'bg-green',bt:'Budget',         ph:'0877-2227788',  mp:'https://maps.google.com/?q=Yatri+Nivas+Tirupati'},
+  {id:'tp_dvp', cat:'budget',  name:'Devi Plaza Lodge',           loc:'Near Railway Station',   rate:1050, stars:1, col:'#555',   bg:'bg-green',bt:'Budget',         ph:'0877-2226644',  mp:'https://maps.google.com/?q=Devi+Plaza+Lodge+Tirupati'},
+  {id:'tp_xhsrl10', cat:'budget', name:'Hotel Sri Renuka Lodge', loc:'Tirupati City', rate:1050, stars:1, col:'#555',bg:'bg-green',bt:'Value', ph:'0877-2239891', mp:'https://maps.google.com/?q=Hotel+Sri+Renuka+Lodge+Tirupati'},
+  {id:'tp_xhsvr26', cat:'budget', name:'Hotel Sri Vasantha Residency', loc:'Near Govindaraja Temple', rate:1050, stars:1, col:'#555',bg:'bg-gold',bt:'Budget+', ph:'0877-2291619', mp:'https://maps.google.com/?q=Hotel+Sri+Vasantha+Residency+Tirupati'},
+  {id:'tp_sr', cat:'budget', name:'Hotel Sri Renuka', loc:'Near Railway Station', rate:1100, stars:1, col:'#555',bg:'bg-green',bt:'Budget', ph:'0877-2223300', mp:'https://maps.google.com/?q=Hotel+Sri+Renuka+Tirupati'},
+  {id:'tp_xskl27', cat:'budget', name:'Sri Kasturi Lodge', loc:'Karakambadi Road', rate:1100, stars:1, col:'#555',bg:'bg-blue',bt:'Budget', ph:'0877-2279897', mp:'https://maps.google.com/?q=Sri+Kasturi+Lodge+Tirupati'},
+  {id:'tp_ssbr', cat:'budget', name:'Hotel Sri Sai Baba Residency', loc:'Central Tirupati', rate:1200, stars:1, col:'#555',bg:'bg-green',bt:'Budget', ph:'0877-2222911', mp:'https://maps.google.com/?q=Hotel+Sri+Sai+Baba+Residency+Tirupati'},
+  {id:'tp_xhmr13', cat:'budget', name:'Hotel Maruthi Residency', loc:'Near APSRTC Bus Stand', rate:1200, stars:1, col:'#555',bg:'bg-gold',bt:'Value', ph:'0877-2231646', mp:'https://maps.google.com/?q=Hotel+Maruthi+Residency+Tirupati'},
+  {id:'tp_xskl14', cat:'budget', name:'Sri Kanyaka Lodge', loc:'Kothapeta', rate:1200, stars:1, col:'#555',bg:'bg-blue',bt:'Budget+', ph:'0877-2244755', mp:'https://maps.google.com/?q=Sri+Kanyaka+Lodge+Tirupati'},
+  {id:'tp_xhsi11', cat:'budget', name:'Hotel Sapthagiri Inn', loc:'Near Old Tiruchanoor Rd', rate:1250, stars:1, col:'#555',bg:'bg-green',bt:'Budget', ph:'0877-2258384', mp:'https://maps.google.com/?q=Hotel+Sapthagiri+Inn+Tirupati'},
+  {id:'tp_sln', cat:'budget', name:'Hotel Sri Lakshmi Nivas', loc:'Central Tirupati', rate:1300, stars:1, col:'#555',bg:'bg-green',bt:'Budget', ph:'0877-2222456', mp:'https://maps.google.com/?q=Hotel+Sri+Lakshmi+Nivas+Tirupati'},
+  {id:'tp_vi', cat:'budget', name:'Hotel Vijayalakshmi Inn', loc:'Near Bus Stand', rate:1300, stars:1, col:'#555',bg:'bg-green',bt:'Budget', ph:'0877-2225788', mp:'https://maps.google.com/?q=Hotel+Vijayalakshmi+Inn+Tirupati'},
+  {id:'tp_xsll2', cat:'budget', name:'Sri Lakshmi Lodge', loc:'Near Railway Station', rate:1550, stars:1, col:'#555',bg:'bg-green',bt:'Budget', ph:'0877-2237338', mp:'https://maps.google.com/?q=Sri+Lakshmi+Lodge+Tirupati'},
+  {id:'tp_xhjr22', cat:'budget', name:'Hotel Janardhana Residency', loc:'Near Railway Station', rate:1550, stars:1, col:'#555',bg:'bg-blue',bt:'Budget+', ph:'0877-2286579', mp:'https://maps.google.com/?q=Hotel+Janardhana+Residency+Tirupati'},
+  {id:'tp_xsml25', cat:'budget', name:'Sri Manjunatha Lodge', loc:'Alipiri Road', rate:1550, stars:1, col:'#555',bg:'bg-blue',bt:'Budget', ph:'0877-2243612', mp:'https://maps.google.com/?q=Sri+Manjunatha+Lodge+Tirupati'},
+  {id:'tp_xsvc18', cat:'budget', name:'Sri Vinayaka Comforts', loc:'Korlagunta', rate:1600, stars:1, col:'#555',bg:'bg-blue',bt:'Budget', ph:'0877-2241862', mp:'https://maps.google.com/?q=Sri+Vinayaka+Comforts+Tirupati'},
+  {id:'tp_xhbi3', cat:'budget', name:'Hotel Balaji Inn', loc:'Near Bus Stand', rate:1700, stars:1, col:'#555',bg:'bg-gold',bt:'Budget', ph:'0877-2293818', mp:'https://maps.google.com/?q=Hotel+Balaji+Inn+Tirupati'},
+  {id:'tp_xhar28', cat:'budget', name:'Hotel Annamayya Residency', loc:'Padmavathipuram', rate:1750, stars:1, col:'#555',bg:'bg-gold',bt:'Budget+', ph:'0877-2272119', mp:'https://maps.google.com/?q=Hotel+Annamayya+Residency+Tirupati'},
+  {id:'tp_xhgr15', cat:'budget', name:'Hotel Govinda Residency', loc:'Tilak Road', rate:1800, stars:1, col:'#555',bg:'bg-gold',bt:'Budget+', ph:'0877-2217334', mp:'https://maps.google.com/?q=Hotel+Govinda+Residency+Tirupati'},
+  {id:'tp_kap',  cat:'budget',  name:'Karnataka Pravasi Soudha', loc:'Tirupati Town',           rate:650,  stars:2, col:'#2e7d32',bg:'bg-green',bt:'KA Priority',    ph:'0877-2276060',  mp:'https://maps.google.com/?q=Karnataka+Pravasi+Soudha+Tirupati'},
+  {id:'tp_xspl8', cat:'budget', name:'Sri Padmavathi Lodge', loc:'Padmavathipuram', rate:750, stars:2, col:'#555',bg:'bg-gold',bt:'Budget', ph:'0877-2258180', mp:'https://maps.google.com/?q=Sri+Padmavathi+Lodge+Tirupati'},
+  {id:'tp_xsal16', cat:'budget', name:'Sri Anjaneya Lodge', loc:'Near ISKCON Temple', rate:750, stars:2, col:'#555',bg:'bg-blue',bt:'Budget+', ph:'0877-2218316', mp:'https://maps.google.com/?q=Sri+Anjaneya+Lodge+Tirupati'},
+  {id:'tp_xhkr7', cat:'budget', name:'Hotel Krishna Residency', loc:'Karakambadi Road', rate:850, stars:2, col:'#555',bg:'bg-blue',bt:'Value', ph:'0877-2243926', mp:'https://maps.google.com/?q=Hotel+Krishna+Residency+Tirupati'},
+  {id:'tp_may',  cat:'budget',  name:'Hotel Mayura',              loc:'Near Bus Stand',         rate:900,  stars:2, col:'#555',   bg:'bg-green',bt:'Budget',         ph:'0877-2226262',  mp:'https://maps.google.com/?q=Hotel+Mayura+Tirupati'},
+  {id:'tp_xhpr24', cat:'budget', name:'Hotel Pavan Residency', loc:'Central Tirupati', rate:900, stars:2, col:'#555',bg:'bg-gold',bt:'Budget+', ph:'0877-2224400', mp:'https://maps.google.com/?q=Hotel+Pavan+Residency+Tirupati'},
+  {id:'tp_xspl29', cat:'budget', name:'Sri Padmasri Lodge', loc:'AIR Bypass Road', rate:900, stars:2, col:'#555',bg:'bg-blue',bt:'Budget', ph:'0877-2217346', mp:'https://maps.google.com/?q=Sri+Padmasri+Lodge+Tirupati'},
+  {id:'tp_kvp',  cat:'budget',  name:'KVP Inn',                    loc:'Near Railway Station',   rate:950,  stars:2, col:'#555',   bg:'bg-green',bt:'Budget',         ph:'0877-2224455',  mp:'https://maps.google.com/?q=KVP+Inn+Tirupati'},
+  {id:'tp_srp',  cat:'budget',  name:'Srinivasa Residency',        loc:'Near Bus Stand',         rate:1100, stars:2, col:'#555',   bg:'bg-green',bt:'Budget',         ph:'0877-2212345',  mp:'https://maps.google.com/?q=Srinivasa+Residency+Tirupati'},
+  {id:'tp_pgr',  cat:'budget',  name:'Padmavathi Guest Rooms',     loc:'Central Tirupati',       rate:1150, stars:2, col:'#555',   bg:'bg-blue', bt:'Budget',         ph:'0877-2227700',  mp:'https://maps.google.com/?q=Padmavathi+Guest+Rooms+Tirupati'},
+  {id:'tp_aks',  cat:'budget',  name:'Akshaya Residency',          loc:'Central Tirupati',       rate:1200, stars:2, col:'#555',   bg:'bg-blue', bt:'Budget',         ph:'0877-2229988',  mp:'https://maps.google.com/?q=Akshaya+Residency+Tirupati'},
+  {id:'tp_omx',  cat:'budget',  name:'Hotel Om Sai Residency',     loc:'Near Bus Stand',         rate:1250, stars:2, col:'#555',   bg:'bg-green',bt:'Budget',         ph:'0877-2233220',  mp:'https://maps.google.com/?q=Om+Sai+Residency+Tirupati'},
+  {id:'tp_har2', cat:'budget',  name:'Hotel Harsha Residency',     loc:'Near Railway Station',   rate:1300, stars:2, col:'#555',   bg:'bg-green',bt:'Budget',         ph:'0877-2221100',  mp:'https://maps.google.com/?q=Hotel+Harsha+Residency+Tirupati'},
+  {id:'tp_gth', cat:'budget',  name:'Greenwood Tourist Home',     loc:'Alipiri Road',           rate:1300, stars:2, col:'#555',   bg:'bg-gold', bt:'Budget+View',    ph:'0877-2238900',  mp:'https://maps.google.com/?q=Greenwood+Tourist+Home+Tirupati'},
+  {id:'tp_tvr',  cat:'budget',  name:'Tirumala View Lodge',        loc:'Alipiri Road',           rate:1350, stars:2, col:'#555',   bg:'bg-gold', bt:'Budget+View',    ph:'0877-2238800',  mp:'https://maps.google.com/?q=Tirumala+View+Lodge+Tirupati'},
+  {id:'tp_rep',  cat:'budget',  name:'Republic Inn',               loc:'Central Tirupati',       rate:1400, stars:2, col:'#555',   bg:'bg-green',bt:'Budget',         ph:'0877-2233445',  mp:'https://maps.google.com/?q=Republic+Inn+Tirupati'},
+  {id:'tp_srr', cat:'budget', name:'Hotel Sai Ram Residency', loc:'Alipiri Road', rate:1400, stars:2, col:'#555',bg:'bg-gold',bt:'Budget+View', ph:'0877-2237400', mp:'https://maps.google.com/?q=Hotel+Sai+Ram+Residency+Tirupati'},
+  {id:'tp_rvr',  cat:'budget',  name:'Hotel River View',           loc:'Near Kapila Theertham',  rate:1450, stars:2, col:'#555',   bg:'bg-blue', bt:'Budget+View',    ph:'0877-2289900',  mp:'https://maps.google.com/?q=Hotel+River+View+Tirupati'},
+  {id:'tp_svr', cat:'budget', name:'Hotel Sri Vasavi Residency', loc:'Near Bus Stand', rate:1450, stars:2, col:'#555',bg:'bg-green',bt:'Budget', ph:'0877-2222100', mp:'https://maps.google.com/?q=Hotel+Sri+Vasavi+Residency+Tirupati'},
+  {id:'tp_na', cat:'budget', name:'Hotel New Annapurna', loc:'Central Tirupati', rate:1450, stars:2, col:'#555',bg:'bg-blue',bt:'Budget', ph:'0877-2223900', mp:'https://maps.google.com/?q=Hotel+New+Annapurna+Tirupati'},
+  {id:'tp_xhsr20', cat:'budget', name:'Hotel Surya Residency', loc:'Tiruchanur Road', rate:1500, stars:2, col:'#555',bg:'bg-green',bt:'Budget', ph:'0877-2275605', mp:'https://maps.google.com/?q=Hotel+Surya+Residency+Tirupati'},
+  {id:'tp_sdr', cat:'budget', name:'Hotel Sri Devi Residency', loc:'Near Bus Stand', rate:1550, stars:2, col:'#555',bg:'bg-green',bt:'Budget', ph:'0877-2226500', mp:'https://maps.google.com/?q=Hotel+Sri+Devi+Residency+Tirupati'},
+  {id:'tp_sbr', cat:'budget', name:'Hotel Sri Balaji Residency', loc:'Alipiri Road', rate:1550, stars:2, col:'#555',bg:'bg-gold',bt:'Budget+View', ph:'0877-2237900', mp:'https://maps.google.com/?q=Hotel+Sri+Balaji+Residency+Tirupati'},
+  {id:'tp_gvp',  cat:'budget',  name:'GVP Residency',              loc:'Central Tirupati',       rate:1600, stars:2, col:'#555',   bg:'bg-blue', bt:'Budget+View',    ph:'0877-2256789',  mp:'https://maps.google.com/?q=GVP+Residency+Tirupati'},
+  {id:'tp_xsrl12', cat:'budget', name:'Sri Ranganatha Lodge', loc:'Leela Mahal Circle', rate:1600, stars:2, col:'#555',bg:'bg-green',bt:'Budget+', ph:'0877-2255314', mp:'https://maps.google.com/?q=Sri+Ranganatha+Lodge+Tirupati'},
+  {id:'tp_tr1', cat:'budget', name:'Hotel Tirumala Residency', loc:'Alipiri Road', rate:1650, stars:2, col:'#555',bg:'bg-gold',bt:'Budget+View', ph:'0877-2238400', mp:'https://maps.google.com/?q=Hotel+Tirumala+Residency+Tirupati'},
+  {id:'tp_sks',  cat:'mid',     name:'Sai Krishna Sadan',          loc:'Near Railway Station',   rate:1700, stars:2, col:'#1565C0',bg:'bg-green',bt:'3★ Value',       ph:'0877-2220088',  mp:'https://maps.google.com/?q=Sai+Krishna+Sadan+Tirupati'},
+  {id:'tp_kvr',  cat:'mid',     name:'Hotel Kaveri Residency',     loc:'Central Tirupati',       rate:1700, stars:2, col:'#1565C0',bg:'bg-green',bt:'3★ Value',       ph:'0877-2229900',  mp:'https://maps.google.com/?q=Kaveri+Residency+Tirupati'},
+  {id:'tp_pr', cat:'mid', name:'Hotel Pragathi Residency', loc:'Near Bus Stand', rate:1700, stars:2, col:'#1565C0',bg:'bg-blue',bt:'3★', ph:'0877-2256100', mp:'https://maps.google.com/?q=Hotel+Pragathi+Residency+Tirupati'},
+  {id:'tp_xhsai49', cat:'mid', name:'Hotel Sri Akshara Inn', loc:'AIR Bypass Road', rate:1700, stars:2, col:'#1565C0',bg:'bg-blue',bt:'2★', ph:'0877-2231516', mp:'https://maps.google.com/?q=Hotel+Sri+Akshara+Inn+Tirupati'},
+  {id:'tp_trb',  cat:'budget',  name:'Treebo Sripadha Residency',  loc:'Alipiri Road',           rate:1750, stars:2, col:'#555',   bg:'bg-green',bt:'Treebo Budget',  ph:'0877-2237890',  mp:'https://maps.google.com/?q=Treebo+Sripadha+Residency+Tirupati'},
+  {id:'tp_kvr2',cat:'mid',     name:'Kaveri Residency Annex',     loc:'Central Tirupati',       rate:1750, stars:2, col:'#1565C0',bg:'bg-green',bt:'3★ Value',       ph:'0877-2229911',  mp:'https://maps.google.com/?q=Kaveri+Residency+Annex+Tirupati'},
+  {id:'tp_skr', cat:'mid', name:'Hotel Sai Krishna Residency', loc:'Near Railway Station', rate:1750, stars:2, col:'#1565C0',bg:'bg-green',bt:'3★', ph:'0877-2227100', mp:'https://maps.google.com/?q=Hotel+Sai+Krishna+Residency+Tirupati'},
+  {id:'tp_xscl23', cat:'budget', name:'Sri Chaitanya Lodge', loc:'Near Bus Stand', rate:1750, stars:2, col:'#555',bg:'bg-gold',bt:'Budget', ph:'0877-2297838', mp:'https://maps.google.com/?q=Sri+Chaitanya+Lodge+Tirupati'},
+  {id:'tp_grc',  cat:'mid',     name:'Hotel Grace Inn',            loc:'Central Tirupati',       rate:1800, stars:2, col:'#1565C0',bg:'bg-green',bt:'3★ Value',       ph:'0877-2233900',  mp:'https://maps.google.com/?q=Hotel+Grace+Inn+Tirupati'},
+  {id:'tp_xhvr4', cat:'budget', name:'Hotel Vasavi Residency', loc:'Central Tirupati', rate:1800, stars:2, col:'#555',bg:'bg-green',bt:'Budget+', ph:'0877-2285384', mp:'https://maps.google.com/?q=Hotel+Vasavi+Residency+Tirupati'},
+  {id:'tp_xhvr9', cat:'budget', name:'Hotel Vinayaka Residency', loc:'AIR Bypass Road', rate:1800, stars:2, col:'#555',bg:'bg-gold',bt:'Value', ph:'0877-2256691', mp:'https://maps.google.com/?q=Hotel+Vinayaka+Residency+Tirupati'},
+  {id:'tp_xhsrl19', cat:'budget', name:'Hotel Sri Rama Lodge', loc:'Vinayaka Nagar', rate:1800, stars:2, col:'#555',bg:'bg-gold',bt:'Value', ph:'0877-2264697', mp:'https://maps.google.com/?q=Hotel+Sri+Rama+Lodge+Tirupati'},
+  {id:'tp_xhssi31', cat:'mid', name:'Hotel Sri Sairam Inn', loc:'Near Old Tiruchanoor Rd', rate:1800, stars:2, col:'#1565C0',bg:'bg-blue',bt:'2★', ph:'0877-2294586', mp:'https://maps.google.com/?q=Hotel+Sri+Sairam+Inn+Tirupati'},
+  {id:'tp_xhtr38', cat:'mid', name:'Hotel Tirumala Residency', loc:'Korlagunta', rate:1800, stars:2, col:'#1565C0',bg:'bg-blue',bt:'2★', ph:'0877-2218132', mp:'https://maps.google.com/?q=Hotel+Tirumala+Residency+Tirupati'},
+  {id:'tp_xhssg44', cat:'mid', name:'Hotel Sri Sapthagiri Grand', loc:'Central Tirupati', rate:1800, stars:2, col:'#1565C0',bg:'bg-blue',bt:'2★', ph:'0877-2261845', mp:'https://maps.google.com/?q=Hotel+Sri+Sapthagiri+Grand+Tirupati'},
+  {id:'tp_svm',  cat:'mid',     name:'Hotel SV Mahal',             loc:'Central Tirupati',       rate:1850, stars:2, col:'#1565C0',bg:'bg-green',bt:'3★ Value',       ph:'0877-2222800',  mp:'https://maps.google.com/?q=Hotel+SV+Mahal+Tirupati'},
+  {id:'tp_vr', cat:'mid', name:'Hotel Vihar Residency', loc:'Central Tirupati', rate:1850, stars:2, col:'#1565C0',bg:'bg-green',bt:'3★ Value', ph:'0877-2229300', mp:'https://maps.google.com/?q=Hotel+Vihar+Residency+Tirupati'},
+  {id:'tp_ski', cat:'mid', name:'Hotel Sri Krishna Inn', loc:'Near Bus Stand', rate:1850, stars:2, col:'#1565C0',bg:'bg-green',bt:'3★ Value', ph:'0877-2257300', mp:'https://maps.google.com/?q=Hotel+Sri+Krishna+Inn+Tirupati'},
+  {id:'tp_xhnr17', cat:'budget', name:'Hotel Nandini Residency', loc:'Near Kapila Theertham', rate:1850, stars:2, col:'#555',bg:'bg-green',bt:'Value', ph:'0877-2273505', mp:'https://maps.google.com/?q=Hotel+Nandini+Residency+Tirupati'},
+  {id:'tp_xhssc57', cat:'mid', name:'Hotel Sri Surya Comforts', loc:'Near Kapila Theertham', rate:2050, stars:2, col:'#1565C0',bg:'bg-gold',bt:'2★', ph:'0877-2218791', mp:'https://maps.google.com/?q=Hotel+Sri+Surya+Comforts+Tirupati'},
+  {id:'tp_xhsbc54', cat:'mid', name:'Hotel Sri Bhagyalakshmi Comforts', loc:'Kothapeta', rate:2100, stars:2, col:'#1565C0',bg:'bg-gold',bt:'2★', ph:'0877-2279162', mp:'https://maps.google.com/?q=Hotel+Sri+Bhagyalakshmi+Comforts+Tirupati'},
+  {id:'tp_xhsvi36', cat:'mid', name:'Hotel Sri Vaishnavi Inn', loc:'Near ISKCON Temple', rate:2200, stars:2, col:'#1565C0',bg:'bg-blue',bt:'2★', ph:'0877-2253121', mp:'https://maps.google.com/?q=Hotel+Sri+Vaishnavi+Inn+Tirupati'},
+  {id:'tp_xhskr55', cat:'mid', name:'Hotel Sri Kalyan Residency', loc:'Tilak Road', rate:2300, stars:2, col:'#1565C0',bg:'bg-blue',bt:'2★', ph:'0877-2284588', mp:'https://maps.google.com/?q=Hotel+Sri+Kalyan+Residency+Tirupati'},
+  {id:'tp_xhskv39', cat:'mid', name:'Hotel Sri Kashi Vishwanath', loc:'Vinayaka Nagar', rate:2350, stars:2, col:'#1565C0',bg:'bg-gold',bt:'2★', ph:'0877-2240385', mp:'https://maps.google.com/?q=Hotel+Sri+Kashi+Vishwanath+Tirupati'},
+  {id:'tp_xhsgi45', cat:'mid', name:'Hotel Sri Govardhan Inn', loc:'Alipiri Road', rate:2350, stars:2, col:'#1565C0',bg:'bg-blue',bt:'2★', ph:'0877-2234294', mp:'https://maps.google.com/?q=Hotel+Sri+Govardhan+Inn+Tirupati'},
+  {id:'tp_xhgi42', cat:'mid', name:'Hotel Greenfields Inn', loc:'Near Railway Station', rate:2500, stars:2, col:'#1565C0',bg:'bg-blue',bt:'2★', ph:'0877-2222774', mp:'https://maps.google.com/?q=Hotel+Greenfields+Inn+Tirupati'},
+  {id:'tp_xhmi40', cat:'mid', name:'Hotel Madhuram Inn', loc:'Tiruchanur Road', rate:2650, stars:2, col:'#1565C0',bg:'bg-gold',bt:'2★', ph:'0877-2226840', mp:'https://maps.google.com/?q=Hotel+Madhuram+Inn+Tirupati'},
+  {id:'tp_xhsvg56', cat:'mid', name:'Hotel Sri Vishal Grand', loc:'Near ISKCON Temple', rate:2700, stars:2, col:'#1565C0',bg:'bg-blue',bt:'2★', ph:'0877-2275182', mp:'https://maps.google.com/?q=Hotel+Sri+Vishal+Grand+Tirupati'},
+  {id:'tp_xhpr32', cat:'mid', name:'Hotel Pearl Residency', loc:'Leela Mahal Circle', rate:2800, stars:2, col:'#1565C0',bg:'bg-green',bt:'2★', ph:'0877-2277993', mp:'https://maps.google.com/?q=Hotel+Pearl+Residency+Tirupati'},
+  {id:'tp_xhsdg48', cat:'mid', name:'Hotel Sri Devi Grand', loc:'Padmavathipuram', rate:2800, stars:2, col:'#1565C0',bg:'bg-blue',bt:'2★', ph:'0877-2293653', mp:'https://maps.google.com/?q=Hotel+Sri+Devi+Grand+Tirupati'},
+  {id:'tp_xhbc30', cat:'mid', name:'Hotel Bliss Continental', loc:'Tirupati City', rate:2850, stars:2, col:'#1565C0',bg:'bg-blue',bt:'2★', ph:'0877-2272935', mp:'https://maps.google.com/?q=Hotel+Bliss+Continental+Tirupati'},
+  {id:'tp_xhspr59', cat:'mid', name:'Hotel Sri Pranav Residency', loc:'Vinayaka Nagar', rate:2850, stars:2, col:'#1565C0',bg:'bg-gold',bt:'2★', ph:'0877-2220529', mp:'https://maps.google.com/?q=Hotel+Sri+Pranav+Residency+Tirupati'},
+  {id:'tp_xhsag37', cat:'mid', name:'Hotel Sri Annapoorna Grand', loc:'Near Kapila Theertham', rate:2900, stars:2, col:'#1565C0',bg:'bg-gold',bt:'2★', ph:'0877-2238107', mp:'https://maps.google.com/?q=Hotel+Sri+Annapoorna+Grand+Tirupati'},
+  {id:'tp_bhd',  cat:'mid',     name:'Bhimas Deluxe',             loc:'Near Railway Station',   rate:1200, stars:3, col:'#1565C0',bg:'bg-blue', bt:'3★ Popular',     ph:'0877-2225521',  mp:'https://maps.google.com/?q=Bhimas+Deluxe+Tirupati'},
+  {id:'tp_har',  cat:'mid',     name:'Haritha Hotel (APTDC)',     loc:'Tirupati, Govt',         rate:1800, stars:3, col:'#2e7d32',bg:'bg-blue', bt:'Govt Hotel',     ph:'0877-2225441',  mp:'https://maps.google.com/?q=Haritha+Hotel+Tirupati'},
+  {id:'tp_mdv',  cat:'mid',     name:'Hotel Maruthi Deluxe',       loc:'Near Bus Stand',         rate:1850, stars:3, col:'#1565C0',bg:'bg-green',bt:'3★',             ph:'0877-2224400',  mp:'https://maps.google.com/?q=Maruthi+Deluxe+Tirupati'},
+  {id:'tp_plr',  cat:'mid',     name:'Hotel PLR Grand',            loc:'Central Tirupati',       rate:1900, stars:3, col:'#1565C0',bg:'bg-green',bt:'3★ Popular',     ph:'0877-2290000',  mp:'https://maps.google.com/?q=Hotel+PLR+Grand+Tirupati'},
+  {id:'tp_ssr',  cat:'mid',     name:'Sree Sai Residency',         loc:'Near Bus Stand',         rate:1950, stars:3, col:'#1565C0',bg:'bg-green',bt:'3★',             ph:'0877-2231100',  mp:'https://maps.google.com/?q=Sree+Sai+Residency+Tirupati'},
+  {id:'tp_nks',  cat:'mid',     name:'Hotel Nakshatra',            loc:'Near Bus Stand',         rate:1950, stars:3, col:'#1565C0',bg:'bg-blue', bt:'3★',             ph:'0877-2258800',  mp:'https://maps.google.com/?q=Hotel+Nakshatra+Tirupati'},
+  {id:'tp_vp', cat:'mid', name:'Hotel Vishnu Priya', loc:'Near Bus Stand', rate:1950, stars:3, col:'#1565C0',bg:'bg-green',bt:'3★', ph:'0877-2255300', mp:'https://maps.google.com/?q=Hotel+Vishnu+Priya+Tirupati'},
+  {id:'tp_mgi',  cat:'mid',     name:'MG Iris Hotel',              loc:'Near Bus Stand',         rate:2000, stars:3, col:'#1565C0',bg:'bg-blue', bt:'3★',             ph:'0877-2255000',  mp:'https://maps.google.com/?q=MG+Iris+Hotel+Tirupati'},
+  {id:'tp_lrd',  cat:'mid',     name:'Hotel Lord Venkateswara',    loc:'Near Railway Station',   rate:2000, stars:3, col:'#1565C0',bg:'bg-gold', bt:'3★ Pilgrims',    ph:'0877-2221234',  mp:'https://maps.google.com/?q=Hotel+Lord+Venkateswara+Tirupati'},
+  {id:'tp_xhssc51', cat:'mid', name:'Hotel Sri Sannidhi Comforts', loc:'Near Old Tiruchanoor Rd', rate:2000, stars:3, col:'#1565C0',bg:'bg-blue',bt:'3★', ph:'0877-2259371', mp:'https://maps.google.com/?q=Hotel+Sri+Sannidhi+Comforts+Tirupati'},
+  {id:'tp_lkv',  cat:'mid',     name:'Hotel Lakshmi Vihar',        loc:'Central Tirupati',       rate:2050, stars:3, col:'#1565C0',bg:'bg-green',bt:'3★',             ph:'0877-2226600',  mp:'https://maps.google.com/?q=Hotel+Lakshmi+Vihar+Tirupati'},
+  {id:'tp_trd', cat:'mid',     name:'Hotel Triveni Deluxe',       loc:'Near Railway Station',   rate:2050, stars:3, col:'#1565C0',bg:'bg-gold', bt:'3★',             ph:'0877-2226677',  mp:'https://maps.google.com/?q=Hotel+Triveni+Deluxe+Tirupati'},
+  {id:'tp_kr', cat:'mid', name:'Hotel Krishna Residency', loc:'Near Bus Stand', rate:2050, stars:3, col:'#1565C0',bg:'bg-blue',bt:'3★', ph:'0877-2253300', mp:'https://maps.google.com/?q=Hotel+Krishna+Residency+Tirupati'},
+  {id:'tp_tc', cat:'mid', name:'Hotel Tirumala Comforts', loc:'Alipiri Road', rate:2050, stars:3, col:'#1565C0',bg:'bg-gold',bt:'3★ View', ph:'0877-2238100', mp:'https://maps.google.com/?q=Hotel+Tirumala+Comforts+Tirupati'},
+  {id:'tp_niv',  cat:'mid',     name:'Hotel Nivaara',              loc:'Near Bus Stand',         rate:2100, stars:3, col:'#1565C0',bg:'bg-gold', bt:'3★ Well-rated',  ph:'0877-2278888',  mp:'https://maps.google.com/?q=Hotel+Nivaara+Tirupati'},
+  {id:'tp_xhspc34', cat:'mid', name:'Hotel Sri Padmavathi Comforts', loc:'Kothapeta', rate:2100, stars:3, col:'#1565C0',bg:'bg-green',bt:'3★', ph:'0877-2295765', mp:'https://maps.google.com/?q=Hotel+Sri+Padmavathi+Comforts+Tirupati'},
+  {id:'tp_anm',  cat:'mid',     name:'Hotel Anmol',               loc:'Near Bus Stand',         rate:2150, stars:3, col:'#1565C0',bg:'bg-green',bt:'3★ Value',       ph:'0877-2221212',  mp:'https://maps.google.com/?q=Hotel+Anmol+Tirupati'},
+  {id:'tp_sgr',  cat:'mid',     name:'Sapthagiri Grand',           loc:'Central Tirupati',       rate:2150, stars:3, col:'#1565C0',bg:'bg-gold', bt:'3★ Central',     ph:'0877-2222900',  mp:'https://maps.google.com/?q=Sapthagiri+Grand+Tirupati'},
+  {id:'tp_pc', cat:'mid', name:'Hotel Padma Comforts', loc:'Central Tirupati', rate:2150, stars:3, col:'#1565C0',bg:'bg-blue',bt:'3★', ph:'0877-2228800', mp:'https://maps.google.com/?q=Hotel+Padma+Comforts+Tirupati'},
+  {id:'tp_vr1', cat:'mid', name:'Hotel Venkateswara Residency', loc:'Near Bus Stand', rate:2150, stars:3, col:'#1565C0',bg:'bg-gold',bt:'3★', ph:'0877-2256900', mp:'https://maps.google.com/?q=Hotel+Venkateswara+Residency+Tirupati'},
+  {id:'tp_xhsai58', cat:'mid', name:'Hotel Sri Aishwarya Inn', loc:'Korlagunta', rate:2150, stars:3, col:'#1565C0',bg:'bg-blue',bt:'3★', ph:'0877-2282352', mp:'https://maps.google.com/?q=Hotel+Sri+Aishwarya+Inn+Tirupati'},
+  {id:'tp_wds',  cat:'mid',     name:'Hotel Woodside Prestige',    loc:'Near Old Tiruchanoor Rd',rate:2200, stars:3, col:'#1565C0',bg:'bg-green',bt:'3★',             ph:'0877-2267777',  mp:'https://maps.google.com/?q=Hotel+Woodside+Prestige+Tirupati'},
+  {id:'tp_mvg',  cat:'mid',     name:'Hotel Mayura Vihar Grand',   loc:'Near Bus Stand',         rate:2250, stars:3, col:'#1565C0',bg:'bg-blue', bt:'3★',             ph:'0877-2256600',  mp:'https://maps.google.com/?q=Mayura+Vihar+Grand+Tirupati'},
+  {id:'tp_pdv',  cat:'mid',     name:'Hotel Padmavathi Villa',     loc:'Central Tirupati',       rate:2250, stars:3, col:'#1565C0',bg:'bg-gold', bt:'3★',             ph:'0877-2223300',  mp:'https://maps.google.com/?q=Hotel+Padmavathi+Villa+Tirupati'},
+  {id:'tp_slc', cat:'mid', name:'Hotel Sri Lakshmi Comforts', loc:'Central Tirupati', rate:2250, stars:3, col:'#1565C0',bg:'bg-blue',bt:'3★', ph:'0877-2224200', mp:'https://maps.google.com/?q=Hotel+Sri+Lakshmi+Comforts+Tirupati'},
+  {id:'tp_xhpr47', cat:'mid', name:'Hotel Pragati Residency', loc:'Karakambadi Road', rate:2250, stars:3, col:'#1565C0',bg:'bg-blue',bt:'3★', ph:'0877-2219553', mp:'https://maps.google.com/?q=Hotel+Pragati+Residency+Tirupati'},
+  {id:'tp_min',  cat:'mid',     name:'Minerva Grand',             loc:'Near Station',           rate:2300, stars:3, col:'#1565C0',bg:'bg-green',bt:'3★',             ph:'0877-2252424',  mp:'https://maps.google.com/?q=Minerva+Grand+Tirupati'},
+  {id:'tp_zns',  cat:'mid',     name:'Hotel Zen Stay',             loc:'Near Bus Stand',         rate:2300, stars:3, col:'#1565C0',bg:'bg-blue', bt:'3★ Modern',      ph:'0877-2257700',  mp:'https://maps.google.com/?q=Hotel+Zen+Stay+Tirupati'},
+  {id:'tp_kpr',  cat:'mid',     name:'Kences Park Residency',      loc:'Near Bus Stand',         rate:2350, stars:3, col:'#1565C0',bg:'bg-blue', bt:'3★',             ph:'0877-2255100',  mp:'https://maps.google.com/?q=Kences+Park+Residency+Tirupati'},
+  {id:'tp_th', cat:'mid', name:'Hotel Tirumala Heights', loc:'Alipiri Road', rate:2350, stars:3, col:'#1565C0',bg:'bg-gold',bt:'3★ View', ph:'0877-2239100', mp:'https://maps.google.com/?q=Hotel+Tirumala+Heights+Tirupati'},
+  {id:'tp_reg',  cat:'mid',     name:'Hotel Regalia',              loc:'Central Tirupati',       rate:2400, stars:3, col:'#1565C0',bg:'bg-blue', bt:'3★',             ph:'0877-2244444',  mp:'https://maps.google.com/?q=Hotel+Regalia+Tirupati'},
+  {id:'tp_sr1', cat:'mid', name:'Hotel Sapthagiri Residency', loc:'Central Tirupati', rate:2400, stars:3, col:'#1565C0',bg:'bg-gold',bt:'3★', ph:'0877-2225100', mp:'https://maps.google.com/?q=Hotel+Sapthagiri+Residency+Tirupati'},
+  {id:'tp_vkt',  cat:'mid',     name:'Hotel Venkateswara Towers',  loc:'Near Bus Stand',         rate:2450, stars:3, col:'#1565C0',bg:'bg-blue', bt:'3★ Towers',      ph:'0877-2254400',  mp:'https://maps.google.com/?q=Venkateswara+Towers+Tirupati'},
+  {id:'tp_xhms35', cat:'mid', name:'Hotel Mantra Suites', loc:'Tilak Road', rate:2450, stars:3, col:'#1565C0',bg:'bg-gold',bt:'3★', ph:'0877-2267223', mp:'https://maps.google.com/?q=Hotel+Mantra+Suites+Tirupati'},
+  {id:'tp_bhp',  cat:'mid',     name:'Bhimas Paradise',           loc:'Near Railway Station',   rate:2500, stars:3, col:'#1565C0',bg:'bg-gold', bt:'3★ Best Andhra', ph:'0877-2237271',  mp:'https://maps.google.com/?q=Bhimas+Paradise+Tirupati'},
+  {id:'tp_zns2',cat:'mid',     name:'Hotel Zen Stay Premium',     loc:'Near Bus Stand',         rate:2550, stars:3, col:'#1565C0',bg:'bg-blue', bt:'3★ Modern',      ph:'0877-2257711',  mp:'https://maps.google.com/?q=Hotel+Zen+Stay+Premium+Tirupati'},
+  {id:'tp_ssk', cat:'comfort', name:'Hotel Sri Sai Krupa', loc:'Tiruchanur Road', rate:2550, stars:3, col:'#c05820',bg:'bg-blue',bt:'3★+', ph:'0877-2267900', mp:'https://maps.google.com/?q=Hotel+Sri+Sai+Krupa+Tirupati'},
+  {id:'tp_xhscr43', cat:'mid', name:'Hotel Sri Chakra Residency', loc:'Near Bus Stand', rate:2550, stars:3, col:'#1565C0',bg:'bg-green',bt:'3★', ph:'0877-2262578', mp:'https://maps.google.com/?q=Hotel+Sri+Chakra+Residency+Tirupati'},
+  {id:'tp_iri',  cat:'mid',     name:'IRIS Hotel Tirupati',        loc:'Near Bus Stand',         rate:2600, stars:3, col:'#1565C0',bg:'bg-green',bt:'3★ Central',     ph:'0877-2265555',  mp:'https://maps.google.com/?q=IRIS+Hotel+Tirupati'},
+  {id:'tp_ag1', cat:'mid', name:'Hotel Akshaya Grand', loc:'Near Railway Station', rate:2600, stars:3, col:'#1565C0',bg:'bg-blue',bt:'3★', ph:'0877-2227900', mp:'https://maps.google.com/?q=Hotel+Akshaya+Grand+Tirupati'},
+  {id:'tp_xhsmg52', cat:'mid', name:'Hotel Sri Mahalakshmi Grand', loc:'Leela Mahal Circle', rate:2600, stars:3, col:'#1565C0',bg:'bg-green',bt:'3★', ph:'0877-2299848', mp:'https://maps.google.com/?q=Hotel+Sri+Mahalakshmi+Grand+Tirupati'},
+  {id:'tp_xhsar50', cat:'mid', name:'Hotel Sri Ananth Residency', loc:'Tirupati City', rate:2650, stars:3, col:'#1565C0',bg:'bg-blue',bt:'3★', ph:'0877-2261160', mp:'https://maps.google.com/?q=Hotel+Sri+Ananth+Residency+Tirupati'},
+  {id:'tp_mc', cat:'comfort', name:'Hotel Maruthi Comforts', loc:'Central Tirupati', rate:2700, stars:3, col:'#c05820',bg:'bg-blue',bt:'3★+', ph:'0877-2224900', mp:'https://maps.google.com/?q=Hotel+Maruthi+Comforts+Tirupati'},
+  {id:'tp_vrr',  cat:'comfort', name:'Hotel Veera Maruthi',        loc:'Near Railway Station',   rate:2750, stars:3, col:'#c05820',bg:'bg-green',bt:'3★+',             ph:'0877-2225588',  mp:'https://maps.google.com/?q=Hotel+Veera+Maruthi+Tirupati'},
+  {id:'tp_xhsbc46', cat:'mid', name:'Hotel Sri Balaji Comforts', loc:'Near Govindaraja Temple', rate:2750, stars:3, col:'#1565C0',bg:'bg-blue',bt:'3★', ph:'0877-2264287', mp:'https://maps.google.com/?q=Hotel+Sri+Balaji+Comforts+Tirupati'},
+  {id:'tp_sin',  cat:'mid',     name:'Hotel Sindhuri Park',        loc:'Near Govindaraja Temple',rate:2800, stars:3, col:'#1565C0',bg:'bg-blue', bt:'3★ Temple View', ph:'0877-2220077',  mp:'https://maps.google.com/?q=Sindhuri+Park+Hotel+Tirupati'},
+  {id:'tp_xhsti53', cat:'mid', name:'Hotel Sri Trinity Inn', loc:'Near APSRTC Bus Stand', rate:2800, stars:3, col:'#1565C0',bg:'bg-blue',bt:'3★', ph:'0877-2234403', mp:'https://maps.google.com/?q=Hotel+Sri+Trinity+Inn+Tirupati'},
+  {id:'tp_pvi', cat:'comfort', name:'Hotel Park View Inn', loc:'Tiruchanur Road', rate:2850, stars:3, col:'#c05820',bg:'bg-green',bt:'3★+', ph:'0877-2266900', mp:'https://maps.google.com/?q=Hotel+Park+View+Inn+Tirupati'},
+  {id:'tp_xhsvc41', cat:'mid', name:'Hotel Sri Vijetha Comforts', loc:'Renigunta Road', rate:2850, stars:3, col:'#1565C0',bg:'bg-blue',bt:'3★', ph:'0877-2270926', mp:'https://maps.google.com/?q=Hotel+Sri+Vijetha+Comforts+Tirupati'},
+  {id:'tp_dcs',  cat:'comfort', name:'Deccan Suites Tirupati',     loc:'Central Tirupati',       rate:2900, stars:3, col:'#c05820',bg:'bg-blue', bt:'3★+ Suites',     ph:'0877-2265000',  mp:'https://maps.google.com/?q=Deccan+Suites+Tirupati'},
+  {id:'tp_svp', cat:'comfort', name:'Hotel Sri Venkatesa Plaza', loc:'Near Bus Stand', rate:2900, stars:3, col:'#c05820',bg:'bg-blue',bt:'3★+', ph:'0877-2255900', mp:'https://maps.google.com/?q=Hotel+Sri+Venkatesa+Plaza+Tirupati'},
+  {id:'tp_xhsvg33', cat:'mid', name:'Hotel Sri Vasavi Grand', loc:'Near APSRTC Bus Stand', rate:2900, stars:3, col:'#1565C0',bg:'bg-blue',bt:'3★', ph:'0877-2279873', mp:'https://maps.google.com/?q=Hotel+Sri+Vasavi+Grand+Tirupati'},
+  {id:'tp_cbe', cat:'comfort', name:'Hotel Comfort Bay',          loc:'Near Railway Station',   rate:2950, stars:3, col:'#c05820',bg:'bg-blue', bt:'3★+',            ph:'0877-2225900',  mp:'https://maps.google.com/?q=Hotel+Comfort+Bay+Tirupati'},
+  {id:'tp_skb',  cat:'comfort', name:'Hotel Sai Krupa Comforts',   loc:'Tiruchanur Road',        rate:3050, stars:3, col:'#c05820',bg:'bg-blue', bt:'3★+ Comfort',    ph:'0877-2267800',  mp:'https://maps.google.com/?q=Sai+Krupa+Comforts+Tirupati'},
+  {id:'tp_ss', cat:'comfort', name:'Hotel Sai Sannidhi', loc:'Tiruchanur Road', rate:3050, stars:3, col:'#c05820',bg:'bg-gold',bt:'3★+', ph:'0877-2267300', mp:'https://maps.google.com/?q=Hotel+Sai+Sannidhi+Tirupati'},
+  {id:'tp_swn',  cat:'comfort', name:'Hotel Swarna Towers',        loc:'Near Govindaraja Temple',rate:3150, stars:3, col:'#c05820',bg:'bg-blue', bt:'3★+ Temple View',ph:'0877-2220900',  mp:'https://maps.google.com/?q=Hotel+Swarna+Towers+Tirupati'},
+  {id:'tp_m', cat:'comfort', name:'Hotel Madhuvan', loc:'Tiruchanur Road', rate:3200, stars:3, col:'#c05820',bg:'bg-blue',bt:'3★+', ph:'0877-2268100', mp:'https://maps.google.com/?q=Hotel+Madhuvan+Tirupati'},
+  {id:'tp_rsv', cat:'comfort', name:'Hotel Royal Sapphire',       loc:'Near Govindaraja Temple',rate:3250, stars:3, col:'#c05820',bg:'bg-blue', bt:'3★+ Temple View',ph:'0877-2221900', mp:'https://maps.google.com/?q=Hotel+Royal+Sapphire+Tirupati'},
+  {id:'tp_xhscc67', cat:'comfort', name:'Hotel Sri Chandana Comforts', loc:'Karakambadi Road', rate:3350, stars:3, col:'#c05820',bg:'bg-blue',bt:'3★', ph:'0877-2224209', mp:'https://maps.google.com/?q=Hotel+Sri+Chandana+Comforts+Tirupati'},
+  {id:'tp_xhsvg74', cat:'comfort', name:'Hotel Sri Vishnu Grand', loc:'Kothapeta', rate:3550, stars:3, col:'#c05820',bg:'bg-blue',bt:'3★', ph:'0877-2284665', mp:'https://maps.google.com/?q=Hotel+Sri+Vishnu+Grand+Tirupati'},
+  {id:'tp_xhsvc81', cat:'comfort', name:'Hotel Sri Vrindavan Comforts', loc:'Renigunta Road', rate:3600, stars:3, col:'#c05820',bg:'bg-blue',bt:'3★', ph:'0877-2214979', mp:'https://maps.google.com/?q=Hotel+Sri+Vrindavan+Comforts+Tirupati'},
+  {id:'tp_xhc77', cat:'comfort', name:'Hotel Cosmopolitan', loc:'Near Kapila Theertham', rate:3950, stars:3, col:'#c05820',bg:'bg-blue',bt:'3★', ph:'0877-2281995', mp:'https://maps.google.com/?q=Hotel+Cosmopolitan+Tirupati'},
+  {id:'tp_xhsgt66', cat:'comfort', name:'Hotel Sri Govind Towers', loc:'Near Govindaraja Temple', rate:4150, stars:3, col:'#c05820',bg:'bg-green',bt:'3★', ph:'0877-2280406', mp:'https://maps.google.com/?q=Hotel+Sri+Govind+Towers+Tirupati'},
+  {id:'tp_xhpc61', cat:'comfort', name:'Hotel Pristine Comforts', loc:'Renigunta Road', rate:4200, stars:3, col:'#c05820',bg:'bg-blue',bt:'3★', ph:'0877-2260234', mp:'https://maps.google.com/?q=Hotel+Pristine+Comforts+Tirupati'},
+  {id:'tp_xhspt83', cat:'comfort', name:'Hotel Sri Padmasree Towers', loc:'Near Bus Stand', rate:4200, stars:3, col:'#c05820',bg:'bg-gold',bt:'3★', ph:'0877-2213775', mp:'https://maps.google.com/?q=Hotel+Sri+Padmasree+Towers+Tirupati'},
+  {id:'tp_xhskc69', cat:'comfort', name:'Hotel Sri Kishkindha Comforts', loc:'AIR Bypass Road', rate:4350, stars:3, col:'#c05820',bg:'bg-green',bt:'3★', ph:'0877-2291973', mp:'https://maps.google.com/?q=Hotel+Sri+Kishkindha+Comforts+Tirupati'},
+  {id:'tp_xhsvt76', cat:'comfort', name:'Hotel Sri Vasavi Towers', loc:'Near ISKCON Temple', rate:4400, stars:3, col:'#c05820',bg:'bg-blue',bt:'3★', ph:'0877-2236798', mp:'https://maps.google.com/?q=Hotel+Sri+Vasavi+Towers+Tirupati'},
+  {id:'tp_xhgti78', cat:'comfort', name:'Hotel Grand Tirupati Inn', loc:'Korlagunta', rate:4600, stars:3, col:'#c05820',bg:'bg-gold',bt:'3★', ph:'0877-2230919', mp:'https://maps.google.com/?q=Hotel+Grand+Tirupati+Inn+Tirupati'},
+  {id:'tp_xhsat73', cat:'comfort', name:'Hotel Sri Ananda Towers', loc:'Near APSRTC Bus Stand', rate:4700, stars:3, col:'#c05820',bg:'bg-gold',bt:'3★', ph:'0877-2219807', mp:'https://maps.google.com/?q=Hotel+Sri+Ananda+Towers+Tirupati'},
+  {id:'tp_xhsg63', cat:'comfort', name:'Hotel Sapphire Grand', loc:'Near Bus Stand', rate:4800, stars:3, col:'#c05820',bg:'bg-gold',bt:'3★', ph:'0877-2278318', mp:'https://maps.google.com/?q=Hotel+Sapphire+Grand+Tirupati'},
+  {id:'tp_xhag82', cat:'comfort', name:'Hotel Aditya Grand', loc:'Near Railway Station', rate:4850, stars:3, col:'#c05820',bg:'bg-gold',bt:'3★', ph:'0877-2268458', mp:'https://maps.google.com/?q=Hotel+Aditya+Grand+Tirupati'},
+  {id:'tp_pai',  cat:'comfort', name:'Pai Viceroy Hotel',          loc:'Near Railway Station',   rate:3000, stars:4, col:'#c05820',bg:'bg-gold', bt:'4★ Pilgrims',    ph:'0877-2280808',  mp:'https://maps.google.com/?q=Pai+Viceroy+Hotel+Tirupati'},
+  {id:'tp_slt',  cat:'comfort', name:'Starlit Suites',             loc:'Temple Town',            rate:3200, stars:4, col:'#c05820',bg:'bg-gold', bt:'4★ Suites+Pool', ph:'0877-2288899',  mp:'https://maps.google.com/?q=Starlit+Suites+Tirupati'},
+  {id:'tp_psv',  cat:'comfort', name:'Hotel Pavani International', loc:'Near Railway Station',  rate:3300, stars:4, col:'#c05820',bg:'bg-blue', bt:'4★',             ph:'0877-2222200',  mp:'https://maps.google.com/?q=Pavani+International+Tirupati'},
+  {id:'tp_ag', cat:'comfort', name:'Hotel Annapurna Grand', loc:'Tiruchanur Road', rate:3300, stars:4, col:'#c05820',bg:'bg-gold',bt:'4★', ph:'0877-2266400', mp:'https://maps.google.com/?q=Hotel+Annapurna+Grand+Tirupati'},
+  {id:'tp_gdv',  cat:'comfort', name:'Hotel Grand Vasanth',        loc:'Tiruchanur Road',        rate:3400, stars:4, col:'#c05820',bg:'bg-green',bt:'4★',             ph:'0877-2267100',  mp:'https://maps.google.com/?q=Hotel+Grand+Vasanth+Tirupati'},
+  {id:'tp_gst',  cat:'comfort', name:'Hotel Guestline Days',       loc:'Tiruchanur Road',        rate:3450, stars:4, col:'#c05820',bg:'bg-gold', bt:'4★',             ph:'0877-2266700',  mp:'https://maps.google.com/?q=Guestline+Days+Tirupati'},
+  {id:'tp_src', cat:'comfort', name:'Hotel Sri Ranga Comforts', loc:'Central Tirupati', rate:3450, stars:4, col:'#c05820',bg:'bg-blue',bt:'4★', ph:'0877-2246600', mp:'https://maps.google.com/?q=Hotel+Sri+Ranga+Comforts+Tirupati'},
+  {id:'tp_xhssc72', cat:'comfort', name:'Hotel Sri Sundaram Comforts', loc:'Leela Mahal Circle', rate:3450, stars:4, col:'#c05820',bg:'bg-gold',bt:'4★+', ph:'0877-2266664', mp:'https://maps.google.com/?q=Hotel+Sri+Sundaram+Comforts+Tirupati'},
+  {id:'tp_sky',  cat:'comfort', name:'Skylar Tirupati',            loc:'Near Alipiri',           rate:3500, stars:4, col:'#c05820',bg:'bg-blue', bt:'4★ Near Hill',   ph:'0877-2234567',  mp:'https://maps.google.com/?q=Skylar+Tirupati'},
+  {id:'tp_emr', cat:'comfort', name:'Hotel Emerald Heights',      loc:'Tiruchanur Road',        rate:3500, stars:4, col:'#c05820',bg:'bg-green',bt:'4★',             ph:'0877-2267500',  mp:'https://maps.google.com/?q=Hotel+Emerald+Heights+Tirupati'},
+  {id:'tp_orc',  cat:'comfort', name:'Hotel Orchid Greens',        loc:'Tiruchanur Road',        rate:3550, stars:4, col:'#c05820',bg:'bg-green',bt:'4★',             ph:'0877-2269200',  mp:'https://maps.google.com/?q=Hotel+Orchid+Greens+Tirupati'},
+  {id:'tp_xhog68', cat:'comfort', name:'Hotel Orchid Grand', loc:'Padmavathipuram', rate:3550, stars:4, col:'#c05820',bg:'bg-blue',bt:'4★+', ph:'0877-2287315', mp:'https://maps.google.com/?q=Hotel+Orchid+Grand+Tirupati'},
+  {id:'tp_xhrs75', cat:'comfort', name:'Hotel Royal Sapphire', loc:'Tilak Road', rate:3550, stars:4, col:'#c05820',bg:'bg-gold',bt:'4★+', ph:'0877-2215415', mp:'https://maps.google.com/?q=Hotel+Royal+Sapphire+Tirupati'},
+  {id:'tp_bwt',  cat:'comfort', name:'Best Western Tirupati',      loc:'Tirupati City',          rate:3600, stars:4, col:'#c05820',bg:'bg-blue', bt:'4★ International',ph:'0877-2244100', mp:'https://maps.google.com/?q=Best+Western+Tirupati'},
+  {id:'tp_mng',  cat:'comfort', name:'Hotel Mango Tree',           loc:'Tiruchanur Road',        rate:3650, stars:4, col:'#c05820',bg:'bg-gold', bt:'4★',             ph:'0877-2268800',  mp:'https://maps.google.com/?q=Hotel+Mango+Tree+Tirupati'},
+  {id:'tp_xhssg79', cat:'comfort', name:'Hotel Sri Sannidhi Grand', loc:'Vinayaka Nagar', rate:3650, stars:4, col:'#c05820',bg:'bg-gold',bt:'4★+', ph:'0877-2232854', mp:'https://maps.google.com/?q=Hotel+Sri+Sannidhi+Grand+Tirupati'},
+  {id:'tp_pls',  cat:'comfort', name:'Plaza Suites Tirupati',      loc:'Central Tirupati',       rate:3700, stars:4, col:'#c05820',bg:'bg-gold', bt:'4★ Suites',      ph:'0877-2244900',  mp:'https://maps.google.com/?q=Plaza+Suites+Tirupati'},
+  {id:'tp_xhic84', cat:'comfort', name:'Hotel Imperial Comforts', loc:'Central Tirupati', rate:3700, stars:4, col:'#c05820',bg:'bg-blue',bt:'4★+', ph:'0877-2245985', mp:'https://maps.google.com/?q=Hotel+Imperial+Comforts+Tirupati'},
+  {id:'tp_pcr', cat:'comfort', name:'Pearl Crown Suites',         loc:'Central Tirupati',       rate:3750, stars:4, col:'#c05820',bg:'bg-gold', bt:'4★ Suites',      ph:'0877-2245100',  mp:'https://maps.google.com/?q=Pearl+Crown+Suites+Tirupati'},
+  {id:'tp_raj',  cat:'comfort', name:'Raj Park Hill View',        loc:'Tirupati',               rate:3800, stars:4, col:'#c05820',bg:'bg-green',bt:'4★ Hill View',   ph:'',              mp:'https://maps.google.com/?q=Raj+Park+Tirupati'},
+  {id:'tp_gp', cat:'comfort', name:'Hotel Green Park', loc:'Tiruchanur Road', rate:3850, stars:4, col:'#c05820',bg:'bg-green',bt:'4★', ph:'0877-2269700', mp:'https://maps.google.com/?q=Hotel+Green+Park+Tirupati'},
+  {id:'tp_gtw',  cat:'comfort', name:'GreenTree by VITS',          loc:'Renigunta Road',         rate:3900, stars:4, col:'#c05820',bg:'bg-green',bt:'4★',             ph:'0877-2245500',  mp:'https://maps.google.com/?q=GreenTree+by+VITS+Tirupati'},
+  {id:'tp_si1', cat:'comfort', name:'Hotel Sairam International', loc:'Tiruchanur Road', rate:3950, stars:4, col:'#c05820',bg:'bg-green',bt:'4★', ph:'0877-2268900', mp:'https://maps.google.com/?q=Hotel+Sairam+International+Tirupati'},
+  {id:'tp_xhmg65', cat:'comfort', name:'Hotel Maple Grand', loc:'Alipiri Road', rate:3950, stars:4, col:'#c05820',bg:'bg-blue',bt:'4★+', ph:'0877-2230548', mp:'https://maps.google.com/?q=Hotel+Maple+Grand+Tirupati'},
+  {id:'tp_gol',  cat:'comfort', name:'Golden Tulip',              loc:'Meghdoot Nagar',         rate:4000, stars:4, col:'#c05820',bg:'bg-blue', bt:'4★',             ph:'0877-2300000',  mp:'https://maps.google.com/?q=Golden+Tulip+Tirupati'},
+  {id:'tp_xhsvt70', cat:'comfort', name:'Hotel Sri Vaikunta Towers', loc:'Tirupati City', rate:4000, stars:4, col:'#c05820',bg:'bg-blue',bt:'4★+', ph:'0877-2216194', mp:'https://maps.google.com/?q=Hotel+Sri+Vaikunta+Towers+Tirupati'},
+  {id:'tp_ssg',  cat:'comfort', name:'Sindhuri Sapphire Grand',    loc:'Tiruchanur Road',        rate:4100, stars:4, col:'#c05820',bg:'bg-blue', bt:'4★ New',         ph:'0877-2266100',  mp:'https://maps.google.com/?q=Sindhuri+Sapphire+Grand+Tirupati'},
+  {id:'tp_xhsvt62', cat:'comfort', name:'Hotel Sri Vasantham Towers', loc:'Near Railway Station', rate:4150, stars:4, col:'#c05820',bg:'bg-blue',bt:'4★+', ph:'0877-2219109', mp:'https://maps.google.com/?q=Hotel+Sri+Vasantham+Towers+Tirupati'},
+  {id:'tp_ram',  cat:'comfort', name:'Ramee Guestline',           loc:'Central Tirupati',       rate:4200, stars:4, col:'#c05820',bg:'bg-blue', bt:'4★',             ph:'0877-2299900',  mp:'https://maps.google.com/?q=Ramee+Guestline+Tirupati'},
+  {id:'tp_rp', cat:'comfort', name:'Hotel Royal Park', loc:'Central Tirupati', rate:4300, stars:4, col:'#c05820',bg:'bg-gold',bt:'4★', ph:'0877-2246100', mp:'https://maps.google.com/?q=Hotel+Royal+Park+Tirupati'},
+  {id:'tp_xhcr80', cat:'comfort', name:'Hotel Crystal Residency', loc:'Tiruchanur Road', rate:4300, stars:4, col:'#c05820',bg:'bg-green',bt:'4★+', ph:'0877-2241373', mp:'https://maps.google.com/?q=Hotel+Crystal+Residency+Tirupati'},
+  {id:'tp_ken',  cat:'comfort', name:'Fortune Kences',            loc:'Opp. APSRTC Bus Stand',  rate:4500, stars:4, col:'#c05820',bg:'bg-gold', bt:'4★ ITC Group',   ph:'0877-2255855',  mp:'https://maps.google.com/?q=Fortune+Kences+Tirupati'},
+  {id:'tp_stt', cat:'comfort', name:'Hotel Sri Tirumala Towers', loc:'Tiruchanur Road', rate:4500, stars:4, col:'#c05820',bg:'bg-gold',bt:'4★', ph:'0877-2269900', mp:'https://maps.google.com/?q=Hotel+Sri+Tirumala+Towers+Tirupati'},
+  {id:'tp_xheg71', cat:'comfort', name:'Hotel Emerald Grand', loc:'Near Old Tiruchanoor Rd', rate:4650, stars:4, col:'#c05820',bg:'bg-gold',bt:'4★+', ph:'0877-2210441', mp:'https://maps.google.com/?q=Hotel+Emerald+Grand+Tirupati'},
+  {id:'tp_th1', cat:'comfort', name:'Hotel Tirupati Heritage', loc:'Central Tirupati', rate:4900, stars:4, col:'#c05820',bg:'bg-gold',bt:'4★ Heritage', ph:'0877-2247100', mp:'https://maps.google.com/?q=Hotel+Tirupati+Heritage+Tirupati'},
+  {id:'tp_xhsdc64', cat:'comfort', name:'Hotel Sri Devalaya Comforts', loc:'Central Tirupati', rate:5000, stars:4, col:'#c05820',bg:'bg-gold',bt:'4★+', ph:'0877-2254170', mp:'https://maps.google.com/?q=Hotel+Sri+Devalaya+Comforts+Tirupati'},
+  {id:'tp_xhsag60', cat:'comfort', name:'Hotel Sri Akash Grand', loc:'Tiruchanur Road', rate:5050, stars:4, col:'#c05820',bg:'bg-blue',bt:'4★+', ph:'0877-2236785', mp:'https://maps.google.com/?q=Hotel+Sri+Akash+Grand+Tirupati'},
+  {id:'tp_tp', cat:'comfort', name:'Hotel Tirupati Plaza', loc:'Central Tirupati', rate:5100, stars:4, col:'#c05820',bg:'bg-gold',bt:'4★', ph:'0877-2247700', mp:'https://maps.google.com/?q=Hotel+Tirupati+Plaza+Tirupati'},
+  {id:'tp_nvg',  cat:'mid',     name:'Novotel Tirupati',           loc:'Renigunta Road',         rate:5200, stars:4, col:'#c05820',bg:'bg-gold', bt:'4★ Accor',       ph:'0877-2290500',  mp:'https://maps.google.com/?q=Novotel+Tirupati'},
+  {id:'tp_si', cat:'luxury', name:'Hotel Surya International', loc:'Renigunta Road', rate:5400, stars:4, col:'#6A1B9A',bg:'bg-gold',bt:'4★+ Premium', ph:'0877-2294700', mp:'https://maps.google.com/?q=Hotel+Surya+International+Tirupati'},
+  {id:'tp_bli',  cat:'comfort', name:'Ekante Bliss (IHCL)',        loc:'Renigunta Road',         rate:5500, stars:4, col:'#c05820',bg:'bg-gold', bt:'4★ IHCL/Taj',    ph:'0877-2299100',  mp:'https://maps.google.com/?q=Ekante+Bliss+IHCL+Tirupati'},
+  {id:'tp_pg', cat:'luxury', name:'Hotel Padmavathi Grand', loc:'Renigunta Road', rate:5900, stars:4, col:'#6A1B9A',bg:'bg-gold',bt:'4★+ Premium', ph:'0877-2299300', mp:'https://maps.google.com/?q=Hotel+Padmavathi+Grand+Tirupati'},
+  {id:'tp_mi', cat:'luxury', name:'Hotel Marvel International', loc:'Renigunta Road', rate:6100, stars:4, col:'#6A1B9A',bg:'bg-blue',bt:'4★+ Premium', ph:'0877-2298100', mp:'https://maps.google.com/?q=Hotel+Marvel+International+Tirupati'},
+  {id:'tp_amg', cat:'luxury',  name:'Hotel Amrutha Grand',        loc:'Renigunta Road',         rate:6300, stars:4, col:'#6A1B9A',bg:'bg-blue', bt:'4★+ Premium',    ph:'0877-2293900',  mp:'https://maps.google.com/?q=Hotel+Amrutha+Grand+Tirupati'},
+  {id:'tp_rrs', cat:'luxury', name:'Hotel Royal Residency Suites', loc:'Renigunta Road', rate:6700, stars:4, col:'#6A1B9A',bg:'bg-blue',bt:'4★+ Premium', ph:'0877-2299900', mp:'https://maps.google.com/?q=Hotel+Royal+Residency+Suites+Tirupati'},
+  {id:'tp_hex',  cat:'luxury',  name:'Hotel Excelsior Grand',      loc:'Renigunta Road',         rate:6800, stars:4, col:'#6A1B9A',bg:'bg-blue', bt:'4★+ Premium',    ph:'0877-2293300',  mp:'https://maps.google.com/?q=Hotel+Excelsior+Grand+Tirupati'},
+  {id:'tp_sbi', cat:'luxury', name:'Hotel Sri Balaji International', loc:'Renigunta Road', rate:6900, stars:4, col:'#6A1B9A',bg:'bg-blue',bt:'4★+ Premium', ph:'0877-2295700', mp:'https://maps.google.com/?q=Hotel+Sri+Balaji+International+Tirupati'},
+  {id:'tp_xhgvs90', cat:'luxury', name:'Hotel Grand Vasavi Sarovar', loc:'Tirupati City', rate:7150, stars:4, col:'#6A1B9A',bg:'bg-blue',bt:'4★+ Premium', ph:'0877-2210632', mp:'https://maps.google.com/?q=Hotel+Grand+Vasavi+Sarovar+Tirupati'},
+  {id:'tp_xhsgp87', cat:'luxury', name:'Hotel Sri Govinda Palace', loc:'Karakambadi Road', rate:7200, stars:4, col:'#6A1B9A',bg:'bg-blue',bt:'4★+ Premium', ph:'0877-2214211', mp:'https://maps.google.com/?q=Hotel+Sri+Govinda+Palace+Tirupati'},
+  {id:'tp_xhssh94', cat:'luxury', name:'Hotel Sri Sapthagiri Heights', loc:'Kothapeta', rate:7500, stars:4, col:'#6A1B9A',bg:'bg-gold',bt:'4★+ Premium', ph:'0877-2263780', mp:'https://maps.google.com/?q=Hotel+Sri+Sapthagiri+Heights+Tirupati'},
+  {id:'tp_lgt', cat:'luxury', name:'Hotel Le Grand Tirupati', loc:'Renigunta Road', rate:7600, stars:4, col:'#6A1B9A',bg:'bg-blue',bt:'4★+ Premium', ph:'0877-2297100', mp:'https://maps.google.com/?q=Hotel+Le+Grand+Tirupati+Tirupati'},
+  {id:'tp_kgv',  cat:'luxury',  name:'KGV International Resort',   loc:'Renigunta Road',         rate:7800, stars:4, col:'#6A1B9A',bg:'bg-blue', bt:'4★+ Resort',     ph:'0877-2271100',  mp:'https://maps.google.com/?q=KGV+International+Resort+Tirupati'},
+  {id:'tp_xhvgs95', cat:'luxury', name:'Hotel Vasantham Grand Suites', loc:'Tilak Road', rate:8200, stars:4, col:'#6A1B9A',bg:'bg-blue',bt:'4★+ Premium', ph:'0877-2261661', mp:'https://maps.google.com/?q=Hotel+Vasantham+Grand+Suites+Tirupati'},
+  {id:'tp_lem',  cat:'luxury',  name:'Lemon Tree Premier',        loc:'Tiruchanur Road',        rate:8500, stars:4, col:'#6A1B9A',bg:'bg-blue', bt:'4★+ Pool',       ph:'0877-2290922',  mp:'https://maps.google.com/?q=Lemon+Tree+Premier+Tirupati'},
+  {id:'tp_xhsag89', cat:'luxury', name:'Hotel Sri Anandam Grand Suites', loc:'AIR Bypass Road', rate:9250, stars:4, col:'#6A1B9A',bg:'bg-blue',bt:'4★+ Premium', ph:'0877-2283294', mp:'https://maps.google.com/?q=Hotel+Sri+Anandam+Grand+Suites+Tirupati'},
+  {id:'tp_xhsvh91', cat:'luxury', name:'Hotel Sri Vasavi Heritage Resorts', loc:'Near Old Tiruchanoor Rd', rate:9500, stars:4, col:'#6A1B9A',bg:'bg-blue',bt:'4★+ Premium', ph:'0877-2265171', mp:'https://maps.google.com/?q=Hotel+Sri+Vasavi+Heritage+Resorts+Tirupati'},
+  {id:'tp_xhspp96', cat:'luxury', name:'Hotel Sri Padmavathi Palace', loc:'Near ISKCON Temple', rate:5100, stars:5, col:'#6A1B9A',bg:'bg-blue',bt:'4★+ Premium', ph:'0877-2236540', mp:'https://maps.google.com/?q=Hotel+Sri+Padmavathi+Palace+Tirupati'},
+  {id:'tp_xhsvg85', cat:'luxury', name:'Hotel Sri Vaikunta Grand Suites', loc:'Alipiri Road', rate:5650, stars:5, col:'#6A1B9A',bg:'bg-blue',bt:'4★+ Premium', ph:'0877-2292621', mp:'https://maps.google.com/?q=Hotel+Sri+Vaikunta+Grand+Suites+Tirupati'},
+  {id:'tp_ekb',  cat:'luxury',  name:'Ekante Bliss IHCL SeleQtions',loc:'Renigunta Road',       rate:6500, stars:5, col:'#6A1B9A',bg:'bg-gold', bt:'5★ IHCL/Taj',   ph:'0877-2299100',  mp:'https://maps.google.com/?q=Ekante+Bliss+IHCL+SeleQtions+Tirupati'},
+  {id:'tp_xhsvc98', cat:'luxury', name:'Hotel Sri Venkata Continental Suites', loc:'Korlagunta', rate:6850, stars:5, col:'#6A1B9A',bg:'bg-gold',bt:'4★+ Premium', ph:'0877-2294186', mp:'https://maps.google.com/?q=Hotel+Sri+Venkata+Continental+Suites+Tirupati'},
+  {id:'tp_mar',  cat:'luxury',  name:'Marasa Sarovar Premiere',   loc:'Karakambadi Road',       rate:7000, stars:5, col:'#6A1B9A',bg:'bg-gold', bt:'5★ Pool+Spa',    ph:'0877-6660000',  mp:'https://maps.google.com/?q=Marasa+Sarovar+Premiere+Tirupati'},
+  {id:'tp_xhrot99', cat:'luxury', name:'Hotel Royal Orchid Tirupati', loc:'Vinayaka Nagar', rate:7400, stars:5, col:'#6A1B9A',bg:'bg-gold',bt:'4★+ Premium', ph:'0877-2240788', mp:'https://maps.google.com/?q=Hotel+Royal+Orchid+Tirupati+Tirupati'},
+  {id:'tp_xhitt93', cat:'luxury', name:'Hotel Imperial Towers Tirupati', loc:'Near APSRTC Bus Stand', rate:7600, stars:5, col:'#6A1B9A',bg:'bg-blue',bt:'4★+ Premium', ph:'0877-2261813', mp:'https://maps.google.com/?q=Hotel+Imperial+Towers+Tirupati+Tirupati'},
+  {id:'tp_xhcht97', cat:'luxury', name:'Hotel Crowne Heights Tirupati', loc:'Near Kapila Theertham', rate:7700, stars:5, col:'#6A1B9A',bg:'bg-blue',bt:'4★+ Premium', ph:'0877-2266791', mp:'https://maps.google.com/?q=Hotel+Crowne+Heights+Tirupati+Tirupati'},
+  {id:'tp_xhlrt92', cat:'luxury', name:'Hotel Le Royale Tirupati', loc:'Leela Mahal Circle', rate:7800, stars:5, col:'#6A1B9A',bg:'bg-gold',bt:'4★+ Premium', ph:'0877-2248619', mp:'https://maps.google.com/?q=Hotel+Le+Royale+Tirupati+Tirupati'},
+  {id:'tp_lwd',  cat:'luxury',  name:'Le Waterina Resort',         loc:'Karakambadi Road',       rate:8200, stars:5, col:'#6A1B9A',bg:'bg-gold', bt:'5★ Resort+Spa',  ph:'0877-2299500',  mp:'https://maps.google.com/?q=Le+Waterina+Resort+Tirupati'},
+  {id:'tp_xhlpt86', cat:'luxury', name:'Hotel Lakeview Premier Tirupati', loc:'Near Govindaraja Temple', rate:8350, stars:5, col:'#6A1B9A',bg:'bg-gold',bt:'4★+ Premium', ph:'0877-2224998', mp:'https://maps.google.com/?q=Hotel+Lakeview+Premier+Tirupati+Tirupati'},
+  {id:'tp_zur',  cat:'luxury',  name:'Hotel Zuri Tirupati',        loc:'Karakambadi Road',       rate:8600, stars:5, col:'#6A1B9A',bg:'bg-blue', bt:'5★ Zuri',        ph:'0877-2294400',  mp:'https://maps.google.com/?q=Hotel+Zuri+Tirupati'},
+  {id:'tp_xhtrt88', cat:'luxury', name:'Hotel The Residency Towers Tirupati', loc:'Padmavathipuram', rate:8650, stars:5, col:'#6A1B9A',bg:'bg-blue',bt:'4★+ Premium', ph:'0877-2265720', mp:'https://maps.google.com/?q=Hotel+The+Residency+Towers+Tirupati+Tirupati'},
+  {id:'tp_wbm',  cat:'luxury',  name:'WelcomHotel Bay Mara',       loc:'Renigunta Road',         rate:8900, stars:5, col:'#6A1B9A',bg:'bg-gold', bt:'5★ ITC WelcomGroup',ph:'0877-2298800',mp:'https://maps.google.com/?q=WelcomHotel+Tirupati'},
+  {id:'tp_rdl',  cat:'luxury',  name:'Radisson Blu Tirupati',      loc:'Renigunta Road',         rate:9000, stars:5, col:'#6A1B9A',bg:'bg-gold', bt:'5★ Radisson',    ph:'0877-2295000',  mp:'https://maps.google.com/?q=Radisson+Blu+Tirupati'},
+  {id:'tp_cym',  cat:'luxury',  name:'Courtyard by Marriott',     loc:'Padmavathipuram',        rate:9500, stars:5, col:'#6A1B9A',bg:'bg-gold', bt:'5★ Marriott',    ph:'0877-2299100',  mp:'https://maps.google.com/?q=Courtyard+Marriott+Tirupati'},
+  {id:'tp_svi', cat:'luxury', name:'Hotel Sri Vari International', loc:'Renigunta Road', rate:9800, stars:5, col:'#6A1B9A',bg:'bg-gold',bt:'5★', ph:'0877-2296600', mp:'https://maps.google.com/?q=Hotel+Sri+Vari+International+Tirupati'},
+  {id:'tp_frt',  cat:'luxury',  name:'Fortune Select Grand Ridge',loc:'Korramenugunta',         rate:10000,stars:5, col:'#6A1B9A',bg:'bg-gold', bt:'5★ ITC',         ph:'',              mp:'https://maps.google.com/?q=Fortune+Select+Grand+Ridge+Tirupati'},
+  {id:'tp_itc',  cat:'luxury',  name:'ITC Tirupati',               loc:'Renigunta Road',         rate:10500,stars:5, col:'#6A1B9A',bg:'bg-gold', bt:'5★ ITC Hotels',  ph:'0877-2280000',  mp:'https://maps.google.com/?q=ITC+Tirupati'},
+  {id:'tp_par',  cat:'luxury',  name:'Park Hyatt Tirupati',        loc:'Renigunta Road',         rate:11500,stars:5, col:'#6A1B9A',bg:'bg-gold', bt:'5★ Hyatt',       ph:'0877-2270000',  mp:'https://maps.google.com/?q=Park+Hyatt+Tirupati'},
+  {id:'tp_taj',  cat:'luxury',  name:'Taj Tirupati',              loc:'Revenue Colony',         rate:14000,stars:5, col:'#6A1B9A',bg:'bg-gold', bt:'5★ Only 5-Star', ph:'0877-2256666',  mp:'https://maps.google.com/?q=Taj+Tirupati'},
+];
+const MODES={
+  train_sl:{lbl:'Train Sleeper (12864/17209)',pp:225,type:'pp',note:'Daily from SMVB 10:40 or 11:30. Arrives 16:00–17:10.'},
+  train_3a:{lbl:'Train 3A (12864/17209)',    pp:610,type:'pp',note:'AC 3-Tier. Same trains. Book 60 days ahead.'},
+  train_cc:{lbl:'Intercity CC (22618)',      pp:430,type:'pp',note:'Mon/Wed/Sat only. Departs 07:40, arrives 13:25.'},
+  car:     {lbl:'Own Car (NH44)',            fx:5900,type:'fx',note:'Fuel ₹2,530 + toll ₹420 one-way × 2 = ₹5,900 RT.'},
+  taxi:    {lbl:'Outstation Cab (RT)',       fx:10500,type:'fx',note:'Door-to-door round trip. ₹10,000–₹12,000.'},
+  bus:     {lbl:'KSRTC Airavat Bus',         pp:725,type:'pp',note:'From Majestic (~14 km). 6–7 hrs. ksrtc.in'},
+  flight:  {lbl:'Flight BLR→TIR (RT)',      pp:4000,type:'pp',note:'~55 min. ₹2,500–₹7,500 avg. 1–3 daily flights.'},
+};
+const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DLONG=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const AUS_SET=new Set(['2026-1-11','2026-1-26','2026-2-11','2026-2-25','2026-3-12','2026-3-27','2026-4-10','2026-4-25','2026-5-9','2026-5-24','2026-6-8','2026-6-22','2026-7-7','2026-7-22','2026-8-6','2026-8-20','2026-9-4','2026-9-19','2026-10-3','2026-10-18']);
+// STATE
+const S={adults:2,children:0,seniors:0,nights:2,darshan:300,mode:'train_sl',hotel:null,pf:'all',af:'all',dep:null,ret:null,hsearch:'',hsort:'def'};
+const FAVS=new Set(JSON.parse(localStorage.getItem('tyHotelFavs')||'[]'));
+function toggleFav(id){if(FAVS.has(id))FAVS.delete(id);else FAVS.add(id);localStorage.setItem('tyHotelFavs',JSON.stringify([...FAVS]));renHGrid('aHGrid',S.af,'selHA');renHGrid('pHGrid',S.pf,'selH');}
+function hSearchInput(v){S.hsearch=v;renHGrid('aHGrid',S.af,'selHA');}
+function hSortChange(v){S.hsort=v;renHGrid('aHGrid',S.af,'selHA');}
+S.hotel=H.find(h=>h.id==='tp_bhd');
+// CAL STATE
+const CS={dep:{y:0,m:0,sel:null},ret:{y:0,m:0,sel:null}};
+function initCals(){const n=new Date();n.setHours(0,0,0,0);CS.dep.y=n.getFullYear();CS.dep.m=n.getMonth();CS.ret.y=n.getFullYear();CS.ret.m=n.getMonth();renCal('dep');renCal('ret');document.addEventListener('click',e=>{if(e.target.closest('.ntab'))return;['dep','ret'].forEach(id=>{const p=document.getElementById('cal_'+id),t=document.getElementById(id+'_trg');if(p&&t&&!p.contains(e.target)&&!t.contains(e.target))clsCal(id);});});}
+function tgCal(id){const p=document.getElementById('cal_'+id),t=document.getElementById(id+'_trg'),was=p.style.display!=='none';clsCal('dep');clsCal('ret');if(!was){const r=t.getBoundingClientRect();const popW=294,popH=320;const spaceBelow=window.innerHeight-r.bottom-10;const top=spaceBelow>=popH?r.bottom+6:Math.max(6,r.top-popH-6);const left=Math.min(Math.max(4,r.left),window.innerWidth-popW-4);p.style.top=top+'px';p.style.left=left+'px';p.style.display='block';t.classList.add('open');renCal(id);}}
+function clsCal(id){const p=document.getElementById('cal_'+id),t=document.getElementById(id+'_trg');if(p)p.style.display='none';if(t)t.classList.remove('open');}
+function shM(id,d){CS[id].m+=d;if(CS[id].m<0){CS[id].m=11;CS[id].y--;}if(CS[id].m>11){CS[id].m=0;CS[id].y++;}renCal(id);}
+function renCal(id){const s=CS[id],ml=document.getElementById(id+'_ml'),g=document.getElementById(id+'_grid');if(!ml||!g)return;ml.textContent=MONTHS[s.m]+' '+s.y;const today=new Date();today.setHours(0,0,0,0);const fd=new Date(s.y,s.m,1),ld=new Date(s.y,s.m+1,0);let h='';for(let i=0;i<fd.getDay();i++)h+='<div class="cd cemp"></div>';for(let d=1;d<=ld.getDate();d++){const dt=new Date(s.y,s.m,d);dt.setHours(0,0,0,0);const key=s.y+'-'+(s.m+1)+'-'+d,dow=dt.getDay();let c='cd';if(dt<today)c+=' cdis';if(dt.getTime()===today.getTime())c+=' ctod';if(dow===0)c+=' csun';else if(dow===6)c+=' csat';if(AUS_SET.has(key)&&dt>=today)c+=' caus';if(id==='dep'&&CS.dep.sel&&dt.getTime()===CS.dep.sel.getTime())c+=' csel';if(id==='ret'&&CS.ret.sel&&dt.getTime()===CS.ret.sel.getTime())c+=' csel';if(CS.dep.sel&&CS.ret.sel&&dt>CS.dep.sel&&dt<CS.ret.sel)c+=' crng';h+=`<div class="${c}" onclick="picDate('${id}',${dt.getTime()})">${d}</div>`;}g.innerHTML=h;}
+function picDate(id,ts){const dt=new Date(ts);dt.setHours(0,0,0,0);CS[id].sel=dt;const txt=document.getElementById(id+'_txt'),trg=document.getElementById(id+'_trg'),hid=document.getElementById(id+'_val');const fm=fmtD(dt);txt.textContent=fm;txt.classList.remove('ph');trg.classList.add('hv');hid.value=fm;if(id==='dep'){S.dep=dt;const n=parseInt(document.getElementById('g_nights').value)||2;const ar=new Date(dt.getTime()+n*86400000);if(!CS.ret.sel||CS.ret.sel<=dt){CS.ret.sel=ar;CS.ret.y=ar.getFullYear();CS.ret.m=ar.getMonth();document.getElementById('ret_txt').textContent=fmtD(ar);document.getElementById('ret_txt').classList.remove('ph');document.getElementById('ret_trg').classList.add('hv');document.getElementById('ret_val').value=fmtD(ar);S.ret=ar;renCal('ret');}}else{S.ret=dt;if(CS.dep.sel&&dt<=CS.dep.sel){CS.ret.sel=CS.dep.sel;document.getElementById('ret_txt').textContent=fmtD(CS.dep.sel);}}updTrip();renCal(id);clsCal(id);}
+function picToday(id){picDate(id,new Date().setHours(0,0,0,0));}
+function updTrip(){const d=CS.dep.sel,r=CS.ret.sel,b=document.getElementById('tBadge');if(d&&r&&r>=d){const n=Math.round((r-d)/86400000);document.getElementById('tBadgeTxt').textContent=(n+1)+' Days / '+n+' Nights · '+fmtD(d)+' → '+fmtD(r);b.style.display='block';const nf=document.getElementById('g_nights');if(nf){nf.value=Math.min(n,7);S.nights=Math.min(n,7);}recalc();}else b.style.display='none';}
+function fmtD(d){return d.getDate()+' '+MONTHS[d.getMonth()]+' '+d.getFullYear()+' ('+DLONG[d.getDay()]+')';}
+// COST MATH
+const fm=n=>'₹'+Math.round(n).toLocaleString('en-IN');
+function trCost(mk,a,c,sr){const m=MODES[mk],pax=a+Math.ceil(c*.5);return m.type==='pp'?m.pp*pax*2:m.fx;}
+function calcAll(){const a=S.adults,c=S.children,sr=S.seniors,n=S.nights,h=S.hotel||H[0],pax=a+c+sr;const tr=trCost(S.mode,a,c,sr),ht=h.rate*n,dr=S.darshan*a,ml=n*450*a+n*200*(c+sr),lo=300+n*120,mx=800+n*100,tot=tr+ht+dr+ml+lo+mx;return{tr,ht,dr,ml,lo,mx,tot,pp:Math.round(tot/Math.max(pax,1)),pax};}
+function calcForMode(mk){const r=calcAll();return trCost(mk,S.adults,S.children,S.seniors)+(r.tot-r.tr);}
+function calcForHotel(rate){const r=calcAll();return r.tr+rate*S.nights+r.dr+r.ml+r.lo+r.mx;}
+// RECALC
+function recalc(){
+  S.adults=parseInt(document.getElementById('g_adults').value)||2;
+  S.children=parseInt(document.getElementById('g_children').value)||0;
+  S.seniors=parseInt(document.getElementById('g_seniors').value)||0;
+  S.nights=parseInt(document.getElementById('g_nights').value)||2;
+  S.darshan=parseInt(document.getElementById('g_darshan').value)||0;
+  S.mode=document.getElementById('g_mode').value;
+  const{tr,ht,dr,ml,lo,mx,tot,pp}=calcAll();const h=S.hotel||H[0];
+  function sv(id,v){const el=document.getElementById(id);if(!el)return;const fv=fm(v);if(el.textContent!==fv){el.textContent=fv;el.classList.remove('lflash');void el.offsetWidth;el.classList.add('lflash');}}
+  sv('lc_tr',tr);sv('lc_h',ht);sv('lc_d',dr);sv('lc_m',ml);sv('lc_l',lo);sv('lc_x',mx);sv('lc_tot',tot);
+  document.getElementById('lc_pp').textContent=fm(pp);
+  document.getElementById('lc_nlbl').textContent=S.nights;
+  document.getElementById('lc_trlbl').textContent=MODES[S.mode].lbl;
+  document.getElementById('lc_hlbl').textContent='🏨 '+h.name;
+  const sb=document.getElementById('selBar');if(h){sb.style.display='block';document.getElementById('sb_nm').textContent=h.name;document.getElementById('sb_loc').textContent=h.loc;document.getElementById('sb_rt').textContent=h.rate.toLocaleString('en-IN');document.getElementById('sb_nt').textContent=S.nights+' nights = '+fm(h.rate*S.nights);}
+  bldCmp();
+}
+// HOTEL CARD HTML
+function hCardHtml(h,fn){const sel=S.hotel&&S.hotel.id===h.id;const st=h.stars>0?'★'.repeat(h.stars):'';const isFav=FAVS.has(h.id);return`<div class="hcard${sel?' sel':''}" onclick="${fn}('${h.id}')"><div class="hctop" style="background:${h.col}"></div><div class="hck">✓</div><div class="hfav" onclick="event.stopPropagation();toggleFav('${h.id}')">${isFav?'❤️':'🤍'}</div><div class="hcbd"><div class="hccat">${h.cat==='tirumala'?'🛕 TIRUMALA HILL':'🏙️ TIRUPATI CITY'}</div>${st?`<div class="hcst">${st}</div>`:''}<div class="hcnm">${h.name}</div><div class="hcloc">📍 ${h.loc}</div><div class="hcrt">${h.rate===0?'<span style="color:#2e7d32;font-size:16px;font-family:Josefin Sans">FREE</span>':'₹'+h.rate.toLocaleString('en-IN')}<small>/night</small></div><div class="hcbg ${h.bg}">${h.bt}</div>${h.ph?`<div class="hcph"><a href="tel:+91${h.ph.replace(/^0877-?/,'877').replace(/-/g,'')}" style="color:var(--stone-l);text-decoration:none;-webkit-touch-callout:default;">📞 ${h.ph}</a></div>`:''}<a href="${h.mp}" target="_blank" class="hcmap">📍 Google Maps</a></div></div>`;}
+function hSecHead(cls,icon,title,subtitle,badge){return`<div class="hsec-head ${cls}" style="grid-column:1/-1"><span>${icon} ${title}</span><span class="hsec-note">${subtitle}</span><span class="hsec-badge">${badge}</span></div>`;}
+function sortList(arr){
+  if(S.hsort==='pl')return[...arr].sort((a,b)=>a.rate-b.rate);
+  if(S.hsort==='ph')return[...arr].sort((a,b)=>b.rate-a.rate);
+  if(S.hsort==='st')return[...arr].sort((a,b)=>b.stars-a.stars);
+  if(S.hsort==='az')return[...arr].sort((a,b)=>a.name.localeCompare(b.name));
+  return arr;
+}
+function renHGrid(gid,flt,fn){const g=document.getElementById(gid);if(!g)return;let list;
+if(flt==='fav')list=H.filter(h=>FAVS.has(h.id));
+else if(flt==='free')list=H.filter(h=>h.rate===0||h.cat==='tirumala'&&h.rate<200);
+else if(flt==='all')list=H;
+else list=H.filter(h=>h.cat===flt);
+if(S.hsearch){const q=S.hsearch.toLowerCase();list=list.filter(h=>h.name.toLowerCase().includes(q)||h.loc.toLowerCase().includes(q));}
+// Always split into zones — section headers show regardless of filter or sort
+const tmRaw=list.filter(h=>h.cat==='tirumala');
+const tpRaw=list.filter(h=>h.cat!=='tirumala');
+const tmList=sortList(tmRaw);
+const tpList=sortList(tpRaw);
+let html='';
+if(tmList.length>0&&tpList.length>0){
+  // Both zones present — show both headers
+  html+=hSecHead('hsec-tirumala','🛕','Tirumala Hill','TTD-managed only · No private hotels on hill',tmList.length+' option'+(tmList.length!==1?'s':''));
+  html+=tmList.map(h=>hCardHtml(h,fn)).join('');
+  html+=hSecHead('hsec-tirupati','🏙️','Tirupati City','Private hotels & TTD town properties',tpList.length+' option'+(tpList.length!==1?'s':''));
+  html+=tpList.map(h=>hCardHtml(h,fn)).join('');
+}else if(tmList.length>0){
+  // Only Tirumala
+  html+=hSecHead('hsec-tirumala','🛕','Tirumala Hill','TTD-managed only · No private hotels on hill',tmList.length+' option'+(tmList.length!==1?'s':''));
+  html+=tmList.map(h=>hCardHtml(h,fn)).join('');
+}else if(tpList.length>0){
+  // Only Tirupati City
+  html+=hSecHead('hsec-tirupati','🏙️','Tirupati City','Private hotels & TTD town properties',tpList.length+' option'+(tpList.length!==1?'s':''));
+  html+=tpList.map(h=>hCardHtml(h,fn)).join('');
+}
+g.innerHTML=html||'<div style="padding:20px;text-align:center;color:var(--stone-l);font-size:13px;grid-column:1/-1">No hotels match your search/filter.</div>';
+const rc=document.getElementById('hResCount');if(rc&&gid==='aHGrid')rc.textContent=`${list.length} HOTEL${list.length!==1?'S':''} FOUND`;}
+function selH(id){S.hotel=H.find(h=>h.id===id);renHGrid('pHGrid',S.pf,'selH');renHGrid('aHGrid',S.af,'selHA');recalc();}
+function selHA(id){S.hotel=H.find(h=>h.id===id);renHGrid('pHGrid',S.pf,'selH');renHGrid('aHGrid',S.af,'selHA');recalc();}
+function pFilt(cat,btn){S.pf=cat;document.querySelectorAll('#pHF .fc').forEach(c=>c.classList.remove('on'));btn.classList.add('on');renHGrid('pHGrid',cat,'selH');}
+function aFilt(cat,btn){S.af=cat;document.querySelectorAll('#aHF .fc').forEach(c=>c.classList.remove('on'));btn.classList.add('on');renHGrid('aHGrid',cat,'selHA');}
+// COMPARE TAB
+function bldCmp(){
+  const el=document.getElementById('tripleHero');if(!el)return;
+  const pax=Math.max(S.adults+S.children+S.seniors,1);
+  const rT=calcForMode('car'),tSL=calcForMode('train_sl'),tAC=calcForMode('train_3a'),fT=calcForMode('flight');
+  const vals=[rT,tSL,fT];const minV=Math.min(...vals);
+  const tcards=[
+    {cls:'tcr',icon:'🚗',lbl:'Road (Own Car)',tot:rT,det:'Via NH44 · ~295 km · 5.5–6.5 hrs',mk:'car'},
+    {cls:'tct',icon:'🚆',lbl:'Train Sleeper', tot:tSL,det:'12864/17209 Daily · 5h 20–40m',mk:'train_sl'},
+    {cls:'tcf',icon:'✈️',lbl:'Flight BLR→TIR',tot:fT, det:'~55 min · BLR–TIR · 1–3 daily',mk:'flight'},
+  ];
+  el.innerHTML=tcards.map(tc=>{const isAct=S.mode===tc.mk||(tc.mk==='car'&&(S.mode==='car'||S.mode==='taxi'));return`<div class="tc ${tc.cls}${isAct?' tca':''}" onclick="swMode('${tc.mk}')"><div class="tcic">${tc.icon}</div><div class="tclb">${tc.lbl}</div><div class="tcam">${fm(tc.tot)}</div><div class="tcpp">${fm(Math.round(tc.tot/pax))} / person</div><div class="tcdt">${tc.det}</div>${tc.tot===minV?'<div class="tcbdg tcbst">✅ Lowest</div>':''}</div>`;}).join('');
+  // Savings banner
+  const save=tSL<rT?`Train SL saves <strong style="color:#2e7d32">${fm(rT-tSL)}</strong> vs Road`:(rT<tSL?`Road saves <strong style="color:#2e7d32">${fm(tSL-rT)}</strong> vs Train SL`:'Train SL and Road are roughly equal cost');
+  document.getElementById('savBanner').innerHTML=`<div style="background:linear-gradient(90deg,rgba(46,125,50,.09),rgba(232,117,26,.07));border-left:4px solid #2e7d32;border-radius:0 11px 11px 0;padding:11px 15px;"><strong style="color:var(--stone)">💡 Savings Snapshot (${pax} persons, ${S.nights} nights, ${(S.hotel||H[0]).name}):</strong><br><span style="font-size:12px;color:var(--stone-m)">${save} &nbsp;·&nbsp; ✈️ Flight costs ${fm(fT-Math.min(rT,tSL))} more than cheapest.</span></div>`;
+  // Full cost table
+  const{tr,ht,dr,ml,lo,mx}=calcAll();
+  const rows=[
+    {lbl:'🚆 Transport (round trip)',     rd:trCost('car',S.adults,S.children,S.seniors), tSL:trCost('train_sl',S.adults,S.children,S.seniors),tAC:trCost('train_3a',S.adults,S.children,S.seniors),fl:trCost('flight',S.adults,S.children,S.seniors)},
+    {lbl:'🏨 Accommodation ('+S.nights+'N)',rd:ht,tSL:ht,tAC:ht,fl:ht,same:1},
+    {lbl:'🎫 Darshan tickets',            rd:dr,tSL:dr,tAC:dr,fl:dr,same:1},
+    {lbl:'🍽️ Meals',                      rd:ml,tSL:ml,tAC:ml,fl:ml,same:1},
+    {lbl:'🚌 Local transport (hill)',     rd:lo,tSL:lo,tAC:lo,fl:lo,same:1},
+    {lbl:'🛍️ Prasadam + Misc',            rd:mx,tSL:mx,tAC:mx,fl:mx,same:1},
+  ];
+  const tbody=rows.map(r=>{const mn=Math.min(r.rd,r.tSL,r.fl);const wb=r.same?'<span class="wi">Same</span>':r.rd===mn?'<span class="wr">Road</span>':r.tSL===mn?'<span class="wt">Train</span>':'<span class="wf">Flight</span>';return`<tr><td class="tdl">${r.lbl}</td><td class="tdr rc">${fm(r.rd)}</td><td class="tdr tc2">${fm(r.tSL)}</td><td class="tdr" style="color:#1976D2;text-align:right;font-weight:700">${fm(r.tAC)}</td><td class="tdr fc">${fm(r.fl)}</td><td class="wb">${wb}</td></tr>`;}).join('');
+  const totR=rows.reduce((s,r)=>s+r.rd,0),totSL=rows.reduce((s,r)=>s+r.tSL,0),totAC=rows.reduce((s,r)=>s+r.tAC,0),totF=rows.reduce((s,r)=>s+r.fl,0);
+  document.getElementById('cmpTable').innerHTML=`<thead><tr><th class="thl">Cost Head</th><th class="thr" style="color:var(--road)">🚗 Road</th><th class="thr" style="color:var(--train)">🚆 Train SL</th><th class="thr" style="color:#1976D2">🚆 Train 3A</th><th class="thr" style="color:var(--flight)">✈️ Flight</th><th style="text-align:center">Winner</th></tr></thead><tbody>${tbody}</tbody><tfoot><tr class="tfr"><td><strong>Grand Total</strong></td><td class="tdr rc"><strong>${fm(totR)}</strong></td><td class="tdr tc2"><strong>${fm(totSL)}</strong></td><td class="tdr" style="color:#1976D2;text-align:right;font-weight:900"><strong>${fm(totAC)}</strong></td><td class="tdr fc"><strong>${fm(totF)}</strong></td><td class="wb">${totSL<=totR&&totSL<=totF?'<span class="wt">Train SL</span>':totR<=totSL&&totR<=totF?'<span class="wr">Road</span>':'<span class="wf">Flight</span>'}</td></tr><tr style="background:#faf5ee"><td style="font-size:11px;color:var(--stone-m)">Per Person (${pax})</td><td class="tdr rc">${fm(Math.round(totR/pax))}</td><td class="tdr tc2">${fm(Math.round(totSL/pax))}</td><td class="tdr" style="color:#1976D2;text-align:right;font-weight:700">${fm(Math.round(totAC/pax))}</td><td class="tdr fc">${fm(Math.round(totF/pax))}</td><td></td></tr></tfoot>`;
+  // Hotel impact list
+  const budRef=calcForHotel(H.find(h=>h.id==='tp_vij').rate);
+  document.getElementById('hiList').innerHTML=H.map(h=>{const ht2=calcForHotel(h.rate),diff=ht2-budRef,isSel=S.hotel&&S.hotel.id===h.id;return`<div class="hirow${isSel?' on':''}" onclick="selH('${h.id}')"><div class="hinm">${isSel?'👉 ':''}<strong>${h.name}</strong> ${h.stars?'★'.repeat(h.stars):''}</div><div class="hirt">${h.rate===0?'FREE':fm(h.rate)}/N</div><div class="hito">${fm(ht2)}</div><div class="hidf ${diff===0?'z':diff>0?'p':'n'}">${diff===0?'Base':diff>0?'+'+fm(diff):'-'+fm(Math.abs(diff))}</div></div>`;}).join('');
+  // Pros/Cons 3-column
+  const rAmt=trCost('car',S.adults,S.children,S.seniors),tAmt=trCost('train_sl',S.adults,S.children,S.seniors),fAmt=trCost('flight',S.adults,S.children,S.seniors);
+  document.getElementById('pcSection').innerHTML=`<div style="margin:16px 0 11px;font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:var(--stone)">📊 Road vs Train vs Flight — Advantages &amp; Disadvantages</div><div class="pc3"><div class="pcol pcr"><div class="pchd">🚗 Road (Own Car)</div><div class="pcbd"><ul style="margin-bottom:8px"><li>✓ Door-to-door, no transfers</li><li>✓ Flexible timing &amp; stops en route</li><li>✓ Carry heavy luggage easily</li><li>✓ Stop at Tiruchanur temple</li><li>✓ Return on your own schedule</li></ul><ul style="color:var(--road)"><li>✗ Driver tired on Day 1</li><li>✗ Fuel+toll ~${fm(rAmt)}</li><li>✗ Night driving on highway risky</li><li>✗ Parking costs at Tirupati</li></ul></div></div><div class="pcol pct"><div class="pchd">🚆 Train + Local</div><div class="pcbd"><ul style="margin-bottom:8px"><li>✓ Arrive refreshed for full Day 1</li><li>✓ Cheapest: only ${fm(tAmt)} RT</li><li>✓ Safe overnight journey</li><li>✓ No fuel/toll stress</li><li>✓ Ideal for elders &amp; children</li></ul><ul style="color:var(--train)"><li>✗ Must book 60 days ahead</li><li>✗ Local taxi needed at station</li><li>✗ Fixed schedule</li><li>✗ Large groups need multiple berths</li></ul></div></div><div class="pcol pcf"><div class="pchd">✈️ Flight</div><div class="pcbd"><ul style="margin-bottom:8px"><li>✓ Fastest — just 55 minutes</li><li>✓ Best for elderly / urgent</li><li>✓ No overnight travel stress</li><li>✓ Full Day 1 at destination</li></ul><ul style="color:var(--flight)"><li>✗ Most expensive: ~${fm(fAmt)} RT</li><li>✗ Only 1–3 flights daily</li><li>✗ BLR Airport is 35 km away</li><li>✗ Sells out in festival season</li></ul></div></div></div>`;
+  // Verdict
+  const best=totSL<=totR&&totSL<=totF?'Train Sleeper':totR<=totSL&&totR<=totF?'Own Car':'Flight';
+  document.getElementById('vbSection').innerHTML=`<div class="vbox"><h3>🏆 Our Recommendation</h3><div class="vgrid"><div class="vdbx"><div class="vdic">💰</div><div class="vdwn">${best}</div><div class="vdct">Best Value</div></div><div class="vdbx"><div class="vdic">😎</div><div class="vdwn">Train 3A</div><div class="vdct">Most Comfortable</div></div><div class="vdbx"><div class="vdic">⚡</div><div class="vdwn">Flight</div><div class="vdct">Fastest</div></div><div class="vdbx"><div class="vdic">🗺️</div><div class="vdwn">Own Car</div><div class="vdct">Most Flexible</div></div></div><div class="vnote">For Tirupati from Banashankari: ${best==='Train Sleeper'?'🚆 Train Sleeper is the best value — everyone arrives fresh, costs least, and TTD free buses take you up the hill. Book on IRCTC 60 days ahead.':best==='Own Car'?'🚗 Own Car saves money at your group size. Depart by 4:30 AM to reach Tirumala by 11 AM. NH44 via Krishnagiri is the smoothest route.':'✈️ Flight is fastest but most expensive. Best for elderly pilgrims or very limited time.'} TTD free buses to Tirumala run every 30 min from Tirupati town (45 min journey, FREE for pilgrims).</div></div><div class="abar as" style="margin-top:12px"><span>⚠️</span><span>All costs are 2026 estimates. Train fares vary by class/quota. Book irctc.co.in 60 days ahead. Hotel rates are approximate — verify before booking.</span></div>`;
+}
+function swMode(mk){document.getElementById('g_mode').value=mk;S.mode=mk;recalc();}
+// ITINERARY
+const ITIN_M={
+  train:{dep:'10:40 AM — SMVT Bengaluru (SMVB) Train 12864 (Daily)',arr:'04:00 PM — Tirupati / Renigunta Jn',rdep:'14:55 Train 22617 (Mon/Wed/Sat) or 17210 Seshadri (Daily)',rarr:'SMVB 20:55 or 17:10',note:'SMVB is 12 km from Banashankari. Auto ₹120–160. Allow 45 min.'},
+  car:  {dep:'05:00 AM — Banashankari (Own Car, NH44)',arr:'10:30 AM — Tirupati',rdep:'05:00 PM from Tirupati',rarr:'10:30–11:00 PM Bengaluru',note:'Via Hosur → Krishnagiri → Vellore → Chittoor. Fuel stop at Krishnagiri.'},
+  taxi: {dep:'05:00 AM — Banashankari (Outstation Cab pickup)',arr:'10:30 AM — Tirupati',rdep:'05:30 PM from Tirupati',rarr:'11:00 PM Bengaluru',note:'Book Ola/Uber Outstation in advance. ₹10,000–₹12,000 round trip.'},
+  bus:  {dep:'09:30 PM (previous evening) — Kempegowda Bus Stand (Majestic)',arr:'04:30 AM — Tirupati Bus Stand',rdep:'09:00 PM — Tirupati Bus Stand',rarr:'04:00 AM — Bengaluru Majestic',note:'Majestic is 14 km from Banashankari.'},
+  flight:{dep:'07:00 AM — BLR Airport T2 (depart Banashankari 04:30 AM)',arr:'08:10 AM — Tirupati Airport (Renigunta)',rdep:'17:30 — Tirupati Airport',rarr:'18:25 — BLR Airport',note:'BLR Airport is 35 km from Banashankari. Book flights 3+ weeks ahead.'},
+};
+function bldItin(){
+  const days=parseInt(document.getElementById('it_days').value)||3;
+  const mode=document.getElementById('it_mode').value;
+  const dar=document.getElementById('it_darshan').value;
+  const t=ITIN_M[mode]||ITIN_M.train;
+  const dwait=dar==='free'?'4–10 hours':dar==='paid'?'2–4 hours':'2–3 hours';
+  const dstart=dar==='free'?'02:30 AM':dar==='paid'?'05:00 AM':'07:00 AM';
+  const dnote=dar==='free'?'Collect SSD token from TTD counter at Railway Station or Bus Stand tonight.':dar==='paid'?'Report with e-ticket printout + Aadhaar 30 min before your slot time.':'Srivani VIP — report at Supatham entry with Srivani receipt + ₹500 ticket.';
+  const pax=S.adults+S.children+S.seniors;
+  const cost=calcAll().tot;
+  document.getElementById('itinSum').innerHTML=`<div class="sgrid"><div class="sstat"><div class="sv">${days}</div><div class="sl">Days</div></div><div class="sstat"><div class="sv">${days-1}</div><div class="sl">Nights</div></div><div class="sstat"><div class="sv">${pax}</div><div class="sl">Persons</div></div><div class="sstat"><div class="sv" style="font-size:16px">${fm(cost)}</div><div class="sl">Est. Total</div></div></div>`;
+  let html='';
+  html+=`<div class="daycard"><div class="dayhd"><div class="daynum">1</div><h3>Day 1 — Departure from Banashankari &amp; Arrival at Tirupati</h3><p>TRAVEL + TEMPLES</p></div><div class="daybd">
+    <div class="slot"><div class="stime">Early AM</div><div><div class="spl">🪔 Banashankari Amma Temple — Pre-Yatra Blessings</div><div class="sdc">Seek blessings of Goddess Banashankari before the sacred Yatra. JP Nagar, Bengaluru — your origin and divine sanction point for this pilgrimage.</div><div class="stags"><span class="stag st-temple">Temple</span><span class="stag st-sacred">Sacred Start</span></div></div></div>
+    <div class="slot"><div class="stime">${t.dep.split(' — ')[0]}</div><div><div class="spl">🚆 Depart Bengaluru → Tirupati</div><div class="sdc">${t.dep.replace(/^[^—]+— /,'')}. ${t.note}</div><div class="stags"><span class="stag st-travel">Travel</span></div></div></div>
+    <div class="slot"><div class="stime">${t.arr.split(' — ')[0]}</div><div><div class="spl">🏙️ Arrive Tirupati — Check into Hotel / TTD GH</div><div class="sdc">Freshen up. Lunch at TTD Annadanam (FREE for all pilgrims) or hotel restaurant. Rest briefly.</div><div class="stags"><span class="stag st-leisure">Arrive</span></div></div></div>
+    <div class="slot"><div class="stime">2:00 PM</div><div><div class="spl">🛕 Sri Padmavathi Ammavari Temple, Tiruchanur (5 km)</div><div class="sdc">Visit Goddess Padmavathi — consort of Lord Venkateswara. Extremely auspicious before Tirumala darshan. ~30 min darshan. Auto ₹150 from city.</div><div class="stags"><span class="stag st-temple">Temple</span><span class="stag st-darshan">Divine Darshan</span></div></div></div>
+    <div class="slot"><div class="stime">4:30 PM</div><div><div class="spl">🛕 Govindharaja Swamy Temple + Kapila Theertham</div><div class="sdc">Largest temple in Tirupati city, then Kapila Theertham — sacred Shiva temple and waterfall. Serene evening prayers.</div><div class="stags"><span class="stag st-temple">Temple</span></div></div></div>
+    <div class="slot"><div class="stime">8:00 PM</div><div><div class="spl">🌙 Dinner &amp; Early Rest — Prepare for Darshan</div><div class="sdc">${dnote} Set alarm for 3:30 AM. TTD free buses from 3 AM onward.</div><div class="stags"><span class="stag st-food">Dinner</span></div></div></div>
+  </div></div>`;
+  html+=`<div class="daycard"><div class="dayhd"><div class="daynum">2</div><h3>Day 2 — Sacred Darshan of Sri Venkateswara Swamy ⛩️</h3><p>THE DIVINE DAY</p></div><div class="daybd">
+    <div class="slot"><div class="stime">3:30 AM</div><div><div class="spl">⏰ Wake Up — Head to TTD Bus Stand, Tirupati</div><div class="sdc">TTD free pilgrim buses run every 30 min. Journey: 45 min / 19 km ghat road. Cab: ₹250–₹350. Carry water, e-ticket printout, Aadhaar.</div><div class="stags"><span class="stag st-travel">Travel</span></div></div></div>
+    <div class="slot"><div class="stime">5:00 AM</div><div><div class="spl">🌊 Holy Bath — Papavinasam Theertham, Tirumala Hill</div><div class="sdc">Sacred waterfall — "Papavinasam" means destroyer of sins. Holy bath is essential before entering the temple complex. Change of clothes required.</div><div class="stags"><span class="stag st-sacred">Holy Bath</span><span class="stag st-temple">Sacred</span></div></div></div>
+    <div class="slot"><div class="stime">6:00 AM</div><div><div class="spl">✂️ Head Tonsure (Mottai) at TTD Complex — Optional</div><div class="sdc">₹50 — highly auspicious offering to Lord Balaji. Token system, ~1 hr wait. Gives deep mental clarity for darshan.</div><div class="stags"><span class="stag st-sacred">Auspicious Offering</span></div></div></div>
+    <div class="slot"><div class="stime">${dstart}</div><div><div class="spl">🎫 Report at Vaikuntam Queue Complex (VQC)</div><div class="sdc">${dnote}</div><div class="stags"><span class="stag st-darshan">Darshan</span></div></div></div>
+    <div class="slot"><div class="stime">Queue ~${dwait}</div><div><div class="spl">⏳ Orderly Queue Through VQC Corridors</div><div class="sdc">Chant "Govinda Govinda" continuously. Seating areas and water provided. No bags inside. No mobile phones inside main temple complex.</div><div class="stags"><span class="stag st-darshan">Queue</span></div></div></div>
+    <div class="slot" style="background:rgba(232,117,26,.05);border-radius:8px;padding:8px;"><div class="stime" style="background:var(--saffron);color:#fff">✨ DIVINE</div><div><div class="spl" style="color:var(--crimson);font-size:15px">🙏 DARSHAN — Sri Venkateswara Swamy, Lord of Seven Hills</div><div class="sdc" style="font-style:normal;color:var(--stone-m)">"Govinda Govinda!" — A 5–20 second glimpse that lasts a lifetime. Prostrate, offer silent prayers, collect Tirtha Prasadam. This sacred moment is the entire purpose of the Yatra.</div><div class="stags"><span class="stag st-darshan">Holy Darshan</span><span class="stag st-sacred">Lord's Blessings</span></div></div></div>
+    <div class="slot"><div class="stime">Post Darshan</div><div><div class="spl">🍬 Collect TTD Prasadam Laddoo (World-famous, GI-tagged)</div><div class="sdc">Included with paid darshan. Extra: ₹50 each, max 10/person — official TTD counters ONLY. Never buy from roadside sellers.</div><div class="stags"><span class="stag st-sacred">Prasadam</span></div></div></div>
+    <div class="slot"><div class="stime">Afternoon</div><div><div class="spl">🍽️ Free Annadanam (TTD) + Explore Tirumala Temple Complex</div><div class="sdc">Free meals for all pilgrims. Visit Sri Varahaswami Temple, Sri Govindaraja shrine. Return to Tirupati town by 5 PM.</div><div class="stags"><span class="stag st-food">Annadanam</span><span class="stag st-temple">Temple Visit</span></div></div></div>
+  </div></div>`;
+  if(days>=3)html+=`<div class="daycard"><div class="dayhd"><div class="daynum">3</div><h3>Day 3 — Srikalahasti Temple &amp; Return Journey</h3><p>SACRED + DEPARTURE</p></div><div class="daybd">
+    <div class="slot"><div class="stime">6:30 AM</div><div><div class="spl">🌅 Morning Prayers — Break Fast with Prasadam</div><div class="sdc">Many pilgrims observe a fast on darshan day and break it the next morning with TTD prasadam or hotel breakfast. A serene, grateful start.</div><div class="stags"><span class="stag st-food">Breakfast</span><span class="stag st-sacred">Gratitude</span></div></div></div>
+    <div class="slot"><div class="stime">7:30 AM</div><div><div class="spl">⛰️ Srikalahasti Temple (36 km from Tirupati)</div><div class="sdc">Powerful Shiva-Parvati temple. Famous for Rahu-Ketu Sarpa Dosha Nivarana Puja. Free entry. Auto ₹700 round trip or local bus ₹40. Allow 3 hrs.</div><div class="stags"><span class="stag st-temple">Shiva Temple</span><span class="stag st-sacred">Rahu-Ketu</span></div></div></div>
+    <div class="slot"><div class="stime">1:00 PM</div><div><div class="spl">🛍️ Shopping — TTD Gift Counters, Tirupati Silks</div><div class="sdc">Buy Laddoos (max 10/person, ₹50 — official TTD counters ONLY), Tirupati silk sarees, devotional items. Avoid all roadside prasadam sellers.</div><div class="stags"><span class="stag st-leisure">Shopping</span></div></div></div>
+    <div class="slot"><div class="stime">${t.rdep.split(' ')[0]}</div><div><div class="spl">🚆 Depart Tirupati → Bengaluru</div><div class="sdc">${t.rdep}. Carry Lord's Laddoos and blessings on the return journey.</div><div class="stags"><span class="stag st-travel">Return</span></div></div></div>
+    <div class="slot"><div class="stime">${t.rarr}</div><div><div class="spl">🏠 Arrive Bengaluru — Yatra Complete 🙏</div><div class="sdc">"Govinda Govinda!" — The sacred pilgrimage is complete. May Lord Venkateswara's blessings follow you home and fill your life with peace and prosperity.</div><div class="stags"><span class="stag st-sacred">Yatra Complete</span></div></div></div>
+  </div></div>`;
+  if(days>=4)html+=`<div class="daycard"><div class="dayhd"><div class="daynum">4</div><h3>Day 4 — ISKCON, Alipiri Sacred Walk &amp; Return</h3><p>SPIRITUAL + DEPARTURE</p></div><div class="daybd">
+    <div class="slot"><div class="stime">9:00 AM</div><div><div class="spl">🕌 ISKCON Sri Sri Radha Govinda Temple, Tirupati</div><div class="sdc">2 km from railway station. Beautiful Vaishnava temple with free breakfast/lunch prasadam. Peaceful morning visit, very spiritually uplifting.</div><div class="stags"><span class="stag st-temple">ISKCON</span></div></div></div>
+    <div class="slot"><div class="stime">11:00 AM</div><div><div class="spl">🏞️ Alipiri Footpath — 3,550 Sacred Steps to Tirumala</div><div class="sdc">The ancient pilgrimage walk (9 km, 3–4 hrs to summit). Lamp-lit stairway. Extremely meditative. Many devotees walk barefoot as a sacred offering to Lord Balaji.</div><div class="stags"><span class="stag st-sacred">Pilgrimage Walk</span><span class="stag st-temple">Devotion</span></div></div></div>
+    <div class="slot"><div class="stime">${t.rdep.split(' ')[0]}</div><div><div class="spl">🚆 Depart Tirupati → Bengaluru</div><div class="sdc">Final return journey carrying the divine blessings of Sri Venkateswara Swamy.</div><div class="stags"><span class="stag st-travel">Return</span></div></div></div>
+  </div></div>`;
+  document.getElementById('itinOut').innerHTML=html;
+}
+// TAB NAVIGATION
+function showT(id,btn){clsCal('dep');clsCal('ret');document.querySelectorAll('.tsec').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));const s=document.getElementById('t-'+id);if(s)s.classList.add('active');if(btn){btn.classList.add('active');btn.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});}if(id==='compare')bldCmp();if(id==='itinerary')bldItin();if(id==='hotels')renHGrid('aHGrid',S.af,'selHA');}
+// INIT
+document.addEventListener('DOMContentLoaded',()=>{initCals();renHGrid('pHGrid','all','selH');renHGrid('aHGrid','all','selHA');bldItin();recalc();});
+
+// ── SAVE AS PDF — iPhone Safari Edition ──────────────
+function savePDF(tabId){
+  var fmv=function(n){return '₹'+Math.round(n).toLocaleString('en-IN');};
+  var h=S.hotel;
+  var bodyHTML='';
+  var tabTitle='';
+
+  function hotelSummaryRow(h){
+    if(!h)return '<p style="color:#8B6040;font-style:italic;padding:8px 0;font-family:Josefin Sans,sans-serif;">No hotel selected.</p>';
+    var zc=h.cat==='tirumala'?'#8B1A1A':'#0d3160';
+    var zl=h.cat==='tirumala'?'🛕 Tirumala Hill':'🏙️ Tirupati City';
+    var rn=h.rate===0?'FREE':'₹'+h.rate.toLocaleString('en-IN')+'/night';
+    var tot=h.rate===0?'Free':'₹'+(h.rate*S.nights).toLocaleString('en-IN')+' · '+S.nights+'N';
+    return '<table width="100%" style="border:2px solid #E8751A;border-radius:10px;border-collapse:separate;overflow:hidden;font-family:Josefin Sans,sans-serif;">'
+      +'<tr><td style="padding:10px 14px;"><div style="display:inline-block;background:'+zc+';color:#fff;font-size:9px;font-weight:700;letter-spacing:1px;padding:2px 8px;border-radius:5px;margin-bottom:5px;">'+zl+'</div><br>'
+      +'<span style="font-size:16px;font-weight:900;color:#2D1B0E;">'+h.name+'</span><br>'
+      +'<span style="font-size:11px;color:#8B6040;">📍 '+h.loc+'</span></td>'
+      +'<td style="padding:10px 14px;text-align:right;white-space:nowrap;vertical-align:middle;">'
+      +'<div style="font-size:17px;font-weight:900;color:#8B1A1A;">'+rn+'</div>'
+      +'<div style="font-size:11px;font-weight:700;color:#5C3A1E;">'+tot+'</div>'
+      +'</td></tr></table>';
+  }
+
+  if(tabId==='planner'){
+    tabTitle='Plan Trip Summary';
+    var r=calcAll(); var pax=r.pax;
+    var ml2=MODES[S.mode]?MODES[S.mode].lbl:S.mode;
+    var dl=S.darshan===0?'Free Sarva Darshan':S.darshan===300?'Special Entry ₹300/person':'Srivani VIP ₹10,500/person';
+    var hname=h?h.name:'Not selected'; var hzone=h?(h.cat==='tirumala'?'🛕 Tirumala Hill':'🏙️ Tirupati City'):'';
+    var hrate=h?(h.rate===0?'FREE':'₹'+h.rate.toLocaleString('en-IN')+'/night'):'—';
+    var htotal=h?(h.rate===0?'Free stay':'₹'+(h.rate*S.nights).toLocaleString('en-IN')):'—';
+    bodyHTML='<table width="100%" style="background:linear-gradient(135deg,#4A0808,#8B1A1A);border-radius:12px;overflow:hidden;border-collapse:separate;margin-bottom:16px;"><tr>'
+      +'<td style="padding:12px 14px;vertical-align:top;"><div style="font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:3px;">👥 Group</div><div style="font-size:20px;font-weight:900;color:#fff;font-family:Playfair Display,serif;">'+pax+'</div><div style="font-size:10px;color:rgba(255,255,255,.6);">'+S.adults+' adults'+(S.children?', '+S.children+' child':'')+(S.seniors?', '+S.seniors+' senior':'')+'</div></td>'
+      +'<td style="padding:12px 14px;vertical-align:top;"><div style="font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:3px;">🌙 Nights</div><div style="font-size:20px;font-weight:900;color:#fff;font-family:Playfair Display,serif;">'+S.nights+'</div></td>'
+      +'<td style="padding:12px 14px;vertical-align:top;"><div style="font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:3px;">🚗 Mode</div><div style="font-size:12px;font-weight:700;color:#fff;line-height:1.3;">'+ml2+'</div></td>'
+      +'<td style="padding:12px 14px;vertical-align:top;"><div style="font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:3px;">🎫 Darshan</div><div style="font-size:11px;font-weight:700;color:#F0C840;line-height:1.3;">'+dl+'</div></td>'
+      +'</tr></table>'
+      +(h?hotelSummaryRow(h)+'<br>':'')
+      +'<div style="background:linear-gradient(135deg,#4A0808,#2D1B0E);border-radius:12px;padding:14px;margin-bottom:14px;">'
+      +'<div style="font-size:14px;font-weight:700;color:#F0C840;margin-bottom:10px;font-family:Playfair Display,serif;">💰 Live Yatra Cost</div>'
+      +'<table width="100%" style="border-collapse:collapse;font-size:12px;">'
+      +'<tr><td style="padding:5px 0;color:rgba(253,246,236,.72);border-bottom:1px solid rgba(255,255,255,.07);">'+ml2+'</td><td style="text-align:right;font-weight:700;color:#FDF6EC;border-bottom:1px solid rgba(255,255,255,.07);">'+fmv(r.tr)+'</td></tr>'
+      +'<tr><td style="padding:5px 0;color:rgba(253,246,236,.72);border-bottom:1px solid rgba(255,255,255,.07);">🏨 '+hname+' ('+S.nights+'N)</td><td style="text-align:right;font-weight:700;color:#FDF6EC;border-bottom:1px solid rgba(255,255,255,.07);">'+fmv(r.ht)+'</td></tr>'
+      +'<tr><td style="padding:5px 0;color:rgba(253,246,236,.72);border-bottom:1px solid rgba(255,255,255,.07);">🎫 Darshan</td><td style="text-align:right;font-weight:700;color:#FDF6EC;border-bottom:1px solid rgba(255,255,255,.07);">'+fmv(r.dr)+'</td></tr>'
+      +'<tr><td style="padding:5px 0;color:rgba(253,246,236,.72);border-bottom:1px solid rgba(255,255,255,.07);">🍽️ Meals</td><td style="text-align:right;font-weight:700;color:#FDF6EC;border-bottom:1px solid rgba(255,255,255,.07);">'+fmv(r.ml)+'</td></tr>'
+      +'<tr><td style="padding:5px 0;color:rgba(253,246,236,.72);border-bottom:1px solid rgba(255,255,255,.07);">🚌 Local transport</td><td style="text-align:right;font-weight:700;color:#FDF6EC;border-bottom:1px solid rgba(255,255,255,.07);">'+fmv(r.lo)+'</td></tr>'
+      +'<tr><td style="padding:5px 0;color:rgba(253,246,236,.72);">🛍️ Prasadam + Misc</td><td style="text-align:right;font-weight:700;color:#FDF6EC;">'+fmv(r.mx)+'</td></tr>'
+      +'</table>'
+      +'<div style="border-top:1px solid rgba(201,150,42,.4);margin-top:10px;padding-top:10px;display:flex;justify-content:space-between;align-items:baseline;">'
+      +'<span style="font-size:14px;font-weight:700;color:#F0C840;font-family:Josefin Sans,sans-serif;">TOTAL YATRA COST</span>'
+      +'<span style="font-size:24px;font-weight:900;color:#F0C840;font-family:Playfair Display,serif;">'+fmv(r.tot)+'</span>'
+      +'</div>'
+      +'<div style="text-align:center;margin-top:6px;font-size:11px;color:rgba(253,246,236,.5);">Per Person: <strong style="color:#E8751A;font-size:15px;">'+fmv(r.pp)+'</strong></div>'
+      +'</div>';
+
+  } else if(tabId==='hotels'){
+    if(!h){alert('Please select a hotel first.');return;}
+    tabTitle='Selected Hotel — '+h.name;
+    var st=h.stars>0?'★'.repeat(h.stars):'';
+    var zc2=h.cat==='tirumala'?'#8B1A1A':'#0d3160';
+    var zl2=h.cat==='tirumala'?'🛕 TIRUMALA HILL':'🏙️ TIRUPATI CITY';
+    var rn2=h.rate===0?'FREE':'₹'+h.rate.toLocaleString('en-IN');
+    var tot2=h.rate===0?'Free stay':'₹'+(h.rate*S.nights).toLocaleString('en-IN');
+    bodyHTML='<table width="100%" style="border:2px solid #E8751A;border-radius:14px;overflow:hidden;border-collapse:separate;font-family:Josefin Sans,sans-serif;">'
+      +'<tr><td colspan="2" style="background:'+zc2+';padding:10px 16px;">'
+      +'<span style="font-size:10px;font-weight:700;color:#fff;letter-spacing:2px;text-transform:uppercase;">'+zl2+'</span>'
+      +'<span style="float:right;background:rgba(255,255,255,.2);color:#fff;font-size:9px;padding:2px 8px;border-radius:8px;">✅ SELECTED</span>'
+      +'</td></tr>'
+      +'<tr><td colspan="2" style="background:#fff;padding:16px 18px;">'
+      +(st?'<div style="font-size:13px;color:#C9962A;letter-spacing:3px;margin-bottom:5px;">'+st+'</div>':'')
+      +'<div style="font-size:24px;font-weight:900;color:#2D1B0E;font-family:Playfair Display,serif;line-height:1.2;">'+h.name+'</div>'
+      +'<div style="font-size:12px;color:#8B6040;font-style:italic;margin-top:4px;">📍 '+h.loc+'</div>'
+      +'</td></tr>'
+      +'<tr>'
+      +'<td style="background:#FBF4E8;padding:14px 18px;border-top:1px solid #F5E8D0;width:50%;">'
+      +'<div style="font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#8B6040;margin-bottom:4px;">Rate Per Night</div>'
+      +'<div style="font-size:26px;font-weight:900;color:#8B1A1A;font-family:Playfair Display,serif;">'+rn2+'</div>'
+      +'</td>'
+      +'<td style="background:#4A0808;padding:14px 18px;border-top:1px solid #F5E8D0;width:50%;">'
+      +'<div style="font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:4px;">'+S.nights+' Nights Total</div>'
+      +'<div style="font-size:26px;font-weight:900;color:#F0C840;font-family:Playfair Display,serif;">'+tot2+'</div>'
+      +'</td>'
+      +'</tr>'
+      +'<tr><td colspan="2" style="background:#fff;padding:14px 18px;border-top:1px solid #F5E8D0;">'
+      +'<span style="background:rgba(201,150,42,.15);color:#7a5a00;padding:4px 11px;border-radius:8px;font-size:11px;font-weight:700;">'+h.bt+'</span>'
+      +(h.ph?'&nbsp;&nbsp;<span style="font-size:11px;color:#5C3A1E;">📞 '+h.ph+'</span>':'')
+      +'</td></tr>'
+      +'</table>';
+
+  } else if(tabId==='compare'){
+    tabTitle='Cost Comparison'+(h?' — '+h.name:'');
+    var pax2=Math.max(S.adults+S.children+S.seniors,1);
+    var r2=calcAll();
+    var rT=calcForMode('car'),tSL=calcForMode('train_sl'),tAC=calcForMode('train_3a'),fT=calcForMode('flight');
+    var minV=Math.min(rT,tSL,fT);
+    var trR=trCost('car',S.adults,S.children,S.seniors);
+    var trSL=trCost('train_sl',S.adults,S.children,S.seniors);
+    var trAC=trCost('train_3a',S.adults,S.children,S.seniors);
+    var trFL=trCost('flight',S.adults,S.children,S.seniors);
+    var cards=[
+      {ic:'🚗',lb:'Road (Own Car)',  tot:rT, col:'#c05820',det:'Via NH44 · ~295 km'},
+      {ic:'🚆',lb:'Train Sleeper',   tot:tSL,col:'#1565C0',det:'12864/17209 Daily'},
+      {ic:'✈️',lb:'Flight BLR→TIR', tot:fT, col:'#6A1B9A',det:'~55 min · 1-3 daily'},
+    ];
+    var heroRow='<table width="100%" style="border-collapse:separate;border-spacing:8px;margin-bottom:16px;"><tr>';
+    cards.forEach(function(c2){
+      heroRow+='<td style="background:'+c2.col+';border-radius:10px;padding:12px 8px;text-align:center;vertical-align:top;">'
+        +(c2.tot===minV?'<div style="background:rgba(255,255,255,.25);color:#fff;font-size:8px;font-weight:700;border-radius:6px;padding:1px 6px;margin-bottom:4px;display:inline-block;">✅ LOWEST</div><br>':'<br>')
+        +'<div style="font-size:18px;margin-bottom:2px;">'+c2.ic+'</div>'
+        +'<div style="font-size:9px;color:rgba(255,255,255,.8);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px;">'+c2.lb+'</div>'
+        +'<div style="font-size:18px;font-weight:900;color:#fff;font-family:Playfair Display,serif;">'+fmv(c2.tot)+'</div>'
+        +'<div style="font-size:10px;color:rgba(255,255,255,.75);margin-top:1px;">'+fmv(Math.round(c2.tot/pax2))+'/person</div>'
+        +'<div style="font-size:9px;color:rgba(255,255,255,.55);margin-top:4px;">'+c2.det+'</div>'
+        +'</td>';
+    });
+    heroRow+='</tr></table>';
+    var crows=[
+      {lb:'🚗 Transport (RT)',r:trR,sl:trSL,ac:trAC,fl:trFL},
+      {lb:'🏨 Hotel ('+S.nights+'N)',r:r2.ht,sl:r2.ht,ac:r2.ht,fl:r2.ht},
+      {lb:'🎫 Darshan',r:r2.dr,sl:r2.dr,ac:r2.dr,fl:r2.dr},
+      {lb:'🍽️ Meals',r:r2.ml,sl:r2.ml,ac:r2.ml,fl:r2.ml},
+      {lb:'🚌 Local',r:r2.lo,sl:r2.lo,ac:r2.lo,fl:r2.lo},
+      {lb:'🛍️ Misc',r:r2.mx,sl:r2.mx,ac:r2.mx,fl:r2.mx},
+      {lb:'TOTAL',r:rT,sl:tSL,ac:tAC,fl:fT,tot:1},
+    ];
+    var tbl2='<div style="background:#fff;border-radius:12px;overflow:hidden;border:1.5px solid #F5E8D0;margin-bottom:14px;">'
+      +'<div style="background:linear-gradient(90deg,#8B1A1A,#6B1515);padding:9px 14px;">'
+      +'<span style="font-size:14px;font-weight:700;color:#fff;font-family:Playfair Display,serif;">💸 Full Cost Breakdown</span>'
+      +'</div>'
+      +'<table width="100%" style="border-collapse:collapse;font-size:11px;">'
+      +'<tr style="background:#FBF4E8;"><th style="padding:6px 10px;text-align:left;font-size:9px;color:#5C3A1E;border-bottom:2px solid #F5E8D0;">Cost Head</th>'
+      +'<th style="padding:6px 8px;text-align:right;font-size:9px;color:#c05820;border-bottom:2px solid #F5E8D0;">🚗 Road</th>'
+      +'<th style="padding:6px 8px;text-align:right;font-size:9px;color:#1565C0;border-bottom:2px solid #F5E8D0;">🚆 Train SL</th>'
+      +'<th style="padding:6px 8px;text-align:right;font-size:9px;color:#6A1B9A;border-bottom:2px solid #F5E8D0;">✈️ Flight</th>'
+      +'</tr>';
+    crows.forEach(function(row){
+      var bg=row.tot?'background:#FBF4E8;':'';
+      var fw=row.tot?'font-weight:900;font-size:13px;':'font-weight:600;';
+      tbl2+='<tr style="'+bg+'"><td style="padding:7px 10px;color:#2D1B0E;'+fw+'border-bottom:1px dashed #F5E8D0;">'+row.lb+'</td>'
+        +'<td style="padding:7px 8px;text-align:right;color:#c05820;'+fw+'border-bottom:1px dashed #F5E8D0;">'+fmv(row.r)+'</td>'
+        +'<td style="padding:7px 8px;text-align:right;color:#1565C0;'+fw+'border-bottom:1px dashed #F5E8D0;">'+fmv(row.sl)+'</td>'
+        +'<td style="padding:7px 8px;text-align:right;color:#6A1B9A;'+fw+'border-bottom:1px dashed #F5E8D0;">'+fmv(row.fl)+'</td>'
+        +'</tr>';
+    });
+    tbl2+='</table></div>';
+    var save=tSL<rT?'🚆 Train SL saves <strong>'+fmv(rT-tSL)+'</strong> vs Road':rT<tSL?'🚗 Road saves <strong>'+fmv(tSL-rT)+'</strong> vs Train SL':'Train SL and Road are roughly equal.';
+    var savB='<div style="background:rgba(46,125,50,.08);border-left:4px solid #2e7d32;border-radius:0 8px 8px 0;padding:10px 13px;margin-bottom:14px;font-size:12px;color:#2D1B0E;">'
+      +'<strong>💡 Savings Snapshot ('+pax2+' persons, '+S.nights+'N'+(h?', '+h.name:'')+')</strong><br>'+save+' · ✈️ Flight costs '+fmv(fT-Math.min(rT,tSL))+' more.</div>';
+    bodyHTML=(h?hotelSummaryRow(h)+'<br>':'')+heroRow+savB+tbl2;
+
+  } else if(tabId==='itinerary'){
+    var r3=calcAll(); var pax3=S.adults+S.children+S.seniors;
+    var hz=h&&h.cat==='tirumala'?'🛕 Tirumala Hill':'🏙️ Tirupati City';
+    var ml3=MODES[S.mode]?MODES[S.mode].lbl:S.mode;
+    var sl2=h&&h.rate>0?'₹'+h.rate.toLocaleString('en-IN')+' × '+S.nights+'N = ₹'+(h.rate*S.nights).toLocaleString('en-IN'):h&&h.rate===0?'Free':'—';
+    tabTitle='Itinerary — '+(h?h.name:'Full Plan');
+    var ovHTML='<table width="100%" style="background:linear-gradient(135deg,#4A0808,#8B1A1A);border-radius:12px;overflow:hidden;border-collapse:separate;margin-bottom:14px;"><tr>'
+      +'<td style="padding:10px 14px;vertical-align:top;"><div style="font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:2px;">🏨 Hotel</div>'
+      +'<div style="font-size:13px;font-weight:900;color:#fff;font-family:Playfair Display,serif;">'+(h?h.name:'Not selected')+'</div>'
+      +(h?'<div style="font-size:9px;color:rgba(255,255,255,.6);">'+hz+'</div>':'')
+      +'<div style="font-size:11px;font-weight:700;color:#F0C840;margin-top:2px;">'+sl2+'</div></td>'
+      +'<td style="padding:10px 14px;vertical-align:top;"><div style="font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:2px;">🚗 Travel</div>'
+      +'<div style="font-size:12px;font-weight:700;color:#fff;">'+ml3+'</div>'
+      +'<div style="font-size:10px;color:rgba(255,255,255,.6);margin-top:1px;">'+pax3+' persons</div></td>'
+      +'<td style="padding:10px 14px;text-align:center;vertical-align:top;">'
+      +'<div style="font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.55);">Total</div>'
+      +'<div style="font-size:18px;font-weight:900;color:#F0C840;font-family:Playfair Display,serif;">'+fmv(r3.tot)+'</div>'
+      +'<div style="font-size:9px;color:rgba(255,255,255,.5);">'+fmv(r3.pp)+'/person</div></td>'
+      +'</tr></table>';
+    var itinEl=document.getElementById('itinOut');
+    var itinHTML=itinEl?itinEl.innerHTML:'';
+    bodyHTML=ovHTML+itinHTML;
+
+  } else {
+    // Other tabs: clone and strip
+    var tabEl=document.getElementById('t-'+tabId);
+    if(!tabEl){alert('Content not found.');return;}
+    var clone=tabEl.cloneNode(true);
+    clone.querySelectorAll('.pdf-bar').forEach(function(b){b.remove();});
+    clone.style.display='block';
+    ['pHGrid','aHGrid','hiList'].forEach(function(gid){
+      var g=clone.querySelector('#'+gid);
+      if(!g)return;
+      g.innerHTML=hotelSummaryRow(h);
+    });
+    clone.querySelectorAll('.fstrip,.hsearchbar,.hresc').forEach(function(el){
+      if(el&&el.parentNode)el.parentNode.removeChild(el);
+    });
+    tabTitle=tabTitle||{trains:'Train Schedule',darshan:'Darshan Guide',tips:'Pilgrim Tips',emergency:'Emergency Services'}[tabId]||tabId;
+    bodyHTML=clone.outerHTML;
+  }
+
+  tabTitle=tabTitle||{planner:'Plan Trip Summary',compare:'Cost Comparison',hotels:'Hotels List',trains:'Train Schedule',itinerary:'Itinerary',darshan:'Darshan Guide',tips:'Pilgrim Tips',emergency:'Emergency Services'}[tabId]||tabId;
+
+  var fullHTML='<!DOCTYPE html><html lang="en"><head>'
+    +'<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">'
+    +'<meta name="apple-mobile-web-app-capable" content="yes">'
+    +'<title>🛕 '+tabTitle+' — Tirupati Yatra</title>'
+    +'<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Josefin+Sans:wght@400;600;700&family=Crimson+Text:ital@1&display=swap">'
+    +'<style>'
+    +'*{box-sizing:border-box;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}'
+    +'body{font-family:Josefin Sans,sans-serif;background:#fff;margin:0;padding:16px;color:#2D1B0E;-webkit-text-size-adjust:100%;}'
+    +'.hdr{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#8B6040;padding-bottom:8px;border-bottom:2px solid #F5E8D0;margin-bottom:16px;}'
+    +'.ftr{font-size:9px;color:#8B6040;text-align:center;margin-top:20px;padding-top:8px;border-top:1px solid #F5E8D0;}'
+    +'.daycard{background:#fff;border-radius:12px;border:1px solid #F5E8D0;margin-bottom:10px;overflow:hidden;page-break-inside:avoid;-webkit-column-break-inside:avoid;}'
+    +'.dayhd{background:linear-gradient(90deg,#4A0808,#6B1515);padding:9px 14px;display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;gap:8px;}'
+    +'.daynum{background:#F0C840;color:#2D1B0E;width:26px;height:26px;border-radius:50%;display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;-webkit-justify-content:center;justify-content:center;font-weight:900;font-size:12px;-webkit-flex-shrink:0;flex-shrink:0;}'
+    +'.dayhd h3{font-family:Playfair Display,serif;font-size:14px;color:#fff;font-weight:700;-webkit-flex:1;flex:1;margin:0;}'
+    +'.daybd{padding:10px 14px;}'
+    +'.slot{display:-webkit-flex;display:flex;gap:9px;padding:6px 0;border-bottom:1px dashed #F5E8D0;font-size:11px;}'
+    +'.slot:last-child{border-bottom:none;}'
+    +'.stime{background:#FBF4E8;border:1px solid #F5E8D0;border-radius:6px;padding:2px 7px;font-size:9px;font-weight:700;color:#E8751A;letter-spacing:1px;white-space:nowrap;-webkit-flex-shrink:0;flex-shrink:0;margin-top:1px;}'
+    +'.spl{font-size:12px;font-weight:700;color:#2D1B0E;}'
+    +'.sdc{font-size:10px;color:#5C3A1E;margin-top:1px;font-style:italic;line-height:1.4;}'
+    +'.stag{font-size:8px;padding:1px 6px;border-radius:8px;font-weight:700;margin-right:3px;}'
+    +'.st-temple{background:#fef3e2;color:#b35a00;}.st-travel{background:#fff8e1;color:#f57f17;}'
+    +'.st-darshan{background:rgba(139,26,26,.1);color:#5a0a0a;}.st-leisure{background:#e0f7fa;color:#00838f;}'
+    +'.st-food{background:#fce4ec;color:#c62828;}.st-sacred{background:rgba(201,150,42,.14);color:#7a5a00;}'
+    +'.sgrid{display:-webkit-flex;display:flex;gap:8px;margin-bottom:14px;}'
+    +'.sstat{background:#FBF4E8;border:1px solid #F5E8D0;border-radius:10px;padding:10px;text-align:center;-webkit-flex:1;flex:1;}'
+    +'.sstat .sv{font-family:Playfair Display,serif;font-size:20px;font-weight:900;color:#8B1A1A;}'
+    +'.sstat .sl{font-size:8px;letter-spacing:1px;text-transform:uppercase;color:#5C3A1E;margin-top:2px;}'
+    +'.abar{border-radius:8px;padding:8px 12px;display:-webkit-flex;display:flex;gap:8px;-webkit-align-items:flex-start;align-items:flex-start;margin-bottom:12px;font-size:11px;line-height:1.5;}'
+    +'.ag{background:rgba(201,150,42,.1);border-left:3px solid #C9962A;color:#5a3a00;}'
+    +'.as{background:rgba(232,117,26,.09);border-left:3px solid #E8751A;color:#4A0808;}'
+    +'.trow{display:-webkit-flex;display:flex;gap:8px;padding:6px 0;border-bottom:1px dashed #F5E8D0;font-size:11px;color:#5C3A1E;line-height:1.5;}'
+    +'.trow:last-child{border-bottom:none;}.tic{-webkit-flex-shrink:0;flex-shrink:0;font-size:14px;}'
+    +'.trow strong{color:#2D1B0E;font-style:normal;}'
+    +'.panel{background:#fff;border-radius:12px;margin-bottom:14px;overflow:hidden;border:1px solid rgba(201,150,42,.2);}'
+    +'.phd{background:linear-gradient(90deg,#8B1A1A,#6B1515);padding:10px 14px;display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;gap:8px;}'
+    +'.phd h2{font-family:Playfair Display,serif;font-size:14px;font-weight:700;color:#fff;margin:0;}'
+    +'.pbd{padding:12px 14px;}'
+    +'.ctab{width:100%;border-collapse:collapse;font-size:11px;}'
+    +'.ctab th{padding:6px 8px;font-size:9px;letter-spacing:1px;text-transform:uppercase;border-bottom:2px solid #F5E8D0;font-weight:700;text-align:right;}'
+    +'.ctab th:first-child{text-align:left;color:#5C3A1E;}'
+    +'.ctab td{padding:6px 8px;border-bottom:1px dashed #F5E8D0;}'
+    +'.ctab .tdl{color:#2D1B0E;font-weight:600;text-align:left;}'
+    +'.ctab .tdr{text-align:right;font-weight:700;}'
+    +'.ctab .tc2{color:#1565C0;}'.ctab+'.rc{color:#c05820;}.ctab .fc{color:#6A1B9A;}'
+    +'.emg-panel{border-radius:12px;overflow:hidden;margin-bottom:12px;border:1.5px solid #F5E8D0;}'
+    +'.emg-panel-head{padding:9px 14px;display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;gap:8px;}'
+    +'.emg-panel-head h2{font-family:Playfair Display,serif;font-size:14px;font-weight:700;color:#fff;-webkit-flex:1;flex:1;margin:0;}'
+    +'.emg-head-red{background:linear-gradient(90deg,#7f0000,#b71c1c);}'
+    +'.emg-head-blue{background:linear-gradient(90deg,#0d3160,#1565C0);}'
+    +'.emg-section-label{font-size:9px;letter-spacing:2px;font-weight:700;text-transform:uppercase;padding:5px 14px 4px;}'
+    +'.emg-label-red{background:rgba(183,28,28,.08);color:#b71c1c;border-left:3px solid #b71c1c;}'
+    +'.emg-label-blue{background:rgba(21,101,192,.07);color:#0D47A1;border-left:3px solid #1565C0;}'
+    +'.emg-label-green{background:rgba(27,94,32,.07);color:#1B5E20;border-left:3px solid #2e7d32;}'
+    +'.emg-label-orange{background:rgba(230,81,0,.06);color:#BF360C;border-left:3px solid #E64A19;}'
+    +'.emg-label-purple{background:rgba(74,20,140,.06);color:#4A148C;border-left:3px solid #7B1FA2;}'
+    +'.erow{display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;border-bottom:1px solid #F5E8D0;}'
+    +'.erow:last-child{border-bottom:none;}'
+    +'.enm-wrap{-webkit-flex:1;flex:1;padding:7px 14px;min-width:0;}'
+    +'.enm{font-size:11px;font-weight:700;color:#2D1B0E;}'
+    +'.edet{font-size:10px;color:#5C3A1E;font-style:italic;}'
+    +'.eph{-webkit-flex-shrink:0;flex-shrink:0;padding:7px 12px 7px 0;}'
+    +'.ecall{border-radius:14px;padding:4px 9px;font-size:9px;font-weight:700;text-decoration:none;white-space:nowrap;}'
+    +'.ecall-red{background:#b71c1c;color:#fff;}.ecall-blue{background:#1565C0;color:#fff;}'
+    +'.ecall-green{background:#2e7d32;color:#fff;}.ecall-orange{background:#E64A19;color:#fff;}.ecall-purple{background:#7B1FA2;color:#fff;}'
+    // How-to-save instructions banner
+    +'#how-to-save{background:linear-gradient(135deg,#0d3160,#1565C0);border-radius:12px;padding:14px 16px;margin-bottom:18px;color:#fff;font-size:12px;line-height:1.6;}'
+    +'#how-to-save h3{font-family:Playfair Display,serif;font-size:15px;font-weight:700;color:#fff;margin-bottom:8px;}'
+    +'#how-to-save ol{padding-left:18px;}'
+    +'#how-to-save li{margin-bottom:3px;}'
+    +'@page{margin:10mm;size:A4;}'
+    +'@media print{#how-to-save{display:none!important;}.pdf-bar{display:none!important;}}'
+    +'</style></head><body>'
+    // Save instructions — hidden on print
+    +'<div id="how-to-save">'
+    +'<h3>📲 How to Save as PDF on iPhone</h3>'
+    +'<ol>'
+    +'<li>Tap the <strong>Share</strong> button (□↑) at the bottom of Safari</li>'
+    +'<li>Tap <strong>Print</strong></li>'
+    +'<li><strong>Pinch-zoom outward</strong> on the page preview</li>'
+    +'<li>Tap the <strong>Share</strong> button again</li>'
+    +'<li>Tap <strong>Save to Files</strong> — saved as PDF ✅</li>'
+    +'</ol>'
+    +'</div>'
+    +'<div class="hdr">🛕 Tirupati Yatra Planner v4.0 &nbsp;·&nbsp; '+tabTitle+' &nbsp;·&nbsp; Pankaj Kanodia</div>'
+    +bodyHTML
+    +'<div class="ftr">Tirupati Yatra Planner v4.0 · Banashankari JP Nagar → Tirumala · Pankaj Kanodia · June 2026</div>'
+    +'</body></html>';
+
+  // iOS Safari: window.open must be called synchronously from tap event
+  var w=window.open('','_blank');
+  if(!w){
+    alert('Safari blocked the popup.\n\nTo fix:\nSettings → Safari → Block Pop-ups → turn OFF\n\nThen tap Save as PDF again.');
+    return;
+  }
+  w.document.open();
+  w.document.write(fullHTML);
+  w.document.close();
+  // Trigger print after render
+  w.addEventListener('load',function(){setTimeout(function(){if(w&&!w.closed)w.print();},400);});
+  setTimeout(function(){if(w&&!w.closed)w.print();},700);
+}
+
+</script>
+
+</body>
+</html>
